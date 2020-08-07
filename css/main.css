@@ -175,7 +175,16 @@ h2{
     margin-top:20px;
     display:inline-block;
     transition:all .3s ease;
+    border: 2px solid;
   }
+
+.button.hollow,
+.button.hollow:hover{
+  background-color: white;
+  color: #fe4918;
+
+}
+
 
 .button.transparente{
   background-color: transparent;
@@ -547,7 +556,62 @@ p.numero{
   font-size:4em;
   display:block;
   margin: 0 0 10px 0;
+  font-family: 'Oswald', sans-serif;
 }
+
+/** Tabla de precios **/
+ul.lista-precios > li{
+  padding: 10px;
+}
+
+@media only screen and (min-width:768px){
+  ul.lista-precios > li{
+    float: left;
+    width: 30%;
+  }
+}
+div.tabla-precio{
+  border: 1px solid #e1e1e1;
+  background-color: #ffffff;
+  padding: 40px 0;
+  text-align: center;
+  transition: all .3s ease; 
+}
+div.tabla-precio:hover{
+  transform: scale(1.1);
+  border: 1px solid #fe4918;
+  box-shadow: 0px 0px 50px #666;
+}
+
+div.tabla-precio ul li {
+  font-family:'PT Sans', sans-serif;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: #868686;
+  line-height:26px;
+}
+div.tabla-precio ul li:before {
+  font-family: 'FontAwesome';
+  display: inline-block;
+  vertical-align:top;
+  padding: 0 5px;
+  font-size:20px;
+  color: green;
+  -webkit-font-smoothing: antialiased;
+  content: '\f00c';
+}
+
+div.tabla-precio h3{
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+div.tabla-precio p.numero{
+  color:#000000;
+  margin:20px 0;
+}
+
 
 /** mapa **/
 div.mapa{
@@ -645,9 +709,99 @@ p.copyright{
   margin-top:50px;
   text-align: center;
 }
+/** Internas **/
+/* registro*/
 
+form.registro h3{
+  text-align:center;
+  text-transform:uppercase;
+  margin: 20px 0 0 0;
+}
+form.registro label{
+  margin-bottom:5px;
+  font-weight: bold;
+}
+h4{
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #fe4918;
+  padding: 10px;
+  font-size:1.2em;
+}
+div.caja{
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+}
+div.campos{
+  padding: 20px 10px;
+  text-align: center;
+}
 
+@media only screen and (min-width:768px){
+  div.campos{
+    float:left;
+    width:30%;
+  }
+}
+div.paquetes .tabla-precio:hover{
+  transform: none;
+  box-shadow: none;
+}
+div.paquetes .tabla-precio input{
+  clear:both;
+  width: 100px;
+  margin: 10px auto 0 auto;
+  display: block;
+}
+.contenido-dia{
+  padding: 20px;
+  /*display:none;*/
+}
+@media only screen and (min-width:768px){
+  .contenido-dia > div {
+    float:left;
+    width:30%;
+  }
+} 
+.contenido-dia > div p{
+    text-align: left;
+}
 
+.contenido-dia > div label{
+  display:block;
+  margin-bottom:10px;
+}
+.contenido-dia > div input{
+  margin-right: 10px;
+}
+.contenido-dia > div label time{
+  color: #fe4918;
+  font-weight:bold;
+}
+
+/* resumen registro */
+div.resumen p{
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+
+div.orden input{ 
+  margin: 10px 0 0 0;
+}
+
+div.resumen input{
+  display:block;
+  margin: 10px auto;
+}
+
+#error{
+  clear:both;
+  padding:20px;
+  text-align:center;
+  display:none;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
