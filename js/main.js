@@ -2,17 +2,18 @@
     "use strict";
 
     document.addEventListener('DOMContentLoaded',function(){
-        var map = L.map('mapa').setView([51.505, -0.09], 17);
+        if (document.querySelector('#mapa')){
+            var map = L.map('mapa').setView([-38.00042, -57.5562], 12);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        L.marker([51.5, -0.09]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-            .openPopup();
-
-
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+    
+            L.marker([-38.00522, -57.5708]).addTo(map)
+                .bindPopup('UNMdP')
+                .openPopup();
+        }
+        
 
 
        //campos datos usuario
@@ -34,10 +35,13 @@
         var resultado=document.getElementById('lista-productos');
 
 
-        nombre.addEventListener('blur',validarCampos);
-        apellido.addEventListener('blur',validarCampos);
-        email.addEventListener('blur',validarCampos);
-        email.addEventListener('blur',validarlMail);
+        if (nombre){
+            nombre.addEventListener('blur',validarCampos);
+            apellido.addEventListener('blur',validarCampos);
+            email.addEventListener('blur',validarCampos);
+            email.addEventListener('blur',validarlMail);
+        }
+        
 
         function validarCampos(){
             if(this.value==''){
@@ -67,6 +71,30 @@
 })();
 
 $(function() {
+
+    //Fijar barra
+
+    let alturaWindow= $(window).height();
+    let alturaBarra= $('.barra').innerHeight();
+
+    $(window).scroll(function(){
+        let scroll= $(window).scrollTop();
+        if (scroll >alturaWindow){
+            $('.barra').addClass('fixed');
+            $('body').css({'margin-top': alturaBarra+'px'});
+        }
+        else{
+            $('.barra').removeClass('fixed');
+            $('body').css({'margin-top': '0px'});
+        }
+    })
+
+
+    //Navegacion menu
+    $('.menu-movil').on('click', function(){
+        $('.navegacion-principal').slideToggle();
+    });
+
 
     //Programa de charlas/stands
     
