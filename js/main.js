@@ -39,7 +39,7 @@
             nombre.addEventListener('blur',validarCampos);
             apellido.addEventListener('blur',validarCampos);
             email.addEventListener('blur',validarCampos);
-            email.addEventListener('blur',validarlMail);
+            email.addEventListener('blur',validarMail);
         }
         
 

@@ -748,9 +748,13 @@ p.copyright{
   margin-bottom:5px;
 
 }
+/* 
+HACERLO CON Js Y AGREGAR UNA CLASE EN CADA PAGINA PARA PODER PREGUNTAR EN JS QUÉ PAGINA ES
+"if (document.getElementByClass('index-activo')"
+
 .galeria-fotos .navegacion-principal .activo {
   border-bottom: 2px solid #fe4918;
-}
+} */
 
 /* registro*/
 
