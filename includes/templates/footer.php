@@ -34,7 +34,19 @@
   <script src="js/main.js"></script>
   <script src="js/jquery.animateNumber.js"></script>
   <script src="js/jquery.countdown.js"></script>
+  <script src="js/jquery.colorbox-min.js"></script>
   <script src="js/lightbox.js"></script>
+
+  <?php 
+    /* $archivo= basename($_SERVER['PHP_SELF']);
+    $pagina= str_replace(".php","",$archivo);
+    if ($pagina == 'galeria')
+      echo '<script src="js/lightbox.js"></script>'; */
+    /*else
+       if ($pagina == 'oradores' || $pagina == 'index')
+        echo '<script src="js/jquery.colorbox-min.js"></script>'; 
+        SI USO ESTO TIRA ERROR LA CONSOLA EN LAS OTRAS PAGINAS*/
+  ?>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

@@ -90,6 +90,13 @@ $(function() {
     })
 
 
+    // CSS navegacion para pagina activa
+    $('body .index .navegacion-principal a:contains("Evento")').addClass('activo');
+    $('body .calendario .navegacion-principal a:contains("Programa")').addClass('activo');
+    $('body .oradores .navegacion-principal a:contains("Oradores")').addClass('activo');
+    $('body .galeria .navegacion-principal a:contains("Galería")').addClass('activo');
+
+
     //Navegacion menu
     $('.menu-movil').on('click', function(){
         $('.navegacion-principal').slideToggle();
@@ -125,8 +132,11 @@ $(function() {
         $('#segundos').html(event.strftime('%S'));
     });
 
+    //Colorbox ORADORES
+    $('.invitado-info').colorbox({inline:true,width:"50%"});
 
-
-
+    /* $('.invitado a').on('click',function(){
+        $('#orador_hidden').css({display:"block"});
+    }) */
 
 });

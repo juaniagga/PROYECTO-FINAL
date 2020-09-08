@@ -15,6 +15,18 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/lightbox.css">
+  <link rel="stylesheet" href="css/colorbox.css">
+  
+  <?php 
+    /* $archivo= basename($_SERVER['PHP_SELF']);
+    $pagina= str_replace(".php","",$archivo);
+
+    if ($pagina == 'galeria')
+      echo '<link rel="stylesheet" href="css/lightbox.css">';
+    else
+      if ($pagina == 'oradores' || $pagina == 'index')
+        echo '<link rel="stylesheet" href="css/colorbox.css">'; */
+  ?>
 
 
   <meta name="theme-color" content="#fafafa">
@@ -23,7 +35,7 @@
 
 </head>
 
-<body>
+<body class="<?php echo $pagina;?>">
 
   <header class="site-header">
     <div class="hero">
@@ -61,8 +73,8 @@
       </div>
       <nav class="navegacion-principal clearfix">
         <a href="index.php">Evento</a>
-        <a href="#programa">Programa</a>
-        <a href="#invitados">Invitados</a>
+        <a href="calendario.php">Programa</a>
+        <a href="oradores.php">Oradores</a>
         <a href="galeria.php">Galería</a>
         <a href="registro.php">Registrarse</a>
       </nav>

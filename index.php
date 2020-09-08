@@ -20,11 +20,33 @@
       <div class="contenedor">
         <div class="programa-evento">
           <h2>Programa del Evento</h2>
+          
+          <?php
+             try{
+                require_once('includes/funciones/conexionBDD.php');
+                $sql="
+                SELECT DISTINCT nombre, icono
+                FROM categoria_act c, actividad a
+                WHERE c.id_categoria=a.id_categoria";
+                $tuplas_cat= $db->query($sql);
+             }
+             catch (Exception $e){
+               $error= $e->getMessage();
+             }
+          ?>
+          
           <nav class="menu-programa">
-            <a href="#charlas"><i class="fa fa-comment"></i>Charlas</a>
-            <a href="#stands"><i class="fa fa-code"></i>Stands</a>
+
+             <?php
+                while ($categorias = $tuplas_cat->fetch_assoc()){
+                  ?>
+                  <a href="#<?php echo $categorias['nombre']; ?>"><i class="fa <?php echo $categorias['icono']; ?>">
+                  </i><?php echo $categorias['nombre']; ?></a>
+                <?php }
+             ?>
+            
           </nav>
-          <div id="charlas" class="info-curso ocultar clearfix">
+          <div id="Charla" class="info-curso ocultar clearfix">
             <div class="detalle-evento">
               <h3> Modelos Internacionales de Gestión de Calidad</h3>
               <p><i class="fa fa-clock"></i>10:00 hs </p>
@@ -40,7 +62,7 @@
             <a href="#" class="button float-right">Ver Todos</a>
 
           </div><!--#charlas-->
-          <div id="stands" class="info-curso ocultar clearfix">
+          <div id="Seminario" class="info-curso ocultar clearfix">
             <div class="detalle-evento">
               <h3> Facultad de Ingenieria</h3>
               <p><i class="fa fa-clock"></i>13:00 hs </p>
@@ -62,8 +84,9 @@
 
   </section><!--programa-->
 
-  <section id="invitados" class="invitados contenedor seccion">
-    <h2>Nuestros Invitados</h2>
+  <?php include_once 'includes/templates/oradores.php'; ?> 
+  <!-- <section id="invitados" class="invitados contenedor seccion">
+    <h2>Nuestros Oradores</h2>
     <ul class="lista-invitados clearfix">
       <li>
         <div class="invitado">
@@ -102,7 +125,7 @@
         </div>
       </li>
     </ul>
-  </section>
+  </section> -->
 
   <div class="contador parallax">
     <div class="contenedor">
