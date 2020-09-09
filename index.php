@@ -127,7 +127,9 @@
     </ul>
   </section> -->
 
-  <div class="contador parallax">
+
+<!-- CONTADOR EVENTO -->
+ <!--  <div class="contador parallax">
     <div class="contenedor">
       <ul class="resumen-evento clearfix">
         <li><p class="numero"></p>Participantes</li>
@@ -136,16 +138,16 @@
         <li><p class="numero"></p>Stands</li>
       </ul>
     </div>
-  </div>
+  </div> -->
 
-<section class="precios seccion">
+<!-- <section class="precios seccion">
   <h2> Precios </h2>
   <div class="contenedor">
     <ul class="lista-precios clearfix">
       <li>
         <div class="tabla-precio">
-          <h3>Pase por día</h3>
-          <p class="numero">$30</p>
+          <h3>Estudiante</h3>
+          <p class="numero">$0</p>
           <ul>
             <li>Bocadillos gratis</li>
             <li>Todas las conferencias</li>
@@ -156,20 +158,20 @@
       </li>
       <li>
         <div class="tabla-precio">
-          <h3>Todos los dias</h3>
-          <p class="numero">$50</p>
+          <h3>Docente</h3>
+          <p class="numero">$0</p>
           <ul>
             <li>Bocadillos gratis</li>
             <li>Todas las conferencias</li>
             <li>Todos los talleres</li>
           </ul>
-          <a href="#" class="button">Comprar</a>
+          <a href="#" class="button hollow">Comprar</a>
         </div>
       </li>
       <li>
         <div class="tabla-precio">
-          <h3>Pase por dos dias</h3>
-          <p class="numero">$45</p>
+          <h3>Externo</h3>
+          <p class="numero">$500</p>
           <ul>
             <li>Bocadillos gratis</li>
             <li>Todas las conferencias</li>
@@ -180,21 +182,13 @@
       </li>
     </ul>
   </div>
-</section>
+</section> -->
 
 
   
   <div id="mapa" class="mapa">
     
   </div>
-
-  <div class="newsletter parallax">
-    <div class="contenido contenedor">
-      <p> Registrate al newsletter</p>
-      <h3>FIESA UNMDP</h3>
-      <a href="#" class="button transparente">Registro</a>
-    </div><!--contenido-->
-  </div><!--newsletter-->
 
 
   <section class="seccion">
@@ -209,6 +203,14 @@
     </div>
   </section>
 
+
+  <div class="newsletter parallax">
+    <div class="contenido contenedor">
+      <p> Registrate al newsletter</p>
+      <h3>FIESA UNMDP</h3>
+      <a href="#" class="button transparente">Registro</a>
+    </div><!--contenido-->
+  </div><!--newsletter-->
   
 
   <?php include_once 'includes/templates/footer.php'; ?>

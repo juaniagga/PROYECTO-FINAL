@@ -67,7 +67,7 @@ CREATE TABLE participante(
     apellido varchar(20) NOT NULL,
     dni varchar(11) NOT NULL,
     mail varchar(30) NOT NULL,
-    ciurdad varchar(30) NOT NULL,
+    ciudad varchar(30) NOT NULL,
     provincia varchar(20) NOT NULL,
     pais varchar(20) NOT NULL,
     documento varchar(20),

@@ -24,52 +24,40 @@
             <ul class="lista-precios clearfix">
                 <li>
                   <div class="tabla-precio">
-                    <h3>Pase por día</h3>
-                    <p class="numero">$30</p>
+                    <h3>Estudiantes</h3>
+                    <p class="numero">$0</p>
                     <ul>
-                      <li>Bocadillos gratis</li>
-                      <li>Todas las conferencias</li>
-                      <li>Todos los talleres</li>
                     </ul>
                     <div class="orden">
-                        <label for="pase_dia">Boletos deseados:</label>
-                        <input type="number" min="0" id="pase_dia" size="3" placeholder="0">
+                        <input type="checkbox"  size="3" placeholder="0">
                     </div>
                   </div>
                 </li>
                 <li>
                   <div class="tabla-precio">
-                    <h3>Todos los dias</h3>
-                    <p class="numero">$50</p>
+                    <h3>Docentes</h3>
+                    <p class="numero">$0</p>
                     <ul>
-                      <li>Bocadillos gratis</li>
-                      <li>Todas las conferencias</li>
-                      <li>Todos los talleres</li>
                     </ul>
                     <div class="orden">
-                        <label for="pase_completo">Boletos deseados:</label>
-                        <input type="number" min="0" id="pase_completo" size="3" placeholder="0">
+                        <input type="checkbox"  size="3" placeholder="0">
                     </div>
                   </div>
                 </li>
                 <li>
                   <div class="tabla-precio">
-                    <h3>Pase por dos dias</h3>
-                    <p class="numero">$45</p>
+                    <h3>Externo</h3>
+                    <p class="numero">$450</p>
                     <ul>
-                      <li>Bocadillos gratis</li>
-                      <li>Todas las conferencias</li>
-                      <li>Todos los talleres</li>
                     </ul>
                     <div class="orden">
-                        <label for="pase_dosdias">Boletos deseados:</label>
-                        <input type="number" min="0" id="pase_dosdias" size="3" placeholder="0">
+                      <input type="checkbox"  size="3" placeholder="0">
                     </div>
                   </div>
                 </li>
               </ul>
         </div><!-- #paquetes-->
-        <div id="eventos" class="eventos clearfix">
+        <!-- <div id="eventos" class="eventos clearfix">
             <h3>Elige tus talleres</h3>
             <div class="caja">
                   <div id="viernes" class="contenido-dia clearfix">
@@ -92,8 +80,8 @@
                               <p>Seminarios:</p>
                               <label><input type="checkbox" name="registro[]" id="sem_01" value="sem_01"><time>10:00</time> Diseño UI y UX para móviles</label>
                           </div>
-                  </div> <!--#viernes-->
-                  <div id="sabado" class="contenido-dia clearfix">
+                  </div> --> <!--#viernes-->
+                  <!-- <div id="sabado" class="contenido-dia clearfix">
                       <h4>Sábado</h4>
                       <div>
                             <p>Talleres:</p>
@@ -115,8 +103,8 @@
                             <label><input type="checkbox" name="registro[]" id="sem_02" value="sem_02"><time>10:00</time> Aprende a Programar en una mañana</label>
                             <label><input type="checkbox" name="registro[]" id="sem_03" value="sem_03"><time>17:00</time> Diseño UI y UX para móviles</label>
                       </div>
-                  </div> <!--#sabado-->
-                  <div id="domingo" class="contenido-dia clearfix">
+                  </div> --> <!--#sabado-->
+                 <!--  <div id="domingo" class="contenido-dia clearfix">
                       <h4>Domingo</h4>
                       <div>
                             <p>Talleres:</p>
@@ -137,22 +125,22 @@
                             <label><input type="checkbox" name="registro[]" id="sem_04" value="sem_04"><time>14:00</time> Creando una App en Android en una tarde</label>
                             <label><input type="checkbox" name="registro[]" id="sem_05" value="sem_05"><time>17:00</time> Creando una App en iOS en una tarde</label>
                       </div>
-                  </div> <!--#domingo-->
+                  </div> --> <!--#domingo-->
               </div><!--.caja-->
         </div> <!--#eventos-->
 
         <div id="resumen" class="resumen clearfix">
-          <div class="caja"></div>
-            <h3>Pago</h3>
+         <!--  <div class="caja"></div> -->
+           <!--  <h3>Pago</h3> -->
             <div class="total">
-              <p>Resumen:</p>
+              <!-- <p>Resumen:</p>
               <div id="lista-productos">
 
               </div>
               <p>Total:</p>
               <div id="suma-total">
 
-              </div>
+              </div> -->
               <input id="btnRegistro" type="submit" class="button" value="Pagar">
             </div><!--#total-->
           </div><!--#caja-->
