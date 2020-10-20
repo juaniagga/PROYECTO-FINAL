@@ -1,5 +1,7 @@
 <?php include_once 'includes/templates/header.php'; ?>
 
+<?php $id_evento= 1?>   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
+
   <section class="seccion contenedor">
     <h2> FIESA Mar del Plata 2021</h2>
       <p>
@@ -24,11 +26,13 @@
           <?php
              try{
                 require_once('includes/funciones/conexionBDD.php');
-                $sql="
+                $sql_cat="
                 SELECT DISTINCT nombre, icono
                 FROM categoria_act c, actividad a
-                WHERE c.id_categoria=a.id_categoria";
-                $tuplas_cat= $db->query($sql);
+                WHERE c.id_categoria=a.id_categoria AND a.id_evento=" . $id_evento . "
+                ORDER BY c.id_categoria";
+            
+                $tuplas_cat= $db->query($sql_cat);
              }
              catch (Exception $e){
                $error= $e->getMessage();
@@ -36,7 +40,6 @@
           ?>
           
           <nav class="menu-programa">
-
              <?php
                 while ($categorias = $tuplas_cat->fetch_assoc()){
                   ?>
@@ -44,40 +47,114 @@
                   </i><?php echo $categorias['nombre']; ?></a>
                 <?php }
              ?>
-            
           </nav>
-          <div id="Charla" class="info-curso ocultar clearfix">
-            <div class="detalle-evento">
-              <h3> Modelos Internacionales de Gestión de Calidad</h3>
-              <p><i class="fa fa-clock"></i>10:00 hs </p>
-              <p><i class="fa fa-calendar"></i>16 de Marzo </p>
-              <p><i class="fa fa-user"></i> JOSÉ ARNAEZ VADILLO (ANECA, España)</p>
-            </div>
-            <div class="detalle-evento">
-              <h3> Competencias Internacionales e Inserción Laboral </h3>
-              <p><i class="fa fa-clock"></i>15:00 hs </p>
-              <p><i class="fa fa-calendar"></i>17 de Marzo</p>
-              <p><i class="fa fa-user"></i> FLORENCIA INCAUGARAT (UNMDP, Argentina)</p>
-            </div>
-            <a href="#" class="button float-right">Ver Todos</a>
+        
+          <?php
+            try {
+              require_once('includes/funciones/conexionBDD.php');
+              $sql_act= "
+              SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad, cat.id_categoria, cat.nombre as nombre_cat
+              FROM actividad act, categoria_act cat
+              WHERE act.id_categoria=cat.id_categoria AND act.id_evento=" . $id_evento . "
+                    AND EXISTS 
+                              (SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad, c.id_categoria
+                              FROM actividad a, categoria_act c
+                              WHERE a.id_categoria=c.id_categoria AND a.id_evento=" . $id_evento . "
+                                                                    AND c.id_categoria=cat.id_categoria
+                              ORDER BY fecha, hora_inicio
+                              LIMIT 2)
+              ORDER BY cat.id_categoria, fecha, hora_inicio";
+              /* Obtengo dos actividades de cada categoria */
+              $tuplas_act= $db->query($sql_act);
+              
+              $sql_oradores="
+              SELECT nombre, apellido, o.dni, id_actividad
+              FROM orador o, dicta d
+              WHERE o.dni = d.dni
+              ORDER BY nombre";;
+              $tuplas_oradores= $db->query($sql_oradores);
+            }
+            catch (Exception $e){
+              $error= $e->getMessage();
+            }
+          ?>
+          
+          <?php
+            $oradores= array();   /* Armo array de oradores */
+            while ($aux_oradores= $tuplas_oradores->fetch_assoc()){
+              $orador= array(
+                  'nombre_ape' => $aux_oradores['nombre'] . ' ' . $aux_oradores['apellido'],
+                  'id_actividad' => $aux_oradores['id_actividad']
+              );
+              $oradores[]= $orador;
+            }
 
-          </div><!--#charlas-->
-          <div id="Seminario" class="info-curso ocultar clearfix">
-            <div class="detalle-evento">
-              <h3> Facultad de Ingenieria</h3>
-              <p><i class="fa fa-clock"></i>13:00 hs </p>
-              <p><i class="fa fa-calendar"></i>16 de Marzo </p>
-              <p><i class="fa fa-user"></i> Felipe Evans UNMDP</p>
-            </div>
-            <div class="detalle-evento">
-              <h3> Universidad Caece </h3>
-              <p><i class="fa fa-clock"></i>16:00 hs </p>
-              <p><i class="fa fa-calendar"></i>17 de Marzo</p>
-              <p><i class="fa fa-user"></i> Maria Perez </p>
-            </div>
-            <a href="#" class="button float-right">Ver Todos</a>
 
-          </div><!--#stands-->
+            $actividades= array();
+            while ($tupla = $tuplas_act->fetch_assoc()){ 
+                $c= $tupla['nombre_cat'];
+                $aux_act= array(
+                    'descripcion' => $tupla['descripcion'],
+                    'nombre_act' => $tupla['nombre_act'],
+                    'fecha' => $tupla['fecha'],
+                    'horario' => $tupla['hora_inicio'] . ' - ' . $tupla['hora_fin'],
+                    'oradores' => array()
+                );
+
+                /* Agrego los oradores */
+                foreach($oradores as $o){
+                  if ($o['id_actividad']==$tupla['id_actividad']){
+                    $aux_act['oradores'][]=$o['nombre_ape'];
+                    /* unset($oradores[$o]); */
+                  }
+                }
+
+                $actividades[$c][]= $aux_act;
+            } ?>
+
+
+
+          
+          <!-- Actividades del programa -->
+          <?php
+            setlocale(LC_TIME, 'es_RA');
+            setlocale(LC_TIME,'spanish');
+					
+              foreach ($actividades as $cat => $lista_act){ ?>
+                <div id="<?php echo $cat?>" class="info-curso ocultar clearfix">
+                  <?php
+                  foreach($lista_act as $a){ ?>
+                    <div class="detalle-evento">
+                      <h3><?php echo $a['nombre_act'] ?></h3>
+                      <p><i class="fa fa-clock"></i> <?php echo $a['horario'] ?> hs </p>
+                      <p><i class="fa fa-calendar"></i> <?php echo utf8_encode(strftime("%d de %B del %Y", strtotime($a['fecha']))); ?> </p>
+                      <p>
+                        <?php 
+                        foreach($a['oradores'] as $o){?>
+                          <i class="fa fa-user" aria-hidden="true"></i>
+                          <?php
+                            echo $o;
+                            echo "<br>";
+                        } ?>
+                      </p>
+                    </div>
+                  <?php }?>
+                  
+                </div><!--#charlas-->
+              
+            <?php } ?>
+          <a href="calendario.php" class="button float-right">Ver Todos</a>
+
+
+
+
+
+          
+
+
+
+          
+
         </div><!--programa evento-->
       </div><!--contenedor-->
     </div><!--contenido-programa-->
@@ -208,7 +285,7 @@
     <div class="contenido contenedor">
       <p> Registrate al newsletter</p>
       <h3>FIESA UNMDP</h3>
-      <a href="#" class="button transparente">Registro</a>
+      <a href="#mc_embed_signup" class="boton_newsletter button transparente">Registro</a>
     </div><!--contenido-->
   </div><!--newsletter-->
   

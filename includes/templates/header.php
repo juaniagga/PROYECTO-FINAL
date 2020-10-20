@@ -18,10 +18,11 @@
   <link rel="stylesheet" href="css/colorbox.css">
   
   <?php 
-    /* $archivo= basename($_SERVER['PHP_SELF']);
+    $archivo= basename($_SERVER['PHP_SELF']);
     $pagina= str_replace(".php","",$archivo);
 
-    if ($pagina == 'galeria')
+
+   /* if ($pagina == 'galeria')
       echo '<link rel="stylesheet" href="css/lightbox.css">';
     else
       if ($pagina == 'oradores' || $pagina == 'index')

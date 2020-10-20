@@ -14,13 +14,13 @@
         try{
             require_once('includes/funciones/conexionBDD.php');
             $sql_actividades="
-            SELECT nombre_act, fecha, hora_inicio, hora_fin, id_actividad,c.nombre as nombre_cat, icono
+            SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad,c.nombre as nombre_cat, icono
             FROM actividad a, categoria_act c
             WHERE a.id_categoria=c.id_categoria";
             $sql_oradores="
-            SELECT nombre, apellido, o.legajo, id_actividad
+            SELECT nombre, apellido, o.dni, id_actividad
             FROM orador o, dicta d
-            WHERE o.legajo = d.legajo";
+            WHERE o.dni = d.dni";
             $tuplas_actividades= $db->query($sql_actividades);
             $tuplas_oradores= $db->query($sql_oradores);    //oradores con el id_actividad
         }
@@ -38,6 +38,7 @@
                 $aux_act= array(
                     'id_actividad' => $aux_actividades['id_actividad'],
                     'categoria' => $aux_actividades['nombre_cat'],
+                    'descripcion' => $aux_actividades['descripcion'],
                     'icono' => $aux_actividades['icono'],
                     'nombre_act' => $aux_actividades['nombre_act'],
                     'fecha' => $aux_actividades['fecha'],
@@ -67,9 +68,8 @@
 					echo utf8_encode(strftime("%A, %d de %B del %Y", strtotime($dia)));
 					?>  
 				</h3>
-                <div class="dia">
-                    
 
+                <div class="dia"> 
                     <?php
                     foreach ($lista as $act){           //Agrego los oradores a cada actividad del calendario
                         foreach ($oradores as $ora){
@@ -90,7 +90,7 @@
                             <p> 
                             <i class="fa <?php echo $act['icono']; ?>" aria-hidden="true"></i>
                             <?php echo $act['categoria'] ?> </p>
-                        
+                            <p><?php echo $act['descripcion'] ;?></p>
                             <p>
                                 <?php 
                                 foreach($act['oradores'] as $o){

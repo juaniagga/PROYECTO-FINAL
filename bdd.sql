@@ -38,20 +38,19 @@ CREATE TABLE actividad(
 );
 
 CREATE TABLE orador(
-    legajo varchar(15) NOT NULL,
+    dni varchar(11) NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
-    dni varchar(11) NOT NULL,
     descripcion text(600) NOT NULL,
     url_imagen varchar(50),
-    PRIMARY KEY(legajo)
+    PRIMARY KEY(dni)
 );
 
 CREATE TABLE dicta(
-    legajo varchar(15) NOT NULL,
+    dni varchar(11) NOT NULL,
     id_actividad int NOT NULL,
-    PRIMARY KEY(legajo,id_actividad),
-    FOREIGN KEY(legajo) REFERENCES orador(legajo) ON DELETE CASCADE,
+    PRIMARY KEY(dni,id_actividad),
+    FOREIGN KEY(dni) REFERENCES orador(dni) ON DELETE CASCADE,
     FOREIGN KEY(id_actividad) REFERENCES actividad(id_actividad) ON DELETE CASCADE
 );
 
@@ -110,7 +109,7 @@ VALUES
 INSERT INTO
     evento(nombre,fecha_inicio,fecha_fin,inscriptos, asistencias, ubicacion, descripcion)
 VALUES
-    ('Fiesa','2021-03-16','2021-03-17', 0, 0, 'UNMDP','Congreso internacional de educacion.');
+    ('Fiesa','2021-03-16','2021-03-17', 0, 0, 'UNMDP','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.');
 
 
 INSERT INTO
@@ -123,16 +122,16 @@ VALUES
 
 
 INSERT INTO
-    orador(legajo, nombre, apellido, dni, descripcion, url_imagen)
+    orador(dni, nombre, apellido, descripcion, url_imagen)
 VALUES
-    ('12129', 'Fernando', 'Perez', '20150120', 'Vice del departamento de Ingenieria en Informatica.', 'fernando.jpg'),
-    ('00123', 'Josefina', 'Costa', '20312120', 'Profesor de Ingenieria en Informatica.', 'josefina.jpg');
+    ('20150120', 'Fernando', 'Perez', 'Vice del departamento de Ingenieria en Informatica.', 'fernando.jpg'),
+    ('20312120', 'Josefina', 'Costa', 'Profesor de Ingenieria en Informatica.', 'josefina.jpg');
 
 
 INSERT INTO
-    dicta(legajo, id_actividad)
+    dicta(dni, id_actividad)
 VALUES
-    ('12129',1),
-    ('00123',1),
-    ('12129',2),
-    ('00123',3);
+    ('20150120',1),
+    ('20312120',1),
+    ('20150120',2),
+    ('20312120',3);
