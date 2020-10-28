@@ -1,0 +1,29 @@
+.user-panel {
+    height: 4rem;
+}
+
+.user-panel .info{
+    /* position: relative;
+    left: auto; */
+    padding: 5px 0px 0px 0px;
+}
+
+.skin-blue .sidebar-menu li.header {
+    color: white;
+}
+
+.login-page .main-footer{
+    display: none;
+}
+
+.login-page .recordarme{
+    padding-left: 3.5rem;
+}
+
+.login-page .social-auth-links{
+    margin-top: 3rem;
+}
+
+.login-page form{
+    margin-bottom: 1rem;
+}

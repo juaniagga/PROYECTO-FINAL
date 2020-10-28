@@ -62,9 +62,9 @@ CREATE TABLE categoria_participante(
 );
 
 CREATE TABLE participante(
+    dni varchar(11) NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
-    dni varchar(11) NOT NULL,
     mail varchar(30) NOT NULL,
     ciudad varchar(30) NOT NULL,
     provincia varchar(20) NOT NULL,
@@ -75,14 +75,12 @@ CREATE TABLE participante(
     FOREIGN KEY(id_categoria) REFERENCES categoria_participante(id_categoria) ON DELETE CASCADE
 );
 
-CREATE TABLE Administrador(
-    legajo varchar(15) NOT NULL,
-    nombre varchar(20) NOT NULL,
-    apellido varchar(20) NOT NULL,
-    dni varchar(11) NOT NULL,
-    usuario varchar(20) NOT NULL,
-    contraseña varchar(30) NOT NULL,
-    PRIMARY KEY(legajo)
+CREATE TABLE administrador(
+    id_admin int NOT NULL AUTO_INCREMENT,
+    usuario varchar(20) NOT NULL UNIQUE,
+    contraseña varchar(255) NOT NULL,
+    nombre varchar(40) NOT NULL,
+    PRIMARY KEY(id_admin)
 );
 
 CREATE TABLE se_inscribe(
