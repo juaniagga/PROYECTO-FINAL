@@ -1,6 +1,8 @@
 <?php
+  include_once 'funciones/sesion-admin.php';
   include_once 'templates/header.php';
-  include_once 'templates/navegacion.php';
+
+  $permiso= $_SESSION['permiso'];
 ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -22,14 +24,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        Información sobre medios de pago
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">Blank page</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -38,7 +34,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Cargue el PDF informativo para los eventos</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -49,11 +45,11 @@
           </div>
         </div>
         <div class="box-body">
-          Start creating your amazing application!
+          Insertar aqui PDF
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
+          boton GUARDAR
         </div>
         <!-- /.box-footer-->
       </div>

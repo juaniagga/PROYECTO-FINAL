@@ -27,3 +27,19 @@
 .login-page form{
     margin-bottom: 1rem;
 }
+
+table td{
+    font-size: 16px;
+}
+
+table th{
+    font-size: 14.5px;
+}
+
+td .btn{
+    margin-top: 0px;
+}
+
+/* .dataTables_wrapper .row{ 
+    display: flex; 
+} */

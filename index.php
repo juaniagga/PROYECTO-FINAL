@@ -9,6 +9,22 @@
       </p>
   </section> <!--seccion-->
 
+  <?php
+
+    try {
+      require_once('includes/funciones/conexionBDD.php');
+      $sql = "
+            SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
+            FROM evento e
+            WHERE e.id_evento=1"; //. $_GET['id'];
+      $tupla = $db->query($sql);
+      $evento = $tupla->fetch_assoc();
+    } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+    }
+
+  ?>
+
   <section id="programa" class="programa">
     <div class="contenedor-video">
       <video autoplay loop poster="bg-talleres.jpg">
@@ -97,7 +113,7 @@
                     'descripcion' => $tupla['descripcion'],
                     'nombre_act' => $tupla['nombre_act'],
                     'fecha' => $tupla['fecha'],
-                    'horario' => $tupla['hora_inicio'] . ' - ' . $tupla['hora_fin'],
+                    'horario' => date_format(date_create($tupla['hora_inicio']), 'H:i') . ' - ' . date_format(date_create($tupla['hora_fin']), 'H:i'),
                     'oradores' => array()
                 );
 
@@ -264,7 +280,7 @@
 
   
   <div id="mapa" class="mapa">
-    
+    <p id="coordenadas" style="display:none"> <?php echo $evento['ubicacion']; ?></p>
   </div>
 
 

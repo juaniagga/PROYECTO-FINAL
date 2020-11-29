@@ -4,7 +4,10 @@
     document.addEventListener('DOMContentLoaded',function(){
         if (document.querySelector('#mapa')){
             var map = L.map('mapa').setView([-38.00042, -57.5562], 12);
-
+           /*  var coordenadas= document.getElementById('coordenadas').innerText;
+            var c='[' + coordenadas + ']';
+            console.log(c);
+            var map = L.map('mapa').setView(c, 12); */
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);

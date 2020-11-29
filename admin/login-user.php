@@ -1,9 +1,4 @@
 <?php
-  session_start();
-  $out= isset($_GET['out']);  //isset evita el mensaje de error en caso de que out no exista
-  if ($out){
-    session_destroy();
-  }
   include_once 'templates/header.php';
 ?>
 
@@ -20,9 +15,9 @@
   <div class="login-box-body">
     <p class="login-box-msg">Iniciar sesión como administrador</p>
 
-    <form name="login-admin" id="login-admin" method="post" action="control-login-admin.php" data-tipo="admin">
+    <form name="login-admin" id="login-admin" method="post" action="insertar-admin.php">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+        <input type="text" class="form-control" id="user" name="usuario" placeholder="Usuario">
         <span class="form-control-feedback"><i class="fa fa-user"></i></span>
       </div>
       <div class="form-group has-feedback">
@@ -46,6 +41,13 @@
       </div>
     </form>
     <a href="#">Olvidé mi contraseña</a><br>
+    <a href="register.html" class="text-center">Register a new membership</a>
+
+    <div class="social-auth-links text-center">
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Continuar con Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Continuar con Google+</a>
+    </div>
+    <!-- /.social-auth-links -->
 
 
   </div>

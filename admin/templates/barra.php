@@ -21,7 +21,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs">Violeta</span>
+              <span class="hidden-xs"><?php echo $_SESSION['usuario']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -37,7 +37,7 @@
                   <a href="#" class="btn btn-default btn-flat">Ajustes</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Cerrar sesión</a>
+                  <a href="login-admin.php?out=true" class="btn btn-default btn-flat">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

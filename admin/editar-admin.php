@@ -1,9 +1,13 @@
 <?php
   include_once 'funciones/sesion-admin.php';
   include_once 'templates/header.php';
-
+  try{
+    include_once 'funciones/funciones.php';
+  }catch(Exception $e){
+    echo "Error: " . $e->getMessage();
+  }
+  $id_admin= $_GET['id'];
   $permiso= $_SESSION['permiso'];
-
 ?>
 
 
@@ -26,19 +30,18 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Nuevo administrador de evento
-        <!-- <small>Completá el formulario para crear el administrador</small> -->
+        Editar administrador
       </h1>
     </section>
 
     <!-- Main content -->
-    <div class="row col-md-8 main">
+    <div class="row col-md-8">
       <section class="content">
 
-        <!-- EVENTO admin box -->
+        <!-- Default box -->
         <div class="box">
           <div class="box-header with-border">
-            <h3 class="box-title">Complete el formulario</h3>
+            <h3 class="box-title">Edite la información</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -47,61 +50,46 @@
             </div>
           </div>
           <div class="box-body">  <!-- CUERPO -->
+
+            <?php
+              $sql="
+              SELECT a.usuario, a.nombre, a.email
+              FROM administrador a
+              WHERE a.id_admin='" . $id_admin . "'";
+              $tupla= $db->query($sql);
+              $admin= $tupla->fetch_assoc();
+            ?>
+
             <div class="box box-info">  
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" name="crear-admin" id="crear-admin" method="post" action="control-admin.php">
+                <form class="form-horizontal" name="editar-admin" id="editar-admin" method="post" action="control-admin.php">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="usuario" class="col-sm-2 control-label">Usuario</label>
                       <div class="col-sm-10">
-                        <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario">
+                        <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario" value="<?php echo $admin['usuario'] ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="nombre" class="col-sm-2 control-label">Nombre</label>
                       <div class="col-sm-10">
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido">
+                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido" value="<?php echo $admin['nombre'] ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="email" class="col-sm-2 control-label">Email</label>
                       <div class="col-sm-10">
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Email">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $admin['email'] ?>">
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="password" class="col-sm-2 control-label">Contraseña</label>
-                      <div class="col-sm-10">
-                        <input name="password" type="password" class="form-control" id="password" placeholder="Contraseña">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="password" class="col-sm-2 control-label">Repetir contraseña</label>
-                      <div class="col-sm-10">
-                        <input name="password_repit" type="password" class="form-control" id="password_repit" placeholder="Contraseña">
-                        <span id="resultado_password" class="help-block"></span>
-                      </div>
-                    </div>
-                    <?php
-                    if ($permiso){
-                    ?>
-                    <div class="form-group">
-                      <label for="evento" class="col-sm-2 control-label">Evento</label>
-                      <div class="col-sm-10">
-                        <input name="evento" type="text" class="form-control" id="evento" placeholder="Nombre del evento">
-                      </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                    <div id="error"></div>
+                    <div id="error" style="display: none"></div>
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
-                    <input type="hidden" name="crear-admin" value="1">
-                    <input type="hidden" name="tipo-admin" value="0">
-                    <button type="submit" class="btn btn-info pull-right" id="btn-new">Añadir</button>
+                    <input type="hidden" name="editar-admin" value="1">
+                    <input type="hidden" name="id_admin" value="<?php echo $id_admin ?>">
+                    <button type="submit" class="btn btn-info pull-right">Guardar</button>
                   </div>
                   <!-- /.box-footer -->
                 </form>
@@ -110,8 +98,6 @@
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
-        
 
       </section>
       <!-- /.content -->
