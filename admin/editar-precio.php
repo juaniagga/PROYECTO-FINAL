@@ -6,10 +6,10 @@
   }catch(Exception $e){
     echo "Error: " . $e->getMessage();
   }
-  $id_admin= $_GET['id'];
+  $id_categoria= $_GET['id'];
   $permiso= $_SESSION['permiso'];
 
-  if (!filter_var($id_admin,FILTER_VALIDATE_INT)){
+  if (!filter_var($id_categoria,FILTER_VALIDATE_INT)){
     die("Error");
   }
 ?>
@@ -34,12 +34,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Editar administrador
+        Editar precio
       </h1>
     </section>
 
-    <!-- Main content -->
-    <div class="row col-md-6">
+    <div class="centrar-contenido">
+<!-- Main content -->
+<div class="row col-md-3">
       <section class="content">
 
         <!-- Default box -->
@@ -56,43 +57,44 @@
           <div class="box-body">  <!-- CUERPO -->
 
             <?php
-              $sql="
-              SELECT a.usuario, a.nombre, a.email
-              FROM administrador a
-              WHERE a.id_admin='" . $id_admin . "'";
-              $tupla= $db->query($sql);
-              $admin= $tupla->fetch_assoc();
+              try {
+                include_once 'funciones/funciones.php';
+
+                $sql = "
+                SELECT ca.id_categoria, ca.precio, c.nombre
+                FROM categoria_participante c INNER JOIN cat_asociadas ca ON c.id_categoria=ca.id_categoria
+                WHERE ca.id_categoria=" . $id_categoria;
+                $tuplas = $db->query($sql);  
+                $cat= $tuplas->fetch_assoc();
+              
+              } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+              }
             ?>
 
             <div class="box box-info">  
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" name="editar-admin" id="editar-admin" method="post" action="control-admin.php">
+                <form class="form-horizontal" name="editar-precio" id="editar-precio" method="post" action="control-evento.php">
                   <div class="box-body">
-                    <div class="form-group">
-                      <label for="usuario" class="col-sm-2 control-label">Usuario</label>
-                      <div class="col-sm-10">
-                        <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario" value="<?php echo $admin['usuario'] ?>">
-                      </div>
-                    </div>
                     <div class="form-group">
                       <label for="nombre" class="col-sm-2 control-label">Nombre</label>
                       <div class="col-sm-10">
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido" value="<?php echo $admin['nombre'] ?>">
+                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" value="<?php echo $cat['nombre'] ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="email" class="col-sm-2 control-label">Email</label>
+                      <label for="precio" class="col-sm-2 control-label">Precio</label>
                       <div class="col-sm-10">
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $admin['email'] ?>">
+                        <input name="precio" type="number" step="0.01" class="form-control" id="precio" placeholder="Precio" value="<?php echo $cat['precio'] ?>">
                       </div>
                     </div>
                     <div id="error" style="display: none"></div>
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
-                    <input type="hidden" name="editar-admin" value="1">
-                    <input type="hidden" name="id_admin" value="<?php echo $id_admin ?>">
+                    <input type="hidden" name="editar-precio" value="1">
+                    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria ?>">
                     <button type="submit" class="btn btn-info pull-right">Guardar</button>
                   </div>
                   <!-- /.box-footer -->
@@ -106,6 +108,8 @@
       </section>
       <!-- /.content -->
     </div> <!-- row -->
+    </div>
+    
     
   </div>
   <!-- /.content-wrapper -->

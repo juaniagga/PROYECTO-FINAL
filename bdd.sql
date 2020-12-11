@@ -43,12 +43,12 @@ CREATE TABLE actividad(
 
 CREATE TABLE orador(
     id_orador int NOT NULL AUTO_INCREMENT,
+    id_evento int NOT NULL,
     dni int(8) UNSIGNED NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
     biografia text(600) NOT NULL,
     imagen varchar(50) not null,
-    id_evento int NOT NULL,
     PRIMARY KEY(id_orador),
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
 );
@@ -64,6 +64,7 @@ CREATE TABLE dicta(
 CREATE TABLE categoria_participante(
     id_categoria int NOT NULL AUTO_INCREMENT,
     nombre varchar(20) NOT NULL,
+    autoreg TINYINT not NULL,
     PRIMARY KEY(id_categoria)
 );
 
@@ -192,7 +193,7 @@ VALUES
 INSERT INTO
     categoria_participante(id_categoria, nombre)
 VALUES
-    (1,'alumno');
+    (1,'estudiante');
 
 INSERT INTO
     cat_asociadas(id_evento, id_categoria, precio)

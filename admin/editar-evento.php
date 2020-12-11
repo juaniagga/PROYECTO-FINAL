@@ -33,9 +33,9 @@ $permiso = $_SESSION['permiso'];
           Editar evento
         </h1>
       </section>
-
-      <!-- Main content -->
-      <div class="row col-md-8">
+<div class="centrar-contenido">
+ <!-- Main content -->
+ <div class="row col-md-6">
         <section class="content">
 
           <!-- Default box -->
@@ -158,6 +158,8 @@ $permiso = $_SESSION['permiso'];
         </section>
         <!-- /.content -->
       </div> <!-- row -->
+</div>
+     
 
     </div>
     <!-- /.content-wrapper -->

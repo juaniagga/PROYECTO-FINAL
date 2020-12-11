@@ -40,7 +40,7 @@ $permiso = $_SESSION['permiso'];
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                <table id="registros" class="table table-bordered table-striped">
+                <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                     <tr>
                       <th>Nombre</th>

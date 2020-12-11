@@ -31,7 +31,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-xs-10">
+        <div class="col-xs-9">
             <!-- BOX ADMIN SISTEMA -->
             <div class="box">
               <div class="box-header">
@@ -39,13 +39,13 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                <table id="registros" class="table table-bordered table-striped">
+                <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th class="col-lg-2">Usuario</th>
-                    <th class="col-lg-3">Email</th>
-                    <th class="col-lg-2">Acciones</th>
+                    <th class="col-xs-2">Nombre</th>
+                    <th class="col-xs-2">Usuario</th>
+                    <th class="col-xs-3">Email</th>
+                    <th class="col-xs-2">Acciones</th>
                   </tr>
                   </thead>
                   <tbody>

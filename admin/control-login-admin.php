@@ -25,7 +25,6 @@
                     $_SESSION['permiso']= $permiso;
 
                     if (!$permiso){
-                        echo "no permiso";
                         $query= "
                         SELECT a.id_evento
                         FROM administrado a

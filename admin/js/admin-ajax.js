@@ -12,6 +12,18 @@ $(document).ready(function(){
 
     $('#editar-evento').on('submit', actualizar);
 
+    $('#editar-precio').on('submit', actualizar);
+
+    $('#editar-categoria').on('submit', actualizar);
+
+    $('#agregar-categoria').on('submit', actualizar);
+
+    $('#crear-orador').on('submit', actualizarFiles);
+    
+    $('#editar-orador').on('submit', actualizarFiles);
+
+    $('#crear-pago').on('submit', actualizarFiles);
+
     function actualizar(e){
         e.preventDefault();
         let datos= $(this).serializeArray();
@@ -29,17 +41,9 @@ $(document).ready(function(){
                 url: $(this).attr('action'),
                 //async: false,
                 dataType: 'json',
-                complete: function(data){
+                success: function(data){
                     console.log(data);
-                    try{
-                        resultado= JSON.parse(data);
-                        console.log("try");
-                    }catch{
-                        resultado=data;
-                        console.log("catch");
-                    }
-                    console.log(resultado);
-                    if (data.statusText== 'OK'){
+                    if (data.respuesta="exito"){
                         swal.fire(
                             'Hecho!',
                             '',
@@ -52,10 +56,49 @@ $(document).ready(function(){
                             text: 'Usuario no disponible',
                           })
                     }
-                    /* if (resultado.respuesta == 'exito'){
+                },
+                error: function(XHR,status){
+                    console.log(XHR);
+                    console.log(status);
+                }
+                
+                
+                /* function(XMLHttpRequest, textStatus, errorThrown) {
+                    //console.log(XMLHttpRequest.responseText);
+                    console.log("Status: " + textStatus, "Error: " + errorThrown);
+                } */
+            });
+        }else{
+            error.style.display="block";
+            error.innerHTML="* Todos los campos son obligatorios";
+        }
+        
+    }
+
+    function actualizarFiles(e){
+        e.preventDefault();
+        let datos= new FormData(this); //Para usar files
+        var error= document.getElementById('error');
+
+        console.log(datos);
+
+        if (validarcampos(datos)){
+            error.style.display='none';
+            $.ajax({
+                type: $(this).attr('method'),
+                data: datos,
+                url: $(this).attr('action'),
+                dataType: 'json',
+                /* Para trabajar con files: */
+                contentType: false,
+                processData: false,
+                async: true,
+                cache:false,
+                success: function(data){
+                    if (data.respuesta=='exito'){
                         swal.fire(
-                            'Añadido!',
-                            'Se ha creado el administrador correctamente',
+                            'Hecho!',
+                            '',
                             'success'
                           )
                     } else {
@@ -64,17 +107,12 @@ $(document).ready(function(){
                             title: 'Error!',
                             text: 'Usuario no disponible',
                           })
-                    } */
-                }/* ,
-                error: function(data){
-                    console.log("Error: " + data);
-                } */
-                
-                
-                /* function(XMLHttpRequest, textStatus, errorThrown) {
-                    //console.log(XMLHttpRequest.responseText);
-                    console.log("Status: " + textStatus, "Error: " + errorThrown);
-                } */
+                    }
+                },
+                error: function(XHR,status){
+                    console.log(XHR);
+                    console.log(status);
+                }
             });
         }else{
             error.style.display="block";
@@ -98,13 +136,13 @@ $(document).ready(function(){
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            complete: function(data){
+            success: function(data){
                 console.log('adentro');
                 var resultado= data;
-                if (data.statusText== 'OK'){
+                if (data.respuesta== 'exito'){
                     swal.fire(
                         'Bienvenido!',
-                        '',//'Administrador creado correctamente',
+                        '',
                         'success'
                       )
                     setTimeout(function(){
@@ -118,7 +156,12 @@ $(document).ready(function(){
                         text: 'Usuario o contraseña incorrectos',
                       })
                 }
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
             }
+
         })
     }
 
@@ -174,25 +217,28 @@ $(document).ready(function(){
 
     });
 
-
-    $('#btn-pago').on('click', function(e){
+    //activar/desactivar pagos
+    $('.content #btn-pago').on('click', function(e){
         e.preventDefault();
 
         const accion= $(this).attr('data');
+        const id= $(this).attr('data-id');
 
         $.ajax({
             type: 'POST',
             data:{
                 medios: 1,
+                id: id,
                 accion: accion,
             },
             url: 'control-evento.php',
             dataType: 'json',
-            success: function(data){
-                console.log(data);
-            },
-            error: function(data){
-                console.log(data);
+            complete: function(data){
+                if (data.statusText== 'OK'){
+                    setTimeout(function(){
+                        window.location.href= 'medios-pago.php';
+                    },500);
+                }
             }
         })
     

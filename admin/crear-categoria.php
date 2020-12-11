@@ -1,7 +1,11 @@
 <?php
 include_once 'funciones/sesion-admin.php';
 include_once 'templates/header.php';
-
+try {
+  include_once 'funciones/funciones.php';
+} catch (Exception $e) {
+  echo "Error: " . $e->getMessage();
+}
 $permiso = $_SESSION['permiso'];
 
 ?>
@@ -26,17 +30,16 @@ $permiso = $_SESSION['permiso'];
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Nuevo administrador de sistema
-          <!-- <small>Completá el formulario para crear el administrador</small> -->
+          Nueva categoría
         </h1>
       </section>
 
       <div class="centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-6 main">
+        <div class="row col-md-3">
           <section class="content">
 
-            <!-- admin-sistema box -->
+            <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Complete el formulario</h3>
@@ -48,49 +51,41 @@ $permiso = $_SESSION['permiso'];
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
+
                 <div class="box box-info">
                   <!-- /.box-header -->
                   <!-- form start -->
-                  <form class="form-horizontal" name="crear-admin" id="crear-admin" method="post" action="control-admin.php">
+                  <form class="form-horizontal" name="crear-categoria" id="crear-categoria" method="post" action="control-evento.php">
                     <div class="box-body">
-                      <div class="form-group">
-                        <label for="usuario" class="col-sm-2 control-label">Usuario</label>
-                        <div class="col-sm-10">
-                          <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario">
-                        </div>
-                      </div>
                       <div class="form-group">
                         <label for="nombre" class="col-sm-2 control-label">Nombre</label>
                         <div class="col-sm-10">
-                          <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido">
+                          <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="email" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
-                          <input name="email" type="email" class="form-control" id="email" placeholder="Email">
+                        <label for="autoreg" class="col-sm-2 control-label">Autoinscripción</label>
+                        <div class="col-sm-12">
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="autoreg" id="estado1" value="1">
+                              <b>ACTIVADA</b>
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="autoreg" id="estado0" value="0" checked>
+                              <b>DESACTIVADA</b>
+                            </label>
+                          </div>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Contraseña</label>
-                        <div class="col-sm-10">
-                          <input name="password" type="password" class="form-control" id="password" placeholder="Contraseña">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Repetir contraseña</label>
-                        <div class="col-sm-10">
-                          <input name="password_repit" type="password" class="form-control" id="password_repit" placeholder="Contraseña">
-                          <span id="resultado_password" class="help-block"></span>
-                        </div>
-                      </div>
-                      <div id="error"></div>
+                      <div id="error" style="display: none"></div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                      <input type="hidden" name="crear-admin" value="1">
-                      <input type="hidden" name="tipo-admin" value="1">
-                      <button type="submit" class="btn btn-info pull-right" id="btn-new">Añadir</button>
+                      <input type="hidden" name="crear-categoria" value="1">
+                      <button type="submit" class="btn btn-info pull-right">Añadir</button>
                     </div>
                     <!-- /.box-footer -->
                   </form>
@@ -99,7 +94,6 @@ $permiso = $_SESSION['permiso'];
               <!-- /.box-body -->
             </div>
             <!-- /.box -->
-
 
           </section>
           <!-- /.content -->

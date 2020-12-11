@@ -24,15 +24,15 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header ">
       <h1>
         Nuevo administrador de evento
         <!-- <small>Completá el formulario para crear el administrador</small> -->
       </h1>
     </section>
-
-    <!-- Main content -->
-    <div class="row col-md-8 main">
+<div class="centrar-contenido">
+<!-- Main content -->
+<div class="row col-md-6 main">
       <section class="content">
 
         <!-- EVENTO admin box -->
@@ -116,6 +116,8 @@
       </section>
       <!-- /.content -->
     </div> <!-- row -->
+</div>
+    
     
   </div>
   <!-- /.content-wrapper -->

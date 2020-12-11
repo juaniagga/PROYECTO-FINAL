@@ -56,6 +56,19 @@
           <li class="treeview">
             <a href="#">
               <i class="fa fa-calendar"></i>
+              <span>Categorías participante</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="categorias-evento.php"><i class="fa fa-list-alt"></i>Ver todas</a></li>
+              <li><a href="agregar-categoria.php"><i class="fa fa-plus"></i>Agregar</a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-calendar"></i>
               <span>Actividades</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -65,12 +78,6 @@
               <li><a href="lista-actividades.php"><i class="fa fa-list-alt"></i>Ver todas</a></li>
               <li><a href="crear-actividad.php"><i class="fa fa-plus"></i>Agregar</a></li>
             </ul>
-          </li>
-          <li class="treeview">
-            <a href="categorias.php">
-              <i class="fa fa-users"></i>
-              <span>Categorías participante</span>
-            </a>
           </li>
           <!-- <li class="treeview">
             <a href="#">
@@ -88,14 +95,14 @@
           <li class="treeview">
             <a href="#">
               <i class="fa fa-user"></i>
-              <span>Expositores</span>
+              <span>Oradores</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-list-alt"></i>Ver todos</a></li>
-              <li><a href="#"><i class="fa fa-plus"></i>Agregar</a></li>
+              <li><a href="lista-oradores.php"><i class="fa fa-list-alt"></i>Ver todos</a></li>
+              <li><a href="crear-orador.php"><i class="fa fa-plus"></i>Agregar</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -139,7 +146,19 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="lista-eventos.php"><i class="fa fa-list-alt"></i> Ver todos </a></li>
-              <li><a href="crear-evento.php"><i class="fa fa-plus"></i> Agregar </a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-calendar"></i>
+              <span>Categorías participante</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="lista-categorias.php"><i class="fa fa-list-alt"></i>Ver todas</a></li>
+              <li><a href="crear-categoria.php"><i class="fa fa-plus"></i>Agregar</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -151,6 +170,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="medios-pago.php"><i class="fa fa-list-alt"></i> Ver todos </a></li>
+              <li><a href="crear-pago.php"><i class="fa fa-plus"></i>Agregar</a></li>
               <li><a href="pdf-pagos.php"><i class="fa fa-file"></i> PDF informativo </a></li>
             </ul>
           </li>

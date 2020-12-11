@@ -40,6 +40,22 @@ td .btn{
     margin-top: 0px;
 }
 
+.centrar-contenido {
+    display: flex;
+    justify-content: center;
+}
+
+/* para los formularios
+ label {
+    margin-right: 1rem;
+}
+
+#categoria{
+    width:25rem;
+} */
+
+
+
 /* .dataTables_wrapper .row{ 
     display: flex; 
 } */

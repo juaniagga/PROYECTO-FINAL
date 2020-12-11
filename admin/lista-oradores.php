@@ -25,7 +25,7 @@ $id_evento= $_SESSION['id_evento'];
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Actividades
+          Oradores
         </h1>
       </section>
 
@@ -37,19 +37,19 @@ $id_evento= $_SESSION['id_evento'];
             <!-- BOX LISTA ACTIVIDADEA -->
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">Gestiona las actividades de tu evento</h3>
+                <h3 class="box-title">Gestiona los oradores de tu evento</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
                 <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th class="col-xs-2">Categoría</th>
-                      <th class="col-xs-2">Fecha</th>
-                      <th class="col-xs-1">Hora inicio</th>
-                      <th class="col-xs-1">Hora fin</th>
-                      <th class="col-xs-2">Acciones</th>
+                      <th class="col-xs-2">Nombre</th>
+                      <th class="col-xs-1">DNI</th>
+                      <th class="col-xs-3">Biografía</th>
+                      <th class="col-xs-2">Actividades dictadas</th>
+                      <th class="col-xs-1">Foto</th>
+                      <th class="col-xs-1">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -58,27 +58,42 @@ $id_evento= $_SESSION['id_evento'];
                     try {
                       include_once 'funciones/funciones.php';
                       $sql = "
-                      SELECT a.id_actividad, a.nombre_act, a.fecha, a.hora_inicio, a.hora_fin, a.id_categoria, c.nombre as nombre_cat
-                      FROM actividad a INNER JOIN categoria_act c ON a.id_categoria=c.id_categoria
-                      WHERE a.id_evento=" . $id_evento;
+                      SELECT o.id_orador, o.nombre, o.apellido, o.dni, o.biografia, o.imagen
+                      FROM orador o
+                      WHERE o.id_evento=" . $id_evento;
                       $tuplas = $db->query($sql);
                     } catch (Exception $e) {
                       echo "Error: " . $e->getMessage();
                     }
 
-                    while ($actividad = $tuplas->fetch_assoc()) {
+                    while ($orador = $tuplas->fetch_assoc()) {
                     ?>
                       <tr>
-                        <td><?php echo $actividad['nombre_act']; ?></td>
-                        <td><?php echo $actividad['nombre_cat']; ?></td>
-                        <td> <?php echo date_format(date_create($actividad['fecha']), 'd-m-Y'); ?></td>
-                        <td> <?php echo date_format(date_create($actividad['hora_inicio']), 'H:i'); ?></td>
-                        <td> <?php echo date_format(date_create($actividad['hora_fin']), 'H:i'); ?></td>
+                        <td><?php echo $orador['nombre']; ?></td>
+                        <td><?php echo $orador['dni']; ?></td>
+                        <td> <?php echo $orador['biografia']; ?></td>
+                        <td> <?php 
+                          try {
+                            $sql2 = "
+                            SELECT a.nombre_act
+                            FROM actividad a INNER JOIN dicta d ON a.id_actividad=d.id_actividad INNER JOIN orador o ON d.id_orador=o.id_orador
+                            WHERE o.id_orador=" . $orador['id_orador'];
+                            $tuplas_act = $db->query($sql2);
+                          } catch (Exception $e) {
+                            echo "Error: " . $e->getMessage();
+                          }
+                          while ($act = $tuplas_act->fetch_assoc()) {
+                            echo "- " . $act['nombre_act'] . "<br>";
+                            
+                          }
+                        ?>
+                        </td>
+                        <td> <?php echo $orador['imagen']; ?></td>
                         <td>
-                          <a href="editar-actividad.php?id=<?php echo $actividad['id_actividad']; ?>" class="btn bg-orange btn-flat margin">
+                          <a href="editar-orador.php?id=<?php echo $orador['id_orador']; ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a>
-                          <a href="#" data-id="<?php echo $actividad['id_actividad']; ?>" data-tipo="actividad" url="control-evento.php" class="btn bg-maroon btn-flat margin borrar-registro">
+                          <a href="#" data-id="<?php echo $orador['id_orador']; ?>" data-tipo="orador" url="control-evento.php" class="btn bg-maroon btn-flat margin borrar-registro">
                             <i class="fa fa-trash"></i>
                           </a>
                         </td>

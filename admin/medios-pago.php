@@ -39,11 +39,11 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                <table id="registros" class="table table-bordered table-striped">
+                <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                   <tr>
                     <th>Medio de pago</th>
-                    <th class="col-lg-2">Estado</th>
+                    <th class="col-lg-3">Estado</th>
                     <th class="col-xs-2">Acciones</th>
                   </tr>
                   </thead>
@@ -70,13 +70,13 @@
                         echo "Activado  "; ?><i class="fa fa-circle text-success"></i>
                         </td>
                         <td>
-                          <button type="button" id="btn-pago" data="0" class="btn btn-block btn-warning" style="width:100%; color:black">Desactivar</button>
+                          <button type="button" id="btn-pago" data="0" data-id="<?php echo $medio['id_pago']; ?>" class="btn btn-block btn-warning" style="width:100%; color:black">Desactivar</button>
                         </td>
                         <?php
                       }else{
                         echo "Desactivado  ";  ?><i class="fa fa-circle-o text-red"></i>
                         <td>
-                          <button type="button" id="btn-pago" data="1" class="btn btn-block btn-warning" style="width:100%; color:black">Activar</button>
+                          <button type="button" id="btn-pago" data="1" data-id="<?php echo $medio['id_pago']; ?>"  class="btn btn-block btn-warning" style="width:100%; color:black">Activar</button>
                         </td>
                         <?php
                       }
