@@ -18,9 +18,9 @@
             FROM actividad a, categoria_act c
             WHERE a.id_categoria=c.id_categoria";
             $sql_oradores="
-            SELECT nombre, apellido, o.dni, id_actividad
+            SELECT nombre, apellido, o.id_orador, id_actividad
             FROM orador o, dicta d
-            WHERE o.dni = d.dni";
+            WHERE o.id_orador = d.id_orador";
             $tuplas_actividades= $db->query($sql_actividades);
             $tuplas_oradores= $db->query($sql_oradores);    //oradores con el id_actividad
         }

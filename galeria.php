@@ -10,7 +10,7 @@
   <section id="" class="seccion contenedor">
     <h2>Galería de fotos</h2>
 
-    <div class="galeria">
+    <div class="galeria-fotos">
       <a href="img/galeria/01.jpg" data-lightbox="galeria">
         <img src="img/galeria/thumbs/01.jpg" alt="">
       </a>
