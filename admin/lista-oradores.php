@@ -31,7 +31,7 @@ $id_evento= $_SESSION['id_evento'];
 
       <!-- Main content -->
       <section class="content">
-        <div class="row">
+        <div class="row centrar-contenido">
           <div class="col-xs-12">
 
             <!-- BOX LISTA ACTIVIDADEA -->

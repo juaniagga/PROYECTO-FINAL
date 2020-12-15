@@ -41,7 +41,7 @@
           
           <?php
              try{
-                require_once('includes/funciones/conexionBDD.php');
+                //require_once('includes/funciones/conexionBDD.php');
                 $sql_cat="
                 SELECT DISTINCT nombre, icono
                 FROM categoria_act c, actividad a
@@ -67,7 +67,7 @@
         
           <?php
             try {
-              require_once('includes/funciones/conexionBDD.php');
+              //require_once('includes/funciones/conexionBDD.php');
               $sql_act= "
               SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad, cat.id_categoria, cat.nombre as nombre_cat
               FROM actividad act, categoria_act cat
@@ -84,9 +84,9 @@
               $tuplas_act= $db->query($sql_act);
               
               $sql_oradores="
-              SELECT nombre, apellido, o.dni, id_actividad
+              SELECT nombre, apellido, o.id_orador, id_actividad
               FROM orador o, dicta d
-              WHERE o.dni = d.dni
+              WHERE o.id_orador = d.id_orador
               ORDER BY nombre";;
               $tuplas_oradores= $db->query($sql_oradores);
             }
@@ -278,10 +278,10 @@
 </section> -->
 
 
-  
-  <div id="mapa" class="mapa">
+  <!-- MAPA -->
+ <!--  <div id="mapa" class="mapa">
     <p id="coordenadas" style="display:none"> <?php echo $evento['ubicacion']; ?></p>
-  </div>
+  </div> -->
 
 
   <section class="seccion">

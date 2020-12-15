@@ -31,7 +31,7 @@ $permiso = $_SESSION['permiso'];
 
       <!-- Main content -->
       <section class="content">
-        <div class="row">
+        <div class="row centrar-contenido">
           <div class="col-xs-8">
             <!-- BOX ADMIN EVENTOS -->
             <div class="box">
