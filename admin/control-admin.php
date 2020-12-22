@@ -21,7 +21,7 @@
                 $stmt_admin->bind_param("ssssi", $usuario, $password_hashed, $email, $nombre, $tipo);
                 $stmt_admin->execute();
 
-                if ($stmt_admin->affected_rows){ 
+                if (mysqli_affected_rows($db)){ 
                     $respuesta= array(
                         'respuesta' => 'exito',
                     );
@@ -47,16 +47,13 @@
                         'respuesta1' => 'exito',
                         'respuesta2' => '',
                     );
-                    echo mysqli_insert_id($db) . "</br>";
+                    //echo mysqli_insert_id($db) . "</br>";
                     $id_admin= mysqli_insert_id($db);
-                    echo "id_admin: " . $id_admin . "</br>";
-                    //echo $stmt_admin->insert_id . "</br>";
 
                     if ($permiso){                  //soy admin-sistema
                         $nombre_evento= $_POST['evento'];
 
                         $stmt_ev= $db->prepare("INSERT INTO evento (nombre) VALUES(?)");
-                        echo "insertando evento";
                         $stmt_ev->bind_param("s", $nombre_evento);
                         $stmt_ev->execute();
 

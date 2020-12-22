@@ -31,6 +31,8 @@ $(document).ready(function(){
         console.log(datos); */
         var error= document.getElementById('error');
 
+        const origen=$(this).attr('id'); 
+
         console.log(datos);
 
         if (validarcampos(datos)){
@@ -50,6 +52,11 @@ $(document).ready(function(){
                             'success'
                           )
                     } else {
+                        var mensaje;
+                        switch (origen){
+                            case 'crear-admin':
+                                mensaje='Nombre de usuario no disponible. Intente otro.'
+                        }
                         swal.fire({
                             icon: 'error',
                             title: 'Error!',
