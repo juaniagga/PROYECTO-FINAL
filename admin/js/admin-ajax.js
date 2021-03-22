@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     $('#editar-evento').on('submit', actualizar);
 
-    $('#editar-precio').on('submit', actualizar);
+    $('#editar-tarifa').on('submit', actualizar);
 
     $('#editar-categoria').on('submit', actualizar);
 
@@ -23,6 +23,16 @@ $(document).ready(function(){
     $('#editar-orador').on('submit', actualizarFiles);
 
     $('#crear-pago').on('submit', actualizarFiles);
+
+    $('#crear-inscripto').on('submit', altaInscripto);
+
+    $('.box-body #acreditar').on('click', acreditar);
+
+    $('.box-body #validar-pago').on('click', validarPago);
+
+    $('.box-body #comprobante').on('click', descargarComprobante);
+
+    $('#exportar').on('click', exportar);
 
     function actualizar(e){
         e.preventDefault();
@@ -45,7 +55,7 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(data){
                     console.log(data);
-                    if (data.respuesta="exito"){
+                    if (data.respuesta=="exito"){
                         swal.fire(
                             'Hecho!',
                             '',
@@ -87,9 +97,10 @@ $(document).ready(function(){
         let datos= new FormData(this); //Para usar files
         var error= document.getElementById('error');
 
-        console.log(datos);
+        let campos= $(this).serializeArray();
+        console.log(campos);
 
-        if (validarcampos(datos)){
+        if (validarcampos(campos)){
             error.style.display='none';
             $.ajax({
                 type: $(this).attr('method'),
@@ -102,6 +113,7 @@ $(document).ready(function(){
                 async: true,
                 cache:false,
                 success: function(data){
+                    console.log(data);
                     if (data.respuesta=='exito'){
                         swal.fire(
                             'Hecho!',
@@ -128,6 +140,182 @@ $(document).ready(function(){
         
     }
 
+    function altaInscripto(e) {
+        e.preventDefault();
+        let datos = new FormData(this); //Para usar files
+        var error = document.getElementById('error');
+        let campos= $(this).serializeArray();
+        console.log(campos);
+        datosAux= camposVacios(datos);
+        console.log(campos);
+        error.style.display = 'none';
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datosAux,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            /* Para trabajar con files: */
+            contentType: false,
+            processData: false,
+            async: true,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                if (data.respuesta == 'exito') {
+                    swal.fire(
+                        'Hecho!',
+                        '',
+                        'success'
+                    )
+                } else {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Usuario no disponible',
+                    })
+                }
+            },
+            error: function (XHR, status) {
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+
+    }
+
+    function acreditar(e){
+        e.preventDefault();
+        const id= $(this).attr('data-id');
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                acreditar: 1
+            },
+            url: 'control-evento.php',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                if (data.respuesta=="exito"){
+                    swal.fire(
+                        'Hecho!',
+                        '',
+                        'success'
+                      )
+                    setTimeout(function(){
+                        jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-green">Acreditado</span>');
+                    },1000);
+                } else {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Vuelva a intentarlo',
+                      })
+                }
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
+
+    function validarPago(e){
+        e.preventDefault();
+        const id= $(this).attr('data-id');
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                validar: 1
+            },
+            url: 'control-evento.php',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                if (data.respuesta=="exito"){
+                    swal.fire(
+                        'Hecho!',
+                        '',
+                        'success'
+                      )
+                    setTimeout(function(){
+                        jQuery('[data-id="'+ id +'"]').parents('tr').find("#pago-confirmado").replaceWith('<span class="badge bg-green">Confirmado</span>');
+                    },1000);
+                } else {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Vuelva a intentarlo',
+                      })
+                }
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
+
+    function descargarComprobante(e){
+        e.preventDefault();
+        const id= $(this).attr('data-id');
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                descargar: 1
+            },
+            url: 'control-evento.php',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'pago_'+id+'.pdf';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
+
+    function exportar(e){
+        e.preventDefault();
+        const id= $(this).attr('data-id');
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                descargar: 1
+            },
+            url: 'exportar.php?id='+id,
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'planilla_inscriptos.xls';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
 
     $('#login-admin').on('submit', logeo);
     
@@ -301,6 +489,8 @@ $(document).ready(function(){
 
     }); */
 
+    
+
     $('.content #usuario').keypress(function(tecla){
       if(tecla.charCode == 32){
          return false;
@@ -322,5 +512,16 @@ $(document).ready(function(){
         }else{
             return 1;
         }
+    }
+
+    function camposVacios(datos){
+        var i=0;
+        while (i < datos.length){
+            if (datos[i]==null){
+                datos[i]="";
+            }
+            i++;
+        };
+        return datos;
     }
 });

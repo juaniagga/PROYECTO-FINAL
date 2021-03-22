@@ -114,9 +114,17 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-list-alt"></i>Ver todos</a></li>
-              <li><a href="#"><i class="fa fa-plus"></i>Agregar</a></li>
+              <li><a href="lista-inscriptos.php"><i class="fa fa-list-alt"></i>Ver todos</a></li>
+              <li><a href="crear-inscripto.php"><i class="fa fa-plus"></i>Agregar</a></li>
             </ul>
+          </li>
+          <li class="treeview">
+            <li>
+            <a href="estadisticas-evento.php">
+              <i class="fa fa-id-card"></i>
+              <span>Estadísticas</span>
+            </a>
+            </li>
           </li>
           <li class="treeview">
             <a href="#">
@@ -146,6 +154,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="lista-eventos.php"><i class="fa fa-list-alt"></i> Ver todos </a></li>
+              <li><a href="crear-admin.php"><i class="fa fa-plus"></i>Nuevo evento</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -171,7 +180,6 @@
             <ul class="treeview-menu">
               <li><a href="medios-pago.php"><i class="fa fa-list-alt"></i> Ver todos </a></li>
               <li><a href="crear-pago.php"><i class="fa fa-plus"></i>Agregar</a></li>
-              <li><a href="pdf-pagos.php"><i class="fa fa-file"></i> PDF informativo </a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -184,7 +192,6 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="lista-admin.php"><i class="fa fa-list-alt"></i>Ver todos</a></li>
-              <li><a href="crear-admin.php"><i class="fa fa-plus"></i>Agregar</a></li>
             </ul>
           </li>
           <li class="treeview">

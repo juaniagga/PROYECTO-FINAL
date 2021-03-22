@@ -1,5 +1,5 @@
 <?php 
-    $db = new mysqli('localhost','root','secret','proyecto_final');
+    $db = new mysqli('localhost','root','','proyecto_final');
 
     if ($db->connect_error){
         echo $error->$db->connect_error;

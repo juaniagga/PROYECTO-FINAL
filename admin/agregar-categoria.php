@@ -97,9 +97,9 @@ $permiso = $_SESSION['permiso'];
                         
                       </div>
                       <div class="form-group">
-                        <label for="precio" class="col-sm-3 control-label">Precio</label>
+                        <label for="tarifa" class="col-sm-3 control-label">Tarifa</label>
                         <div class="col-sm-8">
-                          <input name="precio" type="number" step="0.01" class="form-control" id="precio" placeholder="Precio">
+                          <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="Tarifa">
                         </div>
                       </div>
                       <div id="error" style="display: none"></div>

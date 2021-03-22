@@ -56,7 +56,7 @@ $permiso = $_SESSION['permiso'];
                       include_once 'funciones/funciones.php';
 
                       $sql = "
-                      SELECT ca.id_categoria, ca.precio, c.nombre
+                      SELECT ca.id_categoria, ca.tarifa, c.nombre
                       FROM categoria_participante c INNER JOIN cat_asociadas ca ON c.id_categoria=ca.id_categoria";
                       $tuplas = $db->query($sql);
                     } catch (Exception $e) {
@@ -68,9 +68,9 @@ $permiso = $_SESSION['permiso'];
                     ?>
                       <tr>
                         <td><?php echo $cat['nombre']; ?></td>
-                        <td> <?php echo $cat['precio']; ?></td>
+                        <td> <?php echo $cat['tarifa']; ?></td>
                         <td>
-                          <a href="editar-precio.php?id=<?php echo $cat['id_categoria']; ?>" class="btn bg-orange btn-flat margin">
+                          <a href="editar-tarifa.php?id=<?php echo $cat['id_categoria']; ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a>
                         </td>

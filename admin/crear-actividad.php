@@ -127,29 +127,6 @@ $id_evento = $_SESSION['id_evento'];
                         </div>
                         <!-- /.form group -->
                       </div>
-                      <div class="form-group">
-                        <label>Oradores</label>
-                        <select name="oradores[]" id="oradores" class="form-control select2" multiple="multiple" data-placeholder="Selecciones los oradores" style="width: 100%;">
-                          <?php
-                          try {
-                            $sql_oradores = "
-                            SELECT o.nombre, o.dni
-                            FROM orador o
-                            WHERE o.id_evento=" . $id_evento . "
-                            ORDER BY nombre";
-                            $tuplas_oradores = $db->query($sql_oradores);
-                          } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
-                          }
-
-                          while ($orador = $tuplas_oradores->fetch_assoc()) {
-                          ?>
-                            <option value="<?php echo $orador['dni']; ?>"><?php echo $orador['nombre']; ?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
                       <div id="error" style="display: none"></div>
                     </div>
                     <!-- /.box-body -->

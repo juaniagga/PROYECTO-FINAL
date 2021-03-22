@@ -53,7 +53,7 @@
                     try{
                       include_once 'funciones/funciones.php';
                       $sql= "
-                      SELECT m.id_pago, m.nombre, m.estado
+                      SELECT m.id_medio, m.nombre, m.estado
                       FROM medios_pago m
                       ORDER BY m.estado DESC";
                       $tuplas= $db->query($sql);
@@ -70,13 +70,13 @@
                           echo "Activado  "; ?><i class="fa fa-circle text-success"></i>
                           </td>
                           <td>
-                            <button type="button" id="btn-pago" data="0" data-id="<?php echo $medio['id_pago']; ?>" class="btn btn-block btn-warning" style="width:100%; color:black">Desactivar</button>
+                            <button type="button" id="btn-pago" data="0" data-id="<?php echo $medio['id_medio']; ?>" class="btn btn-block btn-warning" style="width:100%; color:black">Desactivar</button>
                           </td>
                           <?php
                         }else{
                           echo "Desactivado  ";  ?><i class="fa fa-circle-o text-red"></i>
                           <td>
-                            <button type="button" id="btn-pago" data="1" data-id="<?php echo $medio['id_pago']; ?>"  class="btn btn-block btn-warning" style="width:100%; color:black">Activar</button>
+                            <button type="button" id="btn-pago" data="1" data-id="<?php echo $medio['id_medio']; ?>"  class="btn btn-block btn-warning" style="width:100%; color:black">Activar</button>
                           </td>
                           <?php
                         }

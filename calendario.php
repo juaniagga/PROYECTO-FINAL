@@ -7,7 +7,7 @@
       </p>
   </section> --> <!--seccion-->
 
-  <section id="" class="seccion contenedor">
+  <section id="calendario" class="seccion contenedor">
     <h2>Calendario</h2>
 
     <?php 

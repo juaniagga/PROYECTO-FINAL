@@ -38,6 +38,24 @@
 
 <body class="<?php echo $pagina;?>">
 
+<?php $id_evento= 1?>   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
+  <?php
+  setlocale(LC_TIME, 'es_RA');
+  setlocale(LC_TIME,'spanish');
+    try {
+      require_once('includes/funciones/conexionBDD.php');
+      $sql = "
+            SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
+            FROM evento e
+            WHERE e.id_evento=1"; //. $_GET['id'];
+      $tupla = $db->query($sql);
+      $evento = $tupla->fetch_assoc();
+    } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+    }
+
+  ?>
+
   <header class="site-header">
     <div class="hero">
       <div class="contenido-header">
@@ -49,11 +67,19 @@
         </nav>
         <div class="informacion-evento">
           <div class="clearfix">
-            <p class="fecha"><i class="far fa-calendar-alt"></i> 16-17 Marzo</p>
-            <p class="ciudad"><i class="fas fa-map-marker-alt"></i> Mar del Plata</p>
+            <p class="fecha"><i class="far fa-calendar-alt"></i>
+            <?php 
+              if ($evento['fecha_inicio']==$evento['fecha_fin']){
+                echo utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_inicio']))); 
+              }else{
+                echo utf8_encode(strftime("%d %B - ", strtotime($evento['fecha_inicio']))) . utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_fin'])));
+              }
+              
+            ?></p>
+            <p class="ciudad"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion']?> </p>
           </div>
           <br><br>
-          <h1 class="nombre-sitio">FIESA 2021</h1>
+          <h1 class="nombre-sitio"><?php echo $evento['nombre']?></h1>
           <p class="slogan"> Feria Internacional de Educación Superior Argentina</p>
         
         </div> <!-- informacion evento-->
@@ -62,7 +88,7 @@
     </div> <!--hero-->
   </header>
 
-  <div class="barra">
+  <div class="barra" id="seccion">
     <div class="contenedor clearfix">
       <div class="logo">
         <!-- <img src="logo.svg" alt="logo jornadas"> -->
@@ -74,9 +100,9 @@
       </div>
       <nav class="navegacion-principal clearfix">
         <a href="index.php">Evento</a>
-        <a href="calendario.php">Programa</a>
-        <a href="oradores.php">Oradores</a>
-        <a href="galeria.php">Galería</a>
+        <a href="calendario.php#seccion">Programa</a>
+        <a href="oradores.php#seccion">Oradores</a>
+        <a href="galeria.php#seccion">Galería</a>
         <a href="registro.php">Registrarse</a>
       </nav>
     </div><!--contenedor-->

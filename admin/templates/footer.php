@@ -33,8 +33,20 @@
 <!-- bootstrap time picker -->
 <script src="js/bootstrap-timepicker.min.js"></script>
 
+
+<!-- FLOT CHARTS -->
+<script src="plugins/jquery.flot.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/jquery.flot.resize.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/jquery.flot.pie.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="plugins/jquery.flot.categories.js"></script>
+
+
 <script src="js/admin-ajax.js"></script>
 
 <script src="js/app.js"></script>
+
 </body>
 </html>

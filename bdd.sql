@@ -17,11 +17,12 @@ CREATE TABLE evento(
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     inscriptos int not NULL,
-    asistencias int not NULL,
+    acreditados int not NULL,
     estado TINYINT NOT null,
     organizador varchar(30) not null,
     ubicacion varchar(30) NOT NULL,
     descripcion varchar(1000) NOT NULL,
+    info_pago varchar(20) not null,
     PRIMARY KEY(id_evento)
 );
 
@@ -48,7 +49,7 @@ CREATE TABLE orador(
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
     biografia text(600) NOT NULL,
-    imagen varchar(50) not null,
+    imagen varchar(20) not null,
     PRIMARY KEY(id_orador),
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
 );
@@ -71,7 +72,7 @@ CREATE TABLE categoria_participante(
 CREATE TABLE cat_asociadas(
     id_evento int NOT NULL,
     id_categoria int NOT NULL,
-    precio float not NULL,
+    tarifa float not NULL,
     PRIMARY KEY(id_evento,id_categoria),
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE,
     FOREIGN KEY(id_categoria) REFERENCES categoria_participante(id_categoria) ON DELETE CASCADE
@@ -79,22 +80,49 @@ CREATE TABLE cat_asociadas(
 
 CREATE TABLE usuario(
     id_user int NOT NULL AUTO_INCREMENT,
-    email varchar(40) NOT NULL UNIQUE,
+    email varchar(40) NOT NULL,
     dni int(8) UNSIGNED NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
+    telefono int(20) UNSIGNED not null,
     calle varchar(30) NOT NULL,
     numero int NOT NULL,
     ciudad varchar(30) NOT NULL,
     provincia varchar(20) NOT NULL,
     pais varchar(20) NOT NULL,
+    trabajo_cientifico TINYINT not NULL,
+    institucion varchar(30) not null,
+    cargo varchar(20) not null,
     PRIMARY KEY(id_user)
 );
 
 CREATE TABLE participante(
     id_participante int NOT NULL AUTO_INCREMENT,
+    id_user int NOT NULL,
+    id_evento int NOT NULL,
+    id_categoria int NOT NULL,
     fecha_registro DATE NOT NULL,
-    PRIMARY KEY(id_participante)
+    acreditado TINYINT not NULL,
+    forma_pago varchar(30) not null,
+    importe_abonado float not null,
+    comprobante varchar(50) not null,
+    fecha_pago date not null,
+    comentario_pago varchar(300) not null,
+    pago_confirmado TINYINT not NULL,
+    exento TINYINT not NULL,
+    facturacion TINYINT not NULL,
+    iva varchar(15) not null,
+    cuit int(12) not null,
+    adicionales varchar(50) not null,
+    nombre_factura varchar(30) not null,
+    alojamiento varchar(30) not null,
+    fecha_arribo date not null,
+    fecha_partida date not null,
+    traslado varchar(20) not null,
+    PRIMARY KEY(id_participante),
+    FOREIGN KEY(id_user) REFERENCES usuario(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE,
+    FOREIGN KEY(id_categoria) REFERENCES categoria_participante(id_categoria) ON DELETE CASCADE
 );
 
 CREATE TABLE administrador(
@@ -103,6 +131,7 @@ CREATE TABLE administrador(
     clave varchar(255) NOT NULL,
     email varchar(40) NOT NULL,
     nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
     permiso TINYINT NOT NULL,
     PRIMARY KEY(id_admin)
 );
@@ -115,26 +144,25 @@ CREATE TABLE administrado(
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
 );
 
-CREATE TABLE se_inscribe(
-    id_user int NOT NULL,
-    id_participante int NOT NULL,
-    id_evento int NOT NULL,
-    PRIMARY KEY(id_user, id_evento),
-    FOREIGN KEY(id_user) REFERENCES usuario(id_user) ON DELETE CASCADE,
-    FOREIGN KEY(id_participante) REFERENCES participante(id_participante) ON DELETE CASCADE,
-    FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
-);
-
 CREATE TABLE medios_pago(
-    id_pago int NOT NULL AUTO_INCREMENT,
+    id_medio int NOT NULL AUTO_INCREMENT,
     nombre varchar(30) NOT NULL,
     estado TINYINT not NULL,
-    PRIMARY KEY(id_pago)
+    PRIMARY KEY(id_medio)
 );
 
 
--- INSERCIONES  ------------------------------------------------------------------------------------------------------
+/* -- TRIGGER ---------------------------- */
+CREATE TRIGGER add_inscripto
+AFTER INSERT ON participante
+FOR EACH ROW 
+UPDATE evento
+SET  inscriptos=inscriptos + 1
+WHERE id_evento=NEW.id_evento;
 
+
+
+/* INSERCIONES ------------------------------- */
 INSERT INTO
     categoria_act(nombre, icono)
 VALUES
@@ -145,7 +173,7 @@ VALUES
 
 
 INSERT INTO
-    evento(nombre,fecha_inicio,fecha_fin,inscriptos, asistencias, organizador, ubicacion, descripcion)
+    evento(nombre,fecha_inicio,fecha_fin,inscriptos, acreditados, organizador, ubicacion, descripcion)
 VALUES
     ('Fiesa','2021-03-16','2021-03-17', 0, 0, 'UNMdP','Deán Funes 3350','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.');
 
@@ -196,7 +224,7 @@ VALUES
     (1,'estudiante');
 
 INSERT INTO
-    cat_asociadas(id_evento, id_categoria, precio)
+    cat_asociadas(id_evento, id_categoria, tarifa)
 VALUES
     (1,1,0);
 

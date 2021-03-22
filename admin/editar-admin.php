@@ -6,7 +6,7 @@
   }catch(Exception $e){
     echo "Error: " . $e->getMessage();
   }
-  $id_admin= $_GET['id'];
+  $id_admin= $_SESSION['id_admin'];
   $permiso= $_SESSION['permiso'];
 
   if (!filter_var($id_admin,FILTER_VALIDATE_INT)){
@@ -34,7 +34,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Editar administrador
+        Ajustes
       </h1>
     </section>
 

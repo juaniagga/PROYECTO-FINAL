@@ -148,45 +148,6 @@ if (!filter_var($id_actividad,FILTER_VALIDATE_INT)){
                         </div>
                         <!-- /.form group -->
                       </div>
-                      <div class="form-group">
-                        <label>Oradores</label>
-                        <select name="oradores[]" id="oradores" class="form-control select2" multiple="multiple" data-placeholder="Selecciones los oradores" style="width: 100%;">
-                          <?php
-                          try {
-                            //oradores actuales de la actividad
-                            $sql_oradores_act = "
-                            SELECT o.nombre, o.id_orador
-                            FROM dicta d INNER JOIN orador o on o.id_orador=d.id_orador
-                            WHERE d.id_actividad=" . $actividad['id_actividad'] . "
-                            ORDER BY nombre";
-                            $tuplas_oradores_act = $db->query($sql_oradores_act);
-
-                            //todos los oradores
-                            $sql_oradores = "
-                            SELECT o.nombre, o.id_orador
-                            FROM orador o
-                            WHERE o.id_evento=" . $id_evento . "
-                            ORDER BY nombre";
-                            $tuplas_oradores = $db->query($sql_oradores);
-                          } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
-                          }
-
-                          while ($orador = $tuplas_oradores->fetch_assoc()) {
-                            $orador_act = $tuplas_oradores_act->fetch_assoc();
-                            if ($orador_act && $orador['id_orador'] == $orador_act['id_orador']) {
-                          ?>
-                              <option value="<?php echo $orador['id_orador']; ?>" selected><?php echo $orador['nombre']; ?></option>
-                            <?php
-                            } else {
-                            ?>
-                              <option value="<?php echo $orador['id_orador']; ?>"><?php echo $orador['nombre']; ?></option>
-                          <?php
-                            } //if
-                          } //while
-                          ?>
-                        </select>
-                      </div>
                       <div id="error" style="display: none"></div>
                     </div>
                     <!-- /.box-body -->

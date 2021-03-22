@@ -1,7 +1,7 @@
 <?php include_once 'includes/templates/header.php'; ?>
 
   <section class="seccion contenedor">
-    <h2> Registro de Usuarios </h2>
+    <h2> Registro </h2>
     <form id="registro" class="registro" action="index.html" method="post">
         <div id="datos_usuario" class="registro caja clearfix">
             <div class="campos">
@@ -141,7 +141,7 @@
               <div id="suma-total">
 
               </div> -->
-              <input id="btnRegistro" type="submit" class="button" value="Pagar">
+              <input id="btnRegistro" type="submit" class="button" value="Registrarme">
             </div><!--#total-->
           </div><!--#caja-->
         </div><!--#resumen-->

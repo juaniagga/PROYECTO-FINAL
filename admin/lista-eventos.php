@@ -70,19 +70,30 @@ $permiso = $_SESSION['permiso'];
                         <td><?php echo $evento['nombre']; ?></td>
                         <td> <?php echo date_format(date_create($evento['fecha_inicio']), 'd-m-Y'); ?></td>
                         <td> <?php echo date_format(date_create($evento['fecha_fin']), 'd-m-Y'); ?></td>
-                        <td> 
-                          <?php 
-                          if($evento['estado']){
+                        <td>
+                          <?php
+                          if ($evento['estado']) {
                             echo "Activo  "; ?><i class="fa fa-circle text-success"></i><?php
-                          }else{
-                            echo "Inactivo  ";  ?><i class="fa fa-circle-o text-red"></i><?php
-                          }
-                          ?>
+                                                                                      } else {
+                                                                                        echo "Inactivo  ";  ?><i class="fa fa-circle-o text-red"></i><?php
+                                                                                                                                                    }
+                                                                                                                                                      ?>
                         </td>
                         <td>
-                          <!-- <a href="editar-evento.php?id=<?php //echo $evento['id_admin']; ?>" class="btn bg-orange btn-flat margin">
+                          <!-- <a href="editar-evento.php?id=<?php //echo $evento['id_admin']; 
+                                                              ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a> -->
+                          <div class="input-group margin">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">VER
+                              <span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a href="lista-inscriptos.php?id=<?php echo $evento['id_evento']; ?>">Listado inscriptos</a></li>
+                              <li><a href="estadisticas-evento.php?id=<?php echo $evento['id_evento']; ?>">Estadísticas</a></li>
+                            </ul>
+                          </div>
+                          </div>
                           <a href="#" data-id="<?php echo $evento['id_evento']; ?>" data-tipo="evento" class="btn bg-maroon btn-flat margin borrar-registro">
                             <i class="fa fa-trash"></i>
                           </a>

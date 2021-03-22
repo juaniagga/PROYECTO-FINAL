@@ -14,18 +14,17 @@
         ); */
 
         $password_hashed= password_hash($password, PASSWORD_BCRYPT);/* , $opciones */
-
+        $respuesta=array();
         if ($tipo){                                                                 // agrego ADMIN SISTEMA
             try {
                 $stmt_admin= $db->prepare("INSERT INTO administrador (usuario, clave, email, nombre, permiso) VALUES(?,?,?,?,?)");
                 $stmt_admin->bind_param("ssssi", $usuario, $password_hashed, $email, $nombre, $tipo);
                 $stmt_admin->execute();
 
-                if (mysqli_affected_rows($db)){ 
+                if (mysqli_insert_id($db) > 0){ 
                     $respuesta= array(
                         'respuesta' => 'exito',
                     );
-                    echo mysqli_insert_id($db) . "</br>";
                 }else{
                     $respuesta= array(
                         'respuesta' => 'error',
@@ -40,15 +39,15 @@
             try {
                 $stmt_admin= $db->prepare("INSERT INTO administrador (usuario, clave, email, nombre, permiso) VALUES(?,?,?,?,?)");
                 $stmt_admin->bind_param("ssssi", $usuario, $password_hashed, $email, $nombre, $tipo);
-                $stmt_admin->execute();
-                                
-                if ($stmt_admin->affected_rows){    
+                $stmt_admin->execute();        
+                $id_admin= mysqli_insert_id($db);
+
+                if ($id_admin > 0){  
+                    echo "es mayor";  
                     $respuesta= array(
-                        'respuesta1' => 'exito',
-                        'respuesta2' => '',
+                        'respuesta' => 'exito',
+                        'id' => $id_admin
                     );
-                    //echo mysqli_insert_id($db) . "</br>";
-                    $id_admin= mysqli_insert_id($db);
 
                     if ($permiso){                  //soy admin-sistema
                         $nombre_evento= $_POST['evento'];
@@ -68,27 +67,20 @@
                         $stmt_ev= $db->prepare("INSERT INTO administrado (id_admin, id_evento) VALUES(?,?)");
                         $stmt_ev->bind_param("ii", $id_admin, $id_evento);
                         $stmt_ev->execute();
-                        if ($stmt_ev->affected_rows){
-                            $respuesta['respuesta2']= 'exito';
-                            //echo $db->insert_id . "</br>";
-                        }else {
-                            $respuesta['respuesta2']= 'error';
-                        };
                     }
-                    
+                    $stmt_ev->close();
                 }else{
                     $respuesta= array(
-                        'respuesta1' => 'error',
+                        'respuesta' => 'error',
                     );
                 };
                 $stmt_admin->close();
-                $stmt_ev->close();
+                
                 $db->close();
             } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
             }
         }
-
         echo json_encode($respuesta);
     }
     

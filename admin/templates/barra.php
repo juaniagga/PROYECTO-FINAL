@@ -21,20 +21,19 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs"><?php echo $_SESSION['usuario']; ?></span>
+              <span class="hidden-xs" style="font-size:18px; padding-right:3rem;">¡Hola  <?php echo $_SESSION['nombre']; ?>!</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+              <!-- <li class="user-header">
                 <p>
                   Administrador
-                  <small>Member since Nov. 2012</small>
                 </p>
-              </li>
+              </li> -->
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Ajustes</a>
+                  <a href="editar-admin.php" class="btn btn-default btn-flat">Ajustes</a>
                 </div>
                 <div class="pull-right">
                   <a href="login-admin.php?out=true" class="btn btn-default btn-flat">Cerrar sesión</a>

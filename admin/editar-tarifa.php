@@ -61,7 +61,7 @@
                 include_once 'funciones/funciones.php';
 
                 $sql = "
-                SELECT ca.id_categoria, ca.precio, c.nombre
+                SELECT ca.id_categoria, ca.tarifa, c.nombre
                 FROM categoria_participante c INNER JOIN cat_asociadas ca ON c.id_categoria=ca.id_categoria
                 WHERE ca.id_categoria=" . $id_categoria;
                 $tuplas = $db->query($sql);  
@@ -75,7 +75,7 @@
             <div class="box box-info">  
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" name="editar-precio" id="editar-precio" method="post" action="control-evento.php">
+                <form class="form-horizontal" name="editar-tarifa" id="editar-tarifa" method="post" action="control-evento.php">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="nombre" class="col-sm-2 control-label">Nombre</label>
@@ -84,16 +84,16 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="precio" class="col-sm-2 control-label">Precio</label>
+                      <label for="tarifa" class="col-sm-2 control-label">Tarifa</label>
                       <div class="col-sm-10">
-                        <input name="precio" type="number" step="0.01" class="form-control" id="precio" placeholder="Precio" value="<?php echo $cat['precio'] ?>">
+                        <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="tarifa" value="<?php echo $cat['tarifa'] ?>">
                       </div>
                     </div>
                     <div id="error" style="display: none"></div>
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
-                    <input type="hidden" name="editar-precio" value="1">
+                    <input type="hidden" name="editar-tarifa" value="1">
                     <input type="hidden" name="id_categoria" value="<?php echo $id_categoria ?>">
                     <button type="submit" class="btn btn-info pull-right">Guardar</button>
                   </div>
