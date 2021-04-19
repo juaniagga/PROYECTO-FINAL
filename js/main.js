@@ -38,12 +38,12 @@
         var resultado=document.getElementById('lista-productos');
 
 
-        if (nombre){
+        /* if (nombre){
             nombre.addEventListener('blur',validarCampos);
             apellido.addEventListener('blur',validarCampos);
             email.addEventListener('blur',validarCampos);
             email.addEventListener('blur',validarMail);
-        }
+        } */
         
 
         function validarCampos(){
@@ -98,6 +98,7 @@ $(function() {
     $('body.calendario .navegacion-principal a:contains("Programa")').addClass('activo');
     $('body.oradores .navegacion-principal a:contains("Oradores")').addClass('activo');
     $('body.galeria .navegacion-principal a:contains("Galería")').addClass('activo');
+    $('body.registro .navegacion-principal a:contains("Inscripción")').addClass('activo');
 
 
     //Navegacion menu

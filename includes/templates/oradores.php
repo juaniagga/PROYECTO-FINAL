@@ -26,7 +26,7 @@
         
         ?>
         
-        <section id="invitados" class="invitados contenedor seccion">
+        <section id="invitados" class="invitados contenedor seccion min-altura">
             <h2>Nuestros Oradores</h2>
             <ul class="lista-invitados clearfix">
                 <?php

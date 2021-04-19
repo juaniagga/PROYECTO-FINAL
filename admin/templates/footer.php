@@ -28,6 +28,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!-- bootstrap datepicker -->
 <script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.es.min.js"></script>
 <!-- Select2 -->
 <script src="js/select2.full.min.js"></script>
 <!-- bootstrap time picker -->

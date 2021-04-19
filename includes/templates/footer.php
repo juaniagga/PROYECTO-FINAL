@@ -37,6 +37,9 @@
   <script src="js/jquery.colorbox-min.js"></script>
   <script src="js/lightbox.js"></script>
 
+<script src="js/user-ajax.js"></script>
+
+
   <?php 
     /* $archivo= basename($_SERVER['PHP_SELF']);
     $pagina= str_replace(".php","",$archivo);

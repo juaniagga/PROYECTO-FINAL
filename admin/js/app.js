@@ -41,7 +41,8 @@ $(document).ready(function () {
     });
 
   //Date picker
-  $('.box #datepicker').datepicker({
+  $('.box-body #datepicker').datepicker({
+    language: 'es',
     autoclose: true
   });
 
@@ -65,7 +66,8 @@ $(document).ready(function () {
      * estadisticas
   */
 
-    const id_evento= console.log($('#procedencia').attr('data-id'));
+    const id_evento= $('#procedencia').attr('data-id');
+
   $.getJSON('servicios/estadisticas-procedencia.php?id='+id_evento, function(data){
     datos_procedencia= data;
     donutData = [

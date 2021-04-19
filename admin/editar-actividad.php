@@ -117,7 +117,7 @@ if (!filter_var($id_actividad,FILTER_VALIDATE_INT)){
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha" value="<?php echo date_format(date_create($actividad['fecha']), 'm/d/Y'); ?>">
+                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha" value="<?php echo date_format(date_create($actividad['fecha']), 'd/m/Y'); ?>">
                         </div>
                       </div>
                       <div class="bootstrap-timepicker">

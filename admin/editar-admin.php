@@ -93,7 +93,6 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                       <input type="hidden" name="editar-admin" value="1">
-                      <input type="hidden" name="id_admin" value="<?php echo $id_admin ?>">
                       <button type="submit" class="btn btn-info pull-right">Guardar</button>
                     </div>
                     <!-- /.box-footer -->

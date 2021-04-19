@@ -109,6 +109,7 @@ textarea {
   body{
     background-color: #f2f2f2;
     font-family: 'Open Sans', sans-serif;
+    font-size: 13px !important;
   }
 /** Globales **/
 .contenedor{
@@ -170,12 +171,13 @@ h2{
     text-transform: uppercase;
     font-weight: bold;
     font-family: 'Oswald', sans-serif;
-    text-decoration: none;
+    text-decoration: none !important;
     font-size: 1.2em;
     margin-top:20px;
     display:inline-block;
     transition:all .3s ease;
     border: 2px solid;
+    border-radius: 10px;
   }
 
 .button.hollow,
@@ -200,6 +202,8 @@ h2{
 
   .button:hover{
     background-color: #e33000;
+    color: white !important;
+    cursor:pointer;
   }
 
   .float-right{
@@ -293,6 +297,16 @@ h1.nombre-sitio{
   }
 }
 /**Barra**/
+.contenedor-barra{
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.contenido-barra{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0;
+}
 div.barra{
   background-color:#353535;
   padding:20px 0;
@@ -305,7 +319,7 @@ div.barra{
   z-index: 2;
 }
 div.logo{
-  width: 80%;
+  width: 200px;
   float:left;
 }
 div.logo img{
@@ -316,7 +330,7 @@ div.logo img{
     width: 100%;
   }
   div.logo{
-    width: 33%;
+    width: 300px;
     float:left;
   }
 }
@@ -356,7 +370,6 @@ nav.navegacion-principal a:last-child:hover{
 
 @media only screen and (min-width:768px){
   nav.navegacion-principal{
-  width: 67%;
   float: right;
   text-align: right;
   display:block;
@@ -615,6 +628,10 @@ p.numero{
 }
 
 /** Tabla de precios **/
+.lista-precios{
+  display: flex;
+  justify-content: center;
+}
 ul.lista-precios > li{
   padding: 10px;
 }
@@ -622,13 +639,13 @@ ul.lista-precios > li{
 @media only screen and (min-width:768px){
   ul.lista-precios > li{
     float: left;
-    width: 30%;
+    width: 250px;
   }
 }
 div.tabla-precio{
   border: 1px solid #e1e1e1;
   background-color: #ffffff;
-  padding: 40px 0;
+  padding: 20px 0;
   text-align: center;
   transition: all .3s ease; 
 }
@@ -811,6 +828,7 @@ div.campos{
     width:30%;
   }
 }
+
 div.paquetes .tabla-precio:hover{
   transform: none;
   box-shadow: none;
@@ -1087,3 +1105,65 @@ div.resumen input{
   }
 }
 
+
+
+/* USUARIO ----------------------------------------------------------------------------- */
+.min-altura{
+  min-height: 60vh;
+}
+
+.user-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+}
+.paquetes {
+  margin: 2rem 0 2rem 0;  
+}
+
+.paquetes .tabla-precio input{
+  width: 40px;
+  height: 40px;
+}
+
+#info-pago {
+  color: black;
+  font-size: 1rem;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#info-pago:hover {
+  background-color:  #fe4a181f;
+  color: black !important;
+}
+
+.centrar-contenido {
+  display: flex;
+  justify-content: center;
+}
+
+.exito {
+  margin-bottom: 500px;
+}
+
+.swal2-header h2::after{
+  display: none;
+}
+
+.fixed-top {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+.margin-barra{
+  margin-top:100px;
+}
+
+td a:hover{
+  text-decoration: none;
+}

@@ -7,7 +7,7 @@
       </p>
   </section> --> <!--seccion-->
 
-  <section id="" class="seccion contenedor">
+  <section id="" class="seccion contenedor min-altura">
     <h2>Galería de fotos</h2>
 
     <div class="galeria-fotos">

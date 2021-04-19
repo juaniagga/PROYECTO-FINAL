@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  try{
+    include_once 'includes/funciones/conexionBDD.php';
+  }catch(Exception $e){
+    echo "Error: " . $e->getMessage();
+  }
+?>
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -16,13 +24,15 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/lightbox.css">
   <link rel="stylesheet" href="css/colorbox.css">
-  
-  <?php 
-    $archivo= basename($_SERVER['PHP_SELF']);
-    $pagina= str_replace(".php","",$archivo);
 
 
-   /* if ($pagina == 'galeria')
+
+  <?php
+  $archivo = basename($_SERVER['PHP_SELF']);
+  $pagina = str_replace(".php", "", $archivo);
+
+
+  /* if ($pagina == 'galeria')
       echo '<link rel="stylesheet" href="css/lightbox.css">';
     else
       if ($pagina == 'oradores' || $pagina == 'index')
@@ -36,23 +46,24 @@
 
 </head>
 
-<body class="<?php echo $pagina;?>">
+<body class="<?php echo $pagina; ?>">
 
-<?php $id_evento= 1?>   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
+  <?php $id_evento = 1 ?>
+  <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
   <?php
   setlocale(LC_TIME, 'es_RA');
-  setlocale(LC_TIME,'spanish');
-    try {
-      require_once('includes/funciones/conexionBDD.php');
-      $sql = "
+  setlocale(LC_TIME, 'spanish');
+  try {
+    require_once('includes/funciones/conexionBDD.php');
+    $sql = "
             SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
             FROM evento e
             WHERE e.id_evento=1"; //. $_GET['id'];
-      $tupla = $db->query($sql);
-      $evento = $tupla->fetch_assoc();
-    } catch (Exception $e) {
-      echo "Error: " . $e->getMessage();
-    }
+    $tupla = $db->query($sql);
+    $evento = $tupla->fetch_assoc();
+  } catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+  }
 
   ?>
 
@@ -68,42 +79,61 @@
         <div class="informacion-evento">
           <div class="clearfix">
             <p class="fecha"><i class="far fa-calendar-alt"></i>
-            <?php 
-              if ($evento['fecha_inicio']==$evento['fecha_fin']){
-                echo utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_inicio']))); 
-              }else{
+              <?php
+              if ($evento['fecha_inicio'] == $evento['fecha_fin']) {
+                echo utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_inicio'])));
+              } else {
                 echo utf8_encode(strftime("%d %B - ", strtotime($evento['fecha_inicio']))) . utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_fin'])));
               }
-              
-            ?></p>
-            <p class="ciudad"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion']?> </p>
+
+              ?></p>
+            <p class="ciudad"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion'] ?> </p>
           </div>
           <br><br>
-          <h1 class="nombre-sitio"><?php echo $evento['nombre']?></h1>
+          <h1 class="nombre-sitio"><?php echo $evento['nombre'] ?></h1>
           <p class="slogan"> Feria Internacional de Educación Superior Argentina</p>
-        
+
         </div> <!-- informacion evento-->
-        
+
       </div>
-    </div> <!--hero-->
+    </div>
+    <!--hero-->
   </header>
 
   <div class="barra" id="seccion">
     <div class="contenedor clearfix">
-      <div class="logo">
-        <!-- <img src="logo.svg" alt="logo jornadas"> -->
-      </div>
+      
       <div class="menu-movil">
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <nav class="navegacion-principal clearfix">
-        <a href="index.php">Evento</a>
-        <a href="calendario.php#seccion">Programa</a>
-        <a href="oradores.php#seccion">Oradores</a>
-        <a href="galeria.php#seccion">Galería</a>
-        <a href="registro.php">Registrarse</a>
-      </nav>
-    </div><!--contenedor-->
-  </div><!--barra-->
+      <div class="contenido-barra">
+        <div class="logo">
+          <img src="img/logoUNMDP.svg" alt="logo UNMDP">
+        </div>
+        <nav class="navegacion-principal clearfix">
+          <a href="index.php">Evento</a>
+          <a href="calendario.php#seccion">Programa</a>
+          <a href="oradores.php#seccion">Oradores</a>
+          <a href="galeria.php#seccion">Galería</a>
+          <a href="registro.php#seccion">Inscripción</a>
+          <?php
+            if (isset($_SESSION['id_user'])){
+              ?>
+              <a href="usuario/mis-eventos.php">Mi cuenta</a>
+              <a href="usuario/login-user.php?out=true">Cerrar sesión</a>
+              <?php
+            }else{
+              ?>
+              <a href="usuario/login-user.php">Ingresar / Crear cuenta</a>
+              <?php
+            }
+          ?>
+        </nav>
+      </div>
+      
+    </div>
+    <!--contenedor-->
+  </div>
+  <!--barra-->

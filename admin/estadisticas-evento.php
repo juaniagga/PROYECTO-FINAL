@@ -8,6 +8,7 @@ if ($permiso){
 }else{
   $id_evento= $_SESSION['id_evento'];
 }
+
 ?>
 
 <body class="hold-transition skin-blue sidebar-mini">

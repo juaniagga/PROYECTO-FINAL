@@ -91,7 +91,7 @@ $permiso = $_SESSION['permiso'];
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker1" name="fecha_inicio" value="<?php echo date_format(date_create($evento['fecha_inicio']), 'm/d/Y'); ?>">
+                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_inicio" value="<?php echo date_format(date_create($evento['fecha_inicio']), 'd/m/Y'); ?>">
                         </div>
                       </div>
                       <div class="form-group">
@@ -100,7 +100,7 @@ $permiso = $_SESSION['permiso'];
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker2" name="fecha_fin" value="<?php echo date_format(date_create($evento['fecha_inicio']), 'm/d/Y'); ?>">
+                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_fin" value="<?php echo date_format(date_create($evento['fecha_fin']), 'd/m/Y'); ?>">
                         </div>
                       </div>
                       <div class="form-group">
@@ -140,7 +140,7 @@ $permiso = $_SESSION['permiso'];
 
                       </div>
                       <div class="form-group">
-                        <label for="pdf">PDF sobre información de pago</label>
+                        <label for="pdf">Documento con información de pago. IMPORTANTE: debe ser PDF. </label>
                         <input type="file" id="pdf" name="pdf">
                       </div>
                       <div id="error" style="display: none"></div>

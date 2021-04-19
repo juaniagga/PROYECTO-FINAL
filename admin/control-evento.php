@@ -9,7 +9,8 @@
         $descripcion= $_POST['descripcion'];
         $id_evento= $_SESSION['id_evento'];
         $id_categoria= $_POST['categoria'];
-        $fecha= date_format(date_create($_POST['fecha']), 'Y-m-d');
+        $f= str_replace('/', '-', $_POST['fecha']);
+        $fecha= date_format(date_create($f), 'Y-m-d');
         $hora_inicio= date_format(date_create($_POST['hora_inicio']), 'H:i');
         $hora_fin= date_format(date_create($_POST['hora_fin']), 'H:i');
 
@@ -43,7 +44,8 @@
         $descripcion= $_POST['descripcion'];
         $id_evento= $_SESSION['id_evento'];
         $id_categoria= $_POST['categoria'];
-        $fecha= date_format(date_create($_POST['fecha']), 'Y-m-d');
+        $f= str_replace('/', '-', $_POST['fecha']);
+        $fecha= date_format(date_create($f), 'Y-m-d');
         $hora_inicio= date_format(date_create($_POST['hora_inicio']), 'H:i');
         $hora_fin= date_format(date_create($_POST['hora_fin']), 'H:i');
         $id_actividad= $_POST['id_actividad'];
@@ -79,8 +81,11 @@
         $id_evento= $_SESSION['id_evento'];
         $ubicacion= $_POST['ubicacion'];
         $organizador= $_POST['organizador'];
-        $fecha_inicio= date_format(date_create($_POST['fecha_inicio']), 'Y-m-d');
-        $fecha_fin= date_format(date_create($_POST['fecha_fin']), 'Y-m-d');
+        $f_inicio= str_replace('/', '-', $_POST['fecha_inicio']);
+        $f_fin = str_replace('/', '-', $_POST['fecha_fin']);
+        $fecha_inicio= date_format(date_create($f_inicio), 'Y-m-d');
+        $fecha_fin= date_format(date_create($f_fin), 'Y-m-d');
+        
         $estado= $_POST['estado'];
 
         $directorio= "../archivos/";
@@ -89,14 +94,19 @@
             mkdir($directorio,0755, true);
         }
 
-        if (move_uploaded_file($_FILES['pdf']['tmp_name'], $directorio . $_FILES['pdf']['name'])){
-            $pdf= $_FILES['pdf']['name'];
-        }else{
-            $respuesta= array(
-                'respuesta' => error_get_last(),
-            );
+        if (isset($_FILES['pdf'])){
+            if (move_uploaded_file($_FILES['pdf']['tmp_name'], $directorio . "info_pago.pdf")){
+                $pdf= $_FILES['pdf']['name'];
+            }else{
+                $respuesta= array(
+                    'respuesta' => error_get_last(),
+                );
+                $pdf= "";
+            }
+        } else{
             $pdf= "";
         }
+        
 
 
         try {
@@ -113,6 +123,7 @@
                 $respuesta= array(
                     'respuesta' => 'error',
                 );
+                echo " Problem: " . $db->error;
             };
 
             $stmt->close();
@@ -149,6 +160,27 @@
         elseif ($_POST['tipo']=='orador'){
             try {
                 $stmt= $db->prepare("DELETE FROM orador WHERE id_orador=?");
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                if ($stmt->affected_rows){
+                    $respuesta= array(
+                        'respuesta' => 'exito',
+                    );
+                }else{
+                    $respuesta= array(
+                        'respuesta' => 'error',
+                    );
+                };
+                $stmt->close();
+                $db->close();
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+
+        elseif ($_POST['tipo']=='participante'){
+            try {
+                $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
                 if ($stmt->affected_rows){
@@ -483,6 +515,7 @@
         $email= $_POST['email'];
         $telefono= $_POST['telefono'];
         $dni= $_POST['dni'];
+        $clave= password_hash($dni, PASSWORD_BCRYPT);
         $pais= $_POST['pais'];
         $provincia= $_POST['provincia'];
         $ciudad= $_POST['ciudad'];
@@ -495,8 +528,8 @@
         
     
         try {
-            $stmt= $db->prepare("INSERT INTO usuario (email, dni, nombre, apellido, telefono, calle, numero, ciudad, provincia, pais, trabajo_cientifico, institucion, cargo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt->bind_param("sissisisssiss", $email, $dni, $nombre, $apellido, $telefono, $calle, $numero, $ciudad, $provincia, $pais, $trabajo_cientifico, $institucion, $cargo);
+            $stmt= $db->prepare("INSERT INTO usuario (email, clave, dni, nombre, apellido, telefono, calle, numero, ciudad, provincia, pais, trabajo_cientifico, institucion, cargo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("ssissisisssiss", $email, $clave, $dni, $nombre, $apellido, $telefono, $calle, $numero, $ciudad, $provincia, $pais, $trabajo_cientifico, $institucion, $cargo);
             $stmt->execute();
             echo "id:  " . mysqli_insert_id($db);
             if (mysqli_insert_id($db) > 0){ 
@@ -544,14 +577,6 @@
             mkdir($directorio,0755, true);
         }
     
-        if (isset($_FILES['pdf']) && move_uploaded_file($_FILES['pdf']['tmp_name'], $directorio . $_FILES['pdf']['name'])){
-            $pdf= $_FILES['pdf']['name'];
-        }else{
-            $respuesta= array(
-                'respuesta' => error_get_last(),
-            );
-            $pdf= "";
-        }
         try {
             echo "id user " . $id_user;
             $stmtp= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, acreditado,forma_pago, importe_abonado, comprobante, fecha_pago, comentario_pago, pago_confirmado,exento, facturacion,  iva, cuit, adicionales, nombre_factura, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -562,14 +587,64 @@
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
-                echo " id par:  " . mysqli_insert_id($db);
-                echo " adentro";
+                $id_participante= mysqli_insert_id($db);
             }else{
-                echo " Problem: " . $db->error;
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
+
+            if (isset($_FILES['file'])){
+                // file name
+                $filename = $_FILES['file']['name'];
+
+                // Location
+                $location = $directorio . $filename;
+
+                // file extension
+                $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+                $file_extension = strtolower($file_extension);
+
+                // Valid extensions
+                $file_ext = array("jpg", "png", "jpeg", "pdf");
+
+                $new_name = "pago_" . $id_participante;
+                if (in_array($file_extension, $file_ext)) {
+                    // Upload file
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $directorio . $new_name . "." . $file_extension)) {
+                        $file = $new_name;
+                    } else {
+                        $respuesta = array(
+                            'respuesta' => error_get_last(),
+                        );
+                    }
+
+                    try {
+                        $stmtf = $db->prepare("UPDATE participante p SET comprobante=? WHERE p.id_participante=?");
+                        $stmtf->bind_param("si", $file, $id_participante);
+                        $stmtf->execute();
+            
+                        if ($stmtf->affected_rows) {
+                            $respuesta = array(
+                                'respuesta' => 'exito',
+                            );
+                        } else {
+                            $msj = $db->error;
+                            $respuesta = array(
+                                'respuesta' => $msj,
+                            );
+                        };
+            
+                        $stmtf->close();
+                    } catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                }else{
+                    $respuesta = array(
+                        'respuesta' => "Extensión de archivo no permitida",
+                    );
+                }
+            }
 
             $stmtp->close();
             $stmt->close();
@@ -636,11 +711,23 @@
     } 
     
     elseif (isset($_POST['descargar'])) {
-        //nombre de archivos: "pago_id.pdf"
+        //nombre de archivos: "pago_id"
         $id = $_POST['id'];
 
-        $filename = "pago_". $id .".pdf";
-        $filepath = '../comprobantes/'. $filename;
+        $directorio= '../comprobantes/';
+        $name = "pago_". $id;
+
+        if (file_exists($directorio . $name . ".pdf")){
+            $filename = $name . ".pdf";
+        } elseif(file_exists($directorio . $name . ".jpg")){
+            $filename = $name . ".jpg";
+        } elseif(file_exists($directorio . $name . ".png")){
+            $filename = $name . ".png";
+        } elseif(file_exists($directorio . $name . ".jpeg")){
+            $filename = $name . ".jpeg";
+        }
+        
+        $filepath = $directorio . $filename;
 
         // header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');

@@ -10,7 +10,7 @@ $(document).ready(function(){
 
     $('#editar-admin').on('submit', actualizar);
 
-    $('#editar-evento').on('submit', actualizar);
+    $('#editar-evento').on('submit', actualizarFiles);
 
     $('#editar-tarifa').on('submit', actualizar);
 
@@ -96,7 +96,6 @@ $(document).ready(function(){
         e.preventDefault();
         let datos= new FormData(this); //Para usar files
         var error= document.getElementById('error');
-
         let campos= $(this).serializeArray();
         console.log(campos);
 

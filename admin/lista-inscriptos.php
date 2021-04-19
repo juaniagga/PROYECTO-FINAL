@@ -121,7 +121,7 @@ if ($permiso){
                             <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante'];?>" class="btn  btn-primary"><i class="fa fa-check"></i> Validar pago</button>
                             <button type="button" id="comprobante" data-id="<?php echo $user['id_participante'];?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
                             
-                            <a href="#" data-id="<?php echo $user['id_participante']; ?>" data-tipo="user" url="control-user.php" class="btn bg-maroon btn-flat margin borrar-registro">
+                            <a href="#" data-id="<?php echo $user['id_participante']; ?>" data-tipo="participante" url="control-user.php" class="btn bg-maroon btn-flat margin borrar-registro">
                               <i class="fa fa-trash"></i>
                             </a>
                           </td>

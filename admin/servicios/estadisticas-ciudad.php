@@ -14,7 +14,7 @@ try {
     }else{
       $id_evento= $_SESSION['id_evento'];
     }
-    
+
     $sql = "
     SELECT COUNT(*) as res
             FROM participante p INNER JOIN usuario u on p.id_user=u.id_user
@@ -36,6 +36,7 @@ try {
     AND p.acreditado=1";
     $tupla2 = $db->query($sql2);
 
+    
     if ($tupla2){
         $total= $tupla2->fetch_assoc();
         $total= $total['res'];
@@ -51,11 +52,12 @@ try {
     }
 
   $valor2= 100-$valor1;
+  
 
     $data = array(
         array( 'nombre'=> 'MDP', 'valor'=> $valor1),
         array( 'nombre'=> 'Exterior', 'valor'=> $valor2),
     );
-        echo json_encode($data);
+    echo json_encode($data);
 
 ?>

@@ -7,7 +7,6 @@
   <?php
 
     try {
-      require_once('includes/funciones/conexionBDD.php');
       $sql = "
             SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
             FROM evento e
@@ -42,7 +41,6 @@
           
           <?php
              try{
-                //require_once('includes/funciones/conexionBDD.php');
                 $sql_cat="
                 SELECT DISTINCT nombre, icono
                 FROM categoria_act c, actividad a
@@ -68,7 +66,6 @@
         
           <?php
             try {
-              //require_once('includes/funciones/conexionBDD.php');
               $sql_act= "
               SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad, cat.id_categoria, cat.nombre as nombre_cat
               FROM actividad act, categoria_act cat
@@ -160,7 +157,7 @@
                 </div><!--#charlas-->
               
             <?php } ?>
-          <a href="calendario.php" class="button float-right">Ver Todos</a>
+          <a href="calendario.php" class="button float-right">Ver más</a>
 
 
 
@@ -300,11 +297,10 @@
 
   <div class="newsletter parallax">
     <div class="contenido contenedor">
-      <p> Registrate al newsletter</p>
-      <h3>FIESA UNMDP</h3>
-      <a href="#mc_embed_signup" class="boton_newsletter button transparente">Registro</a>
+      <h3><?php echo $evento['nombre']?></h3>
+      <a href="registro.php#seccion" class="button transparente">Registro</a>
     </div><!--contenido-->
-  </div><!--newsletter-->
+  </div>
   
 
   <?php include_once 'includes/templates/footer.php'; ?>

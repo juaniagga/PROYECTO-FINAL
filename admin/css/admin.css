@@ -95,3 +95,13 @@ legend {
 .dataTables_scrollBody{
     height: auto !important;
 }
+
+
+
+.registro .box-body, .registro .box, .registro .form-horizontal, .registro form, .registro .box-footer{
+    background-color: #f2f2f2;
+}
+
+.swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel{
+    font-size: 1.3em;
+}

@@ -79,8 +79,9 @@ CREATE TABLE cat_asociadas(
 );
 
 CREATE TABLE usuario(
-    id_user int NOT NULL AUTO_INCREMENT,
-    email varchar(40) NOT NULL,
+    id_user int NOT NULL AUTO_INCREMENT,  
+    email varchar(40) NOT NULL UNIQUE,
+    clave varchar(255) NOT NULL,
     dni int(8) UNSIGNED NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
@@ -98,7 +99,7 @@ CREATE TABLE usuario(
 
 CREATE TABLE participante(
     id_participante int NOT NULL AUTO_INCREMENT,
-    id_user int NOT NULL,
+    id_user int NOT NULL UNIQUE,
     id_evento int NOT NULL,
     id_categoria int NOT NULL,
     fecha_registro DATE NOT NULL,
