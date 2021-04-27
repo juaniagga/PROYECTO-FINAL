@@ -54,7 +54,7 @@ $permiso = $_SESSION['permiso'];
                 try {
                   include_once 'funciones/funciones.php';
                   $sql = "
-                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.organizador, e.ubicacion, e.estado
+                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.organizador, e.ubicacion, e.estado, e.limite
                       FROM evento e
                       WHERE e.id_evento=" . $_SESSION['id_evento'];
                   $tupla = $db->query($sql);
@@ -104,6 +104,12 @@ $permiso = $_SESSION['permiso'];
                         </div>
                       </div>
                       <div class="form-group">
+                        <label for="limite" class="control-label">Limite de participantes</label>
+                        <input name="limite" type="text" class="form-control" id="limite" placeholder="" value="<?php echo $evento['limite'] ?>">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="" class="control-label">Estado</label>
                         <?php
                         if ($evento['estado']) {
                         ?>

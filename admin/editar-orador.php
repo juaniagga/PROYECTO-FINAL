@@ -8,7 +8,7 @@ try {
 }
 
 $permiso = $_SESSION['permiso'];
-$id_orador =  $_GET['id'];
+$id_orador =  base64_decode(urldecode($_GET['id']));
 $id_evento = $_SESSION['id_evento'];
 
 if (!filter_var($id_orador,FILTER_VALIDATE_INT)){

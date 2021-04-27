@@ -55,31 +55,31 @@ $permiso = $_SESSION['permiso'];
                     <div class="box-body">
                       <div class="form-group">
                         <label for="usuario" class="col-sm-2 control-label">Usuario</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="email" type="email" class="form-control" id="email" placeholder="Email">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">Contraseña</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="password" type="password" class="form-control" id="password" placeholder="Contraseña">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">Repetir contraseña</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="password_repit" type="password" class="form-control" id="password_repit" placeholder="Contraseña">
                           <span id="resultado_password" class="help-block"></span>
                         </div>

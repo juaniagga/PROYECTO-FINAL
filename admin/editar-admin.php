@@ -72,23 +72,26 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="usuario" class="col-sm-2 control-label">Usuario</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario" value="<?php echo $admin['usuario'] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido" value="<?php echo $admin['nombre'] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $admin['email'] ?>">
                         </div>
                       </div>
                       <div id="error" style="display: none"></div>
+                      <div class="form-row">
+                        <a href="new-password.php" class="btn btn-info pull-left">Cambiar contraseña</a>
+                      </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">

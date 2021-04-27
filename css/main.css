@@ -16,7 +16,10 @@ html {
   font-size: 1em;
   line-height: 1.4;
 }
-
+:root {
+  --bar-bg-color: #d0d0d0;
+  --unmdp-color: #191497;
+}
 /*
  * Remove text-shadow in selection highlight:
  * https://twitter.com/miketaylr/status/12228805301
@@ -160,12 +163,12 @@ h2{
   }
   h3{
     font-size:1.6em;
-    color: #fe4918;
+    color: var(--unmdp-color);
     font-family:'PT Sans', sans-serif;
     margin:0;
   }
   .button{
-    background-color: #fe4918;
+    background-color: var(--unmdp-color);
     padding:10px 40px;
     color:white;
     text-transform: uppercase;
@@ -183,15 +186,16 @@ h2{
 .button.hollow,
 .button.hollow:hover{
   background-color: white;
-  color: #fe4918;
+  color: var(--unmdp-color);
 
 }
 
 
 .button.transparente{
+  color: var(--unmdp-color);
   background-color: transparent;
   border:solid;
-  border-color: #fe4918;
+  border-color: var(--unmdp-color);
 }
 
   ul{
@@ -201,7 +205,7 @@ h2{
   }
 
   .button:hover{
-    background-color: #e33000;
+    background-color: var(--unmdp-color);
     color: white !important;
     cursor:pointer;
   }
@@ -265,7 +269,7 @@ div.informacion-evento p{
   text-transform: uppercase;
 }
 div.informacion-evento p i{
-  color: #fe4918;
+  color: var(--unmdp-color);
   font-size: 2.4rem;
 }
 p.fecha{
@@ -308,7 +312,7 @@ h1.nombre-sitio{
   padding:0;
 }
 div.barra{
-  background-color:#353535;
+  background-color: var(--bar-bg-color);
   padding:20px 0;
 }
 .fixed {
@@ -342,7 +346,7 @@ nav.navegacion-principal{
 }
 nav.navegacion-principal a{
   font-family: 'Oswald', sans-serif;
-  color:#ffffff;
+  color: var(--unmdp-color);
   font-size:1.3em;
   text-transform: uppercase;
   text-decoration: none;
@@ -356,12 +360,13 @@ nav.navegacion-principal a{
 }
 
 nav.navegacion-principal a:hover{
-  background-color: #fe4918;
+  background-color: var(--unmdp-color);
+  color: white;
 }
 
 nav.navegacion-principal a:last-child{
-  border:2px solid #fe4918;
-  color: #fe4918;
+  border:2px solid var(--unmdp-color);
+  color: var(--unmdp-color);
 }
 
 nav.navegacion-principal a:last-child:hover{
@@ -457,7 +462,7 @@ nav.menu-programa a{
   font-size:1.2em;
   position:relative;
     padding-bottom:10px;
-    border-bottom:1px solid #fe4918;
+    border-bottom:1px solid var(--unmdp-color);
 }
 nav.menu-programa a.activo::after{
   position:absolute;
@@ -469,7 +474,7 @@ nav.menu-programa a.activo::after{
   height: 20px;
   width: 30px;
   bottom:-20px;
-  background-image: url('../img/talleres-flecha.jpg');
+  background-image: url('../img/talleres-flecha.png');
   background-position: top center;
   background-repeat: no-repeat;
 
@@ -483,7 +488,7 @@ nav.menu-programa a.activo::after{
 }
 nav.menu-programa a i,
 div.detalle-evento p i{
-  color:#fe4918;
+  color:var(--unmdp-color);
   font-size:1.5em;
   margin-right:10px;
 }
@@ -546,7 +551,7 @@ div.invitado p{
   width:100%;
   text-align: left;
   font-family: 'Oswald', sans-serif;
-  color: #fe4918;
+  color: white;
   text-transform: uppercase;
   -webkit-transition: all .5s ease-in-out;
 
@@ -620,7 +625,7 @@ ul.resumen-evento li{
   }
 }
 p.numero{
-  color:#fe4918;
+  color:var(--unmdp-color);
   font-size:4em;
   display:block;
   margin: 0 0 10px 0;
@@ -651,7 +656,7 @@ div.tabla-precio{
 }
 div.tabla-precio:hover{
   transform: scale(1.1);
-  border: 1px solid #fe4918;
+  border: 1px solid var(--unmdp-color);
   box-shadow: 0px 0px 50px #666;
 }
 
@@ -736,7 +741,7 @@ div.cuenta-regresiva{
 
 /**Footer**/
 footer{
-  background-color: #353535;
+  background-color: #585858;
   padding-top:40px;
   margin-top:20px;
 }
@@ -760,7 +765,7 @@ footer h3{
 
 }
 footer h3 span{
-  color:#fe4918;
+  color:var(--unmdp-color);
 }
 footer .ultimos-tweets li{
   margin-bottom:10px;
@@ -782,7 +787,7 @@ p.copyright{
 }
 /** Internas **/
 .navegacion-principal .activo {
-  border-bottom: 2px solid #fe4918;
+  border-bottom: 2px solid var(--unmdp-color);
 } 
 
 /* Galeria */
@@ -807,7 +812,7 @@ form.registro label{
 h4{
   text-align: center;
   text-transform: uppercase;
-  border-bottom: 2px solid #fe4918;
+  border-bottom: 2px solid var(--unmdp-color);
   padding: 10px;
   font-size:1.2em;
 }
@@ -861,7 +866,7 @@ div.paquetes .tabla-precio input{
   margin-right: 10px;
 }
 .contenido-dia > div label time{
-  color: #fe4918;
+  color: var(--unmdp-color);
   font-weight:bold;
 }
 
@@ -891,7 +896,7 @@ div.resumen input{
 
 
 .calendario h3 {
-  background-color: #fe4918;
+  background-color: var(--unmdp-color);
   clear: both;
   color: white;
   text-align: center;
@@ -930,7 +935,7 @@ div.resumen input{
 }
 
 .actividad p.titulo {
-  color:#fe4918;
+  color:var(--unmdp-color);
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -1129,15 +1134,11 @@ div.resumen input{
 }
 
 #info-pago {
-  color: black;
   font-size: 1rem;
   padding-left: 20px;
   padding-right: 20px;
 }
-#info-pago:hover {
-  background-color:  #fe4a181f;
-  color: black !important;
-}
+
 
 .centrar-contenido {
   display: flex;
@@ -1166,4 +1167,17 @@ div.resumen input{
 
 td a:hover{
   text-decoration: none;
+}
+
+
+@media (min-width: 768px){
+  .modal-dialog {
+      width: 60% !important;
+      margin: 30px auto;
+  }
+}
+@media (min-width: 576px){
+  .modal-dialog {
+      max-width: 100% !important;
+  }
 }

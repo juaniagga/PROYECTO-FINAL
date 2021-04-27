@@ -4,6 +4,10 @@ $(document).ready(function(){
 
     $('#crear-user').on('submit', actualizar);
 
+    $('#editar-user').on('submit', actualizar);
+    
+    $('#nueva-clave').on('submit', actualizar);
+
     $('#info-pago').on('click', infoPago);
 
     $('#nuevo-registro').on('submit', registro);
@@ -38,7 +42,7 @@ $(document).ready(function(){
                         if (data.respuesta=="exito"){
                             setTimeout(function(){
                                 window.location.href= 'registro-exitoso.php#seccion';
-                            },1000);
+                            },500);
                         } else {
                             var mensaje;
                             if (data.respuesta=="usuario duplicado"){
@@ -94,22 +98,37 @@ $(document).ready(function(){
                             setTimeout(function () {
                                 window.location.href = 'mis-eventos.php';
                             }, 2000);
+                        case 'editar-user':
+                        case 'nueva-clave':
+                            setTimeout(function () {
+                                window.location.href = 'ajustes.php';
+                            }, 2000);
+                        break;
                     }
                 } else {
                     var mensaje;
-                        switch (origen){
-                            case 'crear-user':
-                                if (data.respuesta=="email duplicado"){
-                                    mensaje='El email ingresado ya se encuentra registrado.'
-                                }else{
-                                    mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
-                                };
-                        }
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: mensaje,
-                        })
+                    switch (origen){
+                        case 'crear-user':
+                            if (data.respuesta=="email duplicado"){
+                                mensaje='El email ingresado ya se encuentra registrado.'
+                            }else{
+                                mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
+                            };
+                        case 'editar-user':
+                            mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.';
+                        case 'nueva-clave':
+                            if (data.respuesta=="clave incorrecta"){
+                                mensaje='La contraseña actual es incorrecta.'
+                            }else{
+                                mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
+                            };
+                        break;
+                    }
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: mensaje,
+                    })
                 }
             },
             error: function (XHR, status) {
@@ -147,10 +166,20 @@ $(document).ready(function(){
                           )
                         $('#uploadModal').modal('toggle');
                     } else {
+                        var msj;
+                        if (data.respuesta=='Extensión incorrecta'){
+                            msj= "Formato de archivo incorrecto. Revise los formatos permitidos."
+                        } else{
+                            if (data.respuesta!=''){
+                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde. Referencia: " + data.respuesta;
+                            }else {
+                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde.";
+                            }
+                        }
                         swal.fire({
                             icon: 'error',
                             title: 'Error!',
-                            text: 'Documento ya cargado.',
+                            text: msj,
                           })
                           $('#uploadModal').modal('toggle');
                     }

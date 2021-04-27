@@ -4,6 +4,10 @@ $out = isset($_GET['out']);  //isset evita el mensaje de error en caso de que ou
 if ($out) {
   session_destroy();
 }
+if (isset($_SESSION['id_user'])){
+  header('Location: mis-eventos.php');
+  exit();
+};
 ?>
 <!doctype html>
 <html class="no-js" lang="">

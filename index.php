@@ -142,22 +142,23 @@
                       <h3><?php echo $a['nombre_act'] ?></h3>
                       <p><i class="fa fa-clock"></i> <?php echo $a['horario'] ?> hs </p>
                       <p><i class="fa fa-calendar"></i> <?php echo utf8_encode(strftime("%d de %B del %Y", strtotime($a['fecha']))); ?> </p>
-                      <p>
+                      
                         <?php 
                         foreach($a['oradores'] as $o){?>
-                          <i class="fa fa-user" aria-hidden="true"></i>
+                          <p>
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <?php echo $o; ?>
+                          </p>
                           <?php
-                            echo $o;
-                            echo "<br>";
                         } ?>
-                      </p>
+                      
                     </div>
                   <?php }?>
                   
                 </div><!--#charlas-->
               
             <?php } ?>
-          <a href="calendario.php" class="button float-right">Ver más</a>
+          <a href="calendario.php#seccion" class="button transparente float-right">Ver más</a>
 
 
 
@@ -175,7 +176,7 @@
 
   </section><!--programa-->
 
-  <?php include_once 'includes/templates/oradores.php'; ?> 
+  <?php// include_once 'includes/templates/oradores.php'; ?> 
   <!-- <section id="invitados" class="invitados contenedor seccion">
     <h2>Nuestros Oradores</h2>
     <ul class="lista-invitados clearfix">
@@ -281,10 +282,20 @@
     <p id="coordenadas" style="display:none"> <?php echo $evento['ubicacion']; ?></p>
   </div> -->
 
+  <?php
+    try{
+      $res= $db->query("SELECT act.hora_inicio FROM categoria_act cat inner join actividad act ON act.id_categoria=cat.id_categoria
+      WHERE act.id_evento=" . $id_evento . " ORDER BY act.hora_inicio");
+      $primer_act= $res->fetch_assoc();
+    }
+    catch (Exception $e){
+      $error= $e->getMessage();
+    }
+  ?>
 
   <section class="seccion">
     <h2>Faltan</h2>
-    <div class="cuenta-regresiva contenedor">
+    <div class="cuenta-regresiva contenedor" data-time="<?php echo date_format(date_create($evento['fecha_inicio']), 'Y/m/d') . " " . $primer_act['hora_inicio']; ?>">
       <ul class="clearfix">
         <li><p id="dias" class="numero"></p>dias</li>
         <li><p id="horas" class="numero"></p>horas</li>

@@ -6,9 +6,13 @@ $(document).ready(function(){
 
     $('#crear-actividad').on('submit', actualizar);
 
+    $('#crear-categoria').on('submit', actualizar);
+
     $('#editar-actividad').on('submit', actualizar);
 
     $('#editar-admin').on('submit', actualizar);
+
+    $('#nueva-clave').on('submit', actualizar);
 
     $('#editar-evento').on('submit', actualizarFiles);
 
@@ -32,7 +36,7 @@ $(document).ready(function(){
 
     $('.box-body #comprobante').on('click', descargarComprobante);
 
-    $('#exportar').on('click', exportar);
+    $('#exportar').on('click', exportarInscriptos);
 
     function actualizar(e){
         e.preventDefault();
@@ -46,7 +50,6 @@ $(document).ready(function(){
         console.log(datos);
 
         if (validarcampos(datos)){
-            error.style.display='none';
             $.ajax({
                 type: $(this).attr('method'),
                 data: datos,
@@ -65,12 +68,19 @@ $(document).ready(function(){
                         var mensaje;
                         switch (origen){
                             case 'crear-admin':
-                                mensaje='Nombre de usuario no disponible. Intente otro.'
+                                mensaje='Nombre de usuario no disponible. Intente otro.';
+                            case 'nueva-clave':
+                                if (data.respuesta=="clave incorrecta"){
+                                    mensaje='La contraseña actual es incorrecta.'
+                                }else{
+                                    mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
+                                };
+                            break;
                         }
                         swal.fire({
                             icon: 'error',
                             title: 'Error!',
-                            text: 'Usuario no disponible',
+                            text: mensaje,
                           })
                     }
                 },
@@ -167,11 +177,21 @@ $(document).ready(function(){
                         'success'
                     )
                 } else {
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Usuario no disponible',
-                    })
+                    var msj;
+                        if (data.respuesta=='Extensión incorrecta'){
+                            msj= "Formato de archivo incorrecto. Revise los formatos permitidos."
+                        } else{
+                            if (data.respuesta!=''){
+                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde. Referencia: " + data.respuesta;
+                            }else {
+                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde.";
+                            }
+                        }
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: msj,
+                          })
                 }
             },
             error: function (XHR, status) {
@@ -305,7 +325,38 @@ $(document).ready(function(){
                 var a = document.createElement('a');
                 var url = window.URL.createObjectURL(data);
                 a.href = url;
-                a.download = 'planilla_inscriptos.xls';
+                a.download = 'planilla_inscriptos.xlsx';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
+
+    function exportarInscriptos(e){
+        e.preventDefault();
+        const id= $(this).attr('data-id');
+        const tabla= $('#dtHorizontalVerticalExample').prop('outerHTML');
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                descargar: 1,
+                tabla: tabla
+            },
+            url: 'exportar-inscriptos.php?id='+id,
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'planilla_inscriptos.xlsx';
                 a.click();
                 window.URL.revokeObjectURL(url);
             },
@@ -365,9 +416,17 @@ $(document).ready(function(){
         const tipo= $(this).attr('data-tipo');  //admin o admin-sistema .. no se usa
         const id= $(this).attr('data-id');
         const url= $(this).attr('url');
+        var titulo;
+        if (tipo=="sin-confirmar"){
+            titulo= "¿Está seguro que desea eliminarlos?"
+            texto= "No podrá recuperarlos";
+        }else{
+            titulo= "¿Está seguro que desea eliminarlo?"
+            texto= "No podrá recuperarlo";
+        }
         swal.fire({
-            title: '¿Está seguro que desea eliminarlo?',
-            text: "No podrá recuperarlo",
+            title: titulo,
+            text: texto,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -388,15 +447,21 @@ $(document).ready(function(){
                     complete: function(data){
                         console.log(data);
                         if (data.statusText== 'OK'){
-
                             swal.fire(
                                 'Eliminado!',
                                 '',//'Administrador creado correctamente',
                                 'success'
                             )
-                            setTimeout(function(){
-                                jQuery('[data-id="'+ id +'"]').parents('tr').remove();
-                            },1000);
+                            if (tipo=="sin-confirmar"){
+                                setTimeout(function(){
+                                    location.reload();
+                                },1000);    
+                            } else{
+                                setTimeout(function(){
+                                    jQuery('[data-id="'+ id +'"]').parents('tr').remove();
+                                },1000);
+                            }
+                            
                         } else {
                             swal.fire({
                                 icon: 'error',

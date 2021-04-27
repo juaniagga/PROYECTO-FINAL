@@ -24,8 +24,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        Guía de uso del sistema
       </h1>
     </section>
 

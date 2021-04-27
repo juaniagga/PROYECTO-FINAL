@@ -128,8 +128,9 @@ $(function() {
     $('.resumen-evento li:nth-child(4) p').animateNumber({ number: 80 }, 1200);
 
     //Cuenta regresiva
-
-    $('.cuenta-regresiva').countdown('2020/12/10 09:00:00', function(event){
+    const tiempo= $('.cuenta-regresiva').attr('data-time');
+    console.log(tiempo);
+    $('.cuenta-regresiva').countdown(tiempo, function(event){
         $('#dias').html(event.strftime('%D'));
         $('#horas').html(event.strftime('%H'));
         $('#minutos').html(event.strftime('%M'));

@@ -3,10 +3,10 @@ include_once 'funciones/sesion-admin.php';
 include_once 'templates/header.php';
 
 $permiso = $_SESSION['permiso'];
-if ($permiso){
-  $id_evento= $_GET['id'];
-}else{
-  $id_evento= $_SESSION['id_evento'];
+if ($permiso) {
+  $id_evento = $_GET['id'];
+} else {
+  $id_evento = $_SESSION['id_evento'];
 }
 ?>
 
@@ -39,21 +39,17 @@ if ($permiso){
           <div class="col-xs-12">
             <!-- BOX ADMIN SISTEMA -->
             <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Gestiones los inscriptos</h3>
-              </div>
               <!-- /.box-header -->
               <div class="box-body">
                 <div class="">
-                <table id="dtHorizontalVerticalExample" class="text-center table table-striped table-bordered table-sm " cellspacing="0"
-  width="100%">
+                  <table id="dtHorizontalVerticalExample" class="text-center table table-striped table-bordered table-sm " cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                      <?php
-                        if (!$permiso){
-                      ?>
-                        <th class="col-xs-2">Acciones</th>
-                      <?php }?>
+                        <?php
+                        if (!$permiso) {
+                        ?>
+                          <th class="col-xs-2">Acciones</th>
+                        <?php } ?>
                         <th class="col-xs-3">Nombre</th>
                         <th class="col-xs-3">Apellido</th>
                         <th class="col-xs-3">Email</th>
@@ -62,6 +58,7 @@ if ($permiso){
                         <th class="col-xs-2">Acreditado</th>
                         <th class="col-xs-2">Fecha registro</th>
                         <th class="col-xs-2">Tarifa</th>
+                        <th class="col-xs-2">Categoría</th>
                         <th class="col-xs-2">Comprobante de pago</th>
                         <th class="col-xs-2">Forma pago</th>
                         <th class="col-xs-2">Importe abonado</th>
@@ -85,7 +82,7 @@ if ($permiso){
                         <th class="col-xs-2">Fecha de arribo</th>
                         <th class="col-xs-2">Fecha de partida</th>
                         <th class="col-xs-2">Forma de traslado</th>
-                        
+
                       </tr>
                     </thead>
                     <tbody>
@@ -98,125 +95,130 @@ if ($permiso){
                       u.provincia, u.pais, u.trabajo_cientifico, u.institucion, u.cargo, p.fecha_registro, p.acreditado,
                       p.forma_pago, p.importe_abonado, p.fecha_pago, p.comentario_pago, p.pago_confirmado, p.exento,
                       p.facturacion, p.iva, p.cuit, p.adicionales, p.nombre_factura, p.alojamiento, p.fecha_arribo,
-                      p.fecha_partida, p.traslado, c.tarifa, p.comprobante, p.id_participante
-                    FROM participante p, usuario u, cat_asociadas c
-                    WHERE u.id_user=p.id_user AND p.id_evento=". $id_evento . "
-                    AND c.id_categoria=p.id_categoria
+                      p.fecha_partida, p.traslado, c.tarifa, p.comprobante, p.id_participante, p.id_categoria, cp.nombre as nombre_categoria
+                    FROM (usuario u INNER JOIN participante p ON u.id_user=p.id_user) INNER JOIN cat_asociadas c
+                    ON c.id_categoria=p.id_categoria INNER JOIN categoria_participante cp ON c.id_categoria=cp.id_categoria
+                    WHERE p.id_evento=" . $id_evento . "
                     ORDER BY u.apellido";
                         $tuplas = $db->query($sql);
                       } catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
                       }
 
-                    if ($tuplas){
-                      while ($user = $tuplas->fetch_assoc()) {
+                      if ($tuplas) {
+                        $emails_inscriptos="";
+                        $emails_sin_confirmar="";
+                        while ($user = $tuplas->fetch_assoc()) {
+                          $emails_inscriptos= $emails_inscriptos . $user['email'] . ",";
+                          if (!$user['pago_confirmado']){
+                            $emails_sin_confirmar= $emails_sin_confirmar . $user['email'] . ",";
+                          }
                       ?>
-                        <tr>
+                          <tr>
                             <?php
-                              if (!$permiso){
+                            if (!$permiso) {
                             ?>
-                          <td>
-                        
-                            <button type="button" id="acreditar" data-id="<?php echo $user['id_participante'];?>" class="btn  btn-success"><i class="fa fa-check"></i> Acreditar</button>
-                            <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante'];?>" class="btn  btn-primary"><i class="fa fa-check"></i> Validar pago</button>
-                            <button type="button" id="comprobante" data-id="<?php echo $user['id_participante'];?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
-                            
-                            <a href="#" data-id="<?php echo $user['id_participante']; ?>" data-tipo="participante" url="control-user.php" class="btn bg-maroon btn-flat margin borrar-registro">
-                              <i class="fa fa-trash"></i>
-                            </a>
-                          </td>
-                          <?php }?>
-                          <td><?php echo $user['nombre']; ?></td>
-                          <td><?php echo $user['apellido']; ?></td>
-                          <td> <?php echo $user['email']; ?></td>
-                          <td> <?php echo $user['dni']; ?></td>
-                          <td><?php echo $user['telefono']; ?></td>
-                          <td><?php 
-                            if ($user['acreditado']){
-                              echo "<span id='acreditado' class='badge bg-green'>Acreditado</span>";
-                            }else{
-                              echo "<span id='acreditado' class='badge bg-red'>No acreditado</span>";
-                            }
-                            ; ?></td>
-                          <td> <?php echo date_format(date_create($user['fecha_registro']), 'd-m-Y'); ?></td>
-                          <td> <?php echo $user['tarifa']; ?></td>
-                          <td><?php echo $user['comprobante']; ?></td>
-                          <td> <?php echo $user['forma_pago']; ?></td>
-                          <td> <?php echo $user['importe_abonado']; ?></td>
-                          <td><?php 
-                            if ($user['fecha_pago']=="0000-00-00"){
-                              echo "";
-                            }else{
-                              echo date_format(date_create($user['fecha_pago']), 'd-m-Y');
-                            };
-                          ?></td>
-                          <td> <?php echo $user['comentario_pago']; ?></td>
-                          <td> <?php
-                            if ($user['pago_confirmado']){
-                              echo "<span id='pago-confirmado' class='badge bg-green'>Confirmado</span>";
-                            }else{
-                              echo "<span id='pago-confirmado' class='badge bg-red'>Sin confirmar</span>";
-                            };
-                          ?></td>
-                          <td><?php
-                              if ($user['exento']){
-                                echo "Si";
-                              }else{
-                                echo "No";
-                              };
-                          ?></td>
-                          <td> <?php
-                             if ($user['trabajo_cientifico']){
-                              echo "Si";
-                            }else{
-                              echo "No";
-                            };
-                          ?></td>
-                          <td> <?php echo $user['calle'] . " " . $user['numero']; ?></td>
-                          <td> <?php echo $user['ciudad']; ?></td>
-                          <td> <?php echo $user['provincia']; ?></td>
-                          <td> <?php echo $user['pais']; ?></td>
-                          <td> <?php echo $user['institucion']; ?></td>
-                          <td> <?php echo $user['cargo']; ?></td>
-                          <td> <?php
-                                  if ($user['facturacion']){
+                              <td>
+
+                                <button type="button" id="acreditar" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa fa-check"></i> Acreditar</button>
+                                <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-check"></i> Validar pago</button>
+                                <button type="button" id="comprobante" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
+                                <button type="button" data-id="<?php echo $user['id_participante']; ?>" url="control-evento.php" data-tipo="participante" class="btn  btn-danger borrar-registro"><i class="fa fa-trash"></i></button>
+
+                              </td>
+                            <?php } ?>
+                            <td><?php echo $user['nombre']; ?></td>
+                            <td><?php echo $user['apellido']; ?></td>
+                            <td> <?php echo $user['email']; ?></td>
+                            <td> <?php echo $user['dni']; ?></td>
+                            <td><?php echo $user['telefono']; ?></td>
+                            <td><?php
+                                if ($user['acreditado']) {
+                                  echo "<span id='acreditado' class='badge bg-green'>Acreditado</span>";
+                                } else {
+                                  echo "<span id='acreditado' class='badge bg-red'>No acreditado</span>";
+                                }; ?></td>
+                            <td> <?php echo date_format(date_create($user['fecha_registro']), 'd-m-Y'); ?></td>
+                            <td> <?php echo $user['tarifa']; ?></td>
+                            <td> <?php echo $user['nombre_categoria']; ?></td>
+                            <td><?php echo $user['comprobante']; ?></td>
+                            <td> <?php echo $user['forma_pago']; ?></td>
+                            <td> <?php echo $user['importe_abonado']; ?></td>
+                            <td><?php
+                                if ($user['fecha_pago'] == "0000-00-00") {
+                                  echo "";
+                                } else {
+                                  echo date_format(date_create($user['fecha_pago']), 'd-m-Y');
+                                };
+                                ?></td>
+                            <td> <?php echo $user['comentario_pago']; ?></td>
+                            <td> <?php
+                                  if ($user['pago_confirmado']) {
+                                    echo "<span id='pago-confirmado' class='badge bg-green'>Confirmado</span>";
+                                  } else {
+                                    echo "<span id='pago-confirmado' class='badge bg-red'>Sin confirmar</span>";
+                                  };
+                                  ?></td>
+                            <td><?php
+                                if ($user['exento']) {
+                                  echo "Si";
+                                } else {
+                                  echo "No";
+                                };
+                                ?></td>
+                            <td> <?php
+                                  if ($user['trabajo_cientifico']) {
                                     echo "Si";
-                                  }else{
+                                  } else {
                                     echo "No";
                                   };
-                          ?></td>
-                          <td> <?php echo $user['iva']; ?></td>
-                          <td> <?php 
-                                  if ($user['cuit']=="0"){
-                                    echo "";
-                                  }else{
-                                    echo $user['cuit']; 
+                                  ?></td>
+                            <td> <?php echo $user['calle'] . " " . $user['numero']; ?></td>
+                            <td> <?php echo $user['ciudad']; ?></td>
+                            <td> <?php echo $user['provincia']; ?></td>
+                            <td> <?php echo $user['pais']; ?></td>
+                            <td> <?php echo $user['institucion']; ?></td>
+                            <td> <?php echo $user['cargo']; ?></td>
+                            <td> <?php
+                                  if ($user['facturacion']) {
+                                    echo "Si";
+                                  } else {
+                                    echo "No";
                                   };
-                          ?></td>
-                          <td> <?php echo $user['adicionales']; ?></td>
-                          <td> <?php echo $user['nombre_factura']; ?></td>
-                          <td> <?php echo $user['alojamiento']; ?></td>
-                          <td> <?php 
-                                  if ($user['fecha_arribo']=="0000-00-00"){
+                                  ?></td>
+                            <td> <?php echo $user['iva']; ?></td>
+                            <td> <?php
+                                  if ($user['cuit'] == "0") {
                                     echo "";
-                                  }else{
+                                  } else {
+                                    echo $user['cuit'];
+                                  };
+                                  ?></td>
+                            <td> <?php echo $user['adicionales']; ?></td>
+                            <td> <?php echo $user['nombre_factura']; ?></td>
+                            <td> <?php echo $user['alojamiento']; ?></td>
+                            <td> <?php
+                                  if ($user['fecha_arribo'] == "0000-00-00") {
+                                    echo "";
+                                  } else {
                                     echo date_format(date_create($user['fecha_arribo']), 'd-m-Y');
                                   };
-                          ?></td>
-                          <td> <?php 
-                                  if ($user['fecha_partida']=="0000-00-00"){
+                                  ?></td>
+                            <td> <?php
+                                  if ($user['fecha_partida'] == "0000-00-00") {
                                     echo "";
-                                  }else{
+                                  } else {
                                     echo date_format(date_create($user['fecha_partida']), 'd-m-Y');
                                   };
-                          ?></td>
-                          <td> <?php echo $user['traslado']; ?></td>
+                                  ?></td>
+                            <td> <?php echo $user['traslado']; ?></td>
 
-                          
-                        </tr>
+
+                          </tr>
                       <?php
+                        }
+                        
                       }
-                    }
                       ?>
                       </tr>
 
@@ -228,7 +230,39 @@ if ($permiso){
               <!-- /.box-body -->
             </div>
             <!-- /.box -->
-            <button type="button" id="exportar" data-id="<?php echo $id_evento?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Descargar planilla</button>
+            
+            <h2 class="title-section">Acciones</h2>
+            <div class="row">
+              <div class="col-lg-2 centrar-contenido">
+                <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
+              </div>
+              <div class="col-lg-4">
+                <div class="col-12">
+                  <label style="margin-right: 10px" for="">Eliminar inscriptos sin pago confirmado</label>
+                  <button type="button" data-id="0" url="control-evento.php" data-tipo="sin-confirmar" class="btn  btn-danger borrar-registro"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+
+            </div>
+            <h3 class="title-section">Envío de emails</h3>
+            <div class="row">
+              <div class="col-lg-2 centrar-contenido">
+                
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_inscriptos ?>" target="_blank">
+                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A todos los inscriptos</button>
+                </a>
+              </div>
+              <div class="col-lg-4">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_sin_confirmar?>" target="_blank">
+                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A inscriptos sin pago confirmado</button>
+                </a>
+              </div>
+
+            </div>
+
+
+
+
 
           </div>
           <!-- /.col -->

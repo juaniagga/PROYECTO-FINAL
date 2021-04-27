@@ -14,10 +14,16 @@ if ($permiso){
   $id_evento= $_SESSION['id_evento'];
 }
 
-$filename = "planilla.xls";
+$filename = "planilla_inscriptos.xlsx";
 header("Content-Type: application/vnd.ms-excel; charset=utf-8");
-header("Content-Disposition: attachment; filename=" . $filename);
+header("Content-Disposition: attachment; filename='" . $filename . "'");
 ?>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
 <table class="text-center table table-striped table-bordered table-sm" width="100%" cellpadding="5px" cellspacing="5px" border="0.5">
     <thead>
         <tr>
@@ -174,7 +180,8 @@ header("Content-Disposition: attachment; filename=" . $filename);
 
         </tfoot>
 </table>
-
+</body>
+</html>
 <?php
     exit;
 

@@ -262,7 +262,7 @@ $id_evento = $_SESSION['id_evento'];
                         <div class="form-group col-sm-4">
                           <label for="importe" class="col-sm-6 control-label">Importe abonado</label>
                           <div class="col-sm-12">
-                            <input name="importe" type="number" class="form-control" id="importe" placeholder="">
+                            <input name="importe" type="number" step="0.01" class="form-control" id="importe" placeholder="">
                           </div>
                         </div>
 
@@ -296,7 +296,7 @@ $id_evento = $_SESSION['id_evento'];
                           </div>
                       </div>
                       <div class="form-group col-sm-12" style="margin-left: 1rem;">
-                        <label for="pdf">Comprobante de pago</label>
+                        <label for="pdf">Comprobante de pago <span style="font-weight:300">(Formatos permitidos: "PDF", "JPG", "PNG", "JPEG")</span></label>
                         <input type="file" id="pdf" name="pdf">
                       </div>
                     

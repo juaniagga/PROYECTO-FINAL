@@ -1,3 +1,13 @@
+h1{
+    font-size: 30px;
+}
+h2{
+    font-size: 24px;
+}
+h3{
+    font-size: 20px;
+}
+
 .user-panel {
     height: 4rem;
 }
@@ -104,4 +114,19 @@ legend {
 
 .swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel{
     font-size: 1.3em;
+}
+
+.title-section{
+    margin: 5rem 0 2rem 0 !important;
+}
+
+button i{
+    margin-right: 1rem;
+}
+i.fa-trash{
+    margin-right: 0;
+}
+
+button.btn.btn-success.dropdown-toggle {
+    border-radius: 4px;
 }

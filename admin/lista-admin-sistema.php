@@ -73,8 +73,8 @@
                       <!-- <a href="editar-admin.php?id=<?php //echo $admin['id_admin']; ?>" class="btn bg-orange btn-flat margin">
                         <i class="fa fa-pencil"></i>
                       </a> -->
-                      <a href="#" data-id="<?php echo $admin['id_admin']; ?>" data-tipo="admin" url="control-admin.php" class="btn bg-maroon btn-flat margin borrar-registro">
-                        <i class="fa fa-trash"></i>
+                      <a href="#" data-id="<?php echo $admin['id_admin']; ?>" data-tipo="admin" url="control-admin.php" class="borrar-registro">
+                        <button type="button" class="btn  btn-danger"><i class="fa fa-trash"></i></button>
                       </a>
                     </td>
                   </tr>

@@ -21,27 +21,29 @@
             try {
               $sql = "
                               SELECT c.id_categoria, cp.nombre, c.tarifa
-                              FROM categoria_participante cp, cat_asociadas c
-                              WHERE c.id_evento=" . $id_evento . " and cp.id_categoria=c.id_categoria";
+                              FROM categoria_participante cp INNER JOIN cat_asociadas c ON cp.id_categoria=c.id_categoria
+                              WHERE c.id_evento=" . $id_evento . " and cp.autoreg=1";
               $tuplas = $db->query($sql);
             } catch (Exception $e) {
               echo "Error: " . $e->getMessage();
             }
 
-            while ($cat = $tuplas->fetch_assoc()) {
-            ?>
-              <li>
-                <div class="tabla-precio">
-                  <h3><?php echo $cat['nombre']; ?></h3>
-                  <p class="numero">$<?php echo $cat['tarifa']; ?></p>
-                  <ul>
-                  </ul>
-                  <div class="orden">
-                    <input type="radio" name="id_categoria" size="3" value="<?php echo $cat['id_categoria']; ?>" required>
-                  </div>
-                </div>
-              </li>
-            <?php
+            if ($tuplas){
+              while ($cat = $tuplas->fetch_assoc()) {
+                ?>
+                  <li>
+                    <div class="tabla-precio">
+                      <h3><?php echo $cat['nombre']; ?></h3>
+                      <p class="numero">$<?php echo $cat['tarifa']; ?></p>
+                      <ul>
+                      </ul>
+                      <div class="orden">
+                        <input type="radio" name="id_categoria" size="3" value="<?php echo $cat['id_categoria']; ?>" required>
+                      </div>
+                    </div>
+                  </li>
+                <?php
+                }
             }
             ?>
 
@@ -96,7 +98,7 @@
           <input type="hidden" name="nuevo-registro" value="1">
           <input type="hidden" name="id_evento" value="<?php echo $id_evento ?>">
           
-          <input id="btnRegistro" type="submit" class="button" value="REGISTRARSE">
+          <input id="btnRegistro" type="submit" class="button transparente" value="REGISTRARSE">
         </div>
         <!-- /.box-footer -->
       </form>

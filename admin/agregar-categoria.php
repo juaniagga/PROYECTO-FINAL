@@ -73,7 +73,7 @@ $permiso = $_SESSION['permiso'];
                     <div class="box-body">
                       <div class="form-group">
                         <label for="categoria" class="col-sm-3 control-label">Categoría</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                         <select name="categoria" class="form-control select2" id="categoria" placeholder="categoria" style="width: 100%;">
                           <option value="0">- Seleccione -</option>
                           <?php
@@ -98,7 +98,7 @@ $permiso = $_SESSION['permiso'];
                       </div>
                       <div class="form-group">
                         <label for="tarifa" class="col-sm-3 control-label">Tarifa</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                           <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="Tarifa">
                         </div>
                       </div>

@@ -45,6 +45,10 @@ $(document).ready(function () {
     language: 'es',
     autoclose: true
   });
+  $('.modal-body #datepicker').datepicker({
+    language: 'es',
+    autoclose: true
+  });
 
   //Initialize Select2 Elements
   $('.select2').select2();

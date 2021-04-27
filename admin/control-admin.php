@@ -1,13 +1,14 @@
 <?php
     include_once 'funciones/sesion-admin.php';
     include_once 'funciones/funciones.php';
-    $usuario= $_POST['usuario'];
-    $nombre= $_POST['nombre'];
-    $email= $_POST['email'];
+    
     $permiso= $_SESSION['permiso'];
 
     if (isset($_POST['crear-admin'])){
         $password= $_POST['password'];
+        $usuario= $_POST['usuario'];
+        $nombre= $_POST['nombre'];
+        $email= $_POST['email'];
         $tipo= $_POST['tipo-admin'];
         /* $opciones= array(
         'cost'=> 12
@@ -87,6 +88,9 @@
 
     elseif (isset($_POST['editar-admin'])){
         $id_admin= $_SESSION['id_admin'];
+        $usuario= $_POST['usuario'];
+        $nombre= $_POST['nombre'];
+        $email= $_POST['email'];
         /* $opciones= array(
         'cost'=> 12
         ); */
@@ -119,8 +123,61 @@
         echo json_encode($respuesta);
     }
 
+    elseif (isset($_POST['nueva-clave'])){
+        $id_admin= $_SESSION['id_admin'];
+        $clave_actual= $_POST['password'];
+        $clave_nueva= $_POST['new_password'];
+        $respuesta=array();
+
+        try {
+            $stmt= $db->prepare(" SELECT a.clave FROM administrador a WHERE a.id_admin=? ");
+            $stmt->bind_param("i", $id_admin);
+            $stmt->execute();
+            $stmt->bind_result($clave);
+            $stmt->store_result();  //para poder usar num_rows
+            $stmt->fetch();
+
+            if ($stmt->num_rows){
+                if (password_verify($clave_actual, $clave)){    //compara la password ingresada con la encriptada en la bdd
+        
+                    $new_pass= password_hash($clave_nueva, PASSWORD_BCRYPT);
+                    try {
+                        $stmt_2= $db->prepare("UPDATE administrador SET clave=? WHERE id_admin=?");
+                        $stmt_2->bind_param("si", $new_pass, $id_admin);
+                        $stmt_2->execute();
+                        if ($stmt_2->affected_rows || $db->error == ""){ 
+                            $respuesta= array(
+                                'respuesta' => 'exito',
+                            );
+                        }else{
+                            $respuesta= array(
+                                'respuesta' => $db->error,
+                            );
+                        };           
+                        $stmt_2->close();
+                    } catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                }else{
+                    $respuesta= array(
+                        'respuesta' => "clave incorrecta",
+                    );
+                }
+            }else{
+                $respuesta= array(
+                    'respuesta'=> 'error',
+                );
+            };
+            $stmt->close();
+            $db->close();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        echo json_encode($respuesta);
+    }
+
     elseif (isset($_POST['eliminar'])){
-        $id_admin= $_POST['id_admin'];
+        $id_admin= $_POST['id'];
         try {
             $stmt= $db->prepare("DELETE FROM administrador WHERE id_admin=?");
             $stmt->bind_param("i", $id_admin);

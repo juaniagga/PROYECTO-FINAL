@@ -81,6 +81,7 @@
         $id_evento= $_SESSION['id_evento'];
         $ubicacion= $_POST['ubicacion'];
         $organizador= $_POST['organizador'];
+        $limite= $_POST['limite'];
         $f_inicio= str_replace('/', '-', $_POST['fecha_inicio']);
         $f_fin = str_replace('/', '-', $_POST['fecha_fin']);
         $fecha_inicio= date_format(date_create($f_inicio), 'Y-m-d');
@@ -110,9 +111,9 @@
 
 
         try {
-            $stmt= $db->prepare("UPDATE evento SET nombre=?, fecha_inicio=?, fecha_fin=?, estado=?, organizador=?, ubicacion=?, descripcion=?, info_pago=? 
+            $stmt= $db->prepare("UPDATE evento SET nombre=?, fecha_inicio=?, fecha_fin=?, estado=?, organizador=?, limite=?, ubicacion=?, descripcion=?, info_pago=? 
             WHERE id_evento=?");
-            $stmt->bind_param("sssissssi", $nombre, $fecha_inicio, $fecha_fin, $estado, $organizador,$ubicacion, $descripcion, $pdf, $id_evento);
+            $stmt->bind_param("sssisisssi", $nombre, $fecha_inicio, $fecha_fin, $estado, $organizador, $limite, $ubicacion, $descripcion, $pdf, $id_evento);
             $stmt->execute();
 
             if ($stmt->affected_rows){ 
@@ -177,11 +178,52 @@
                 echo "Error: " . $e->getMessage();
             }
         }
-
+        elseif ($_POST['tipo']=='evento'){
+            try {
+                $stmt= $db->prepare("DELETE FROM evento WHERE id_evento=?");
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                if ($stmt->affected_rows){
+                    $respuesta= array(
+                        'respuesta' => 'exito',
+                    );
+                }else{
+                    $respuesta= array(
+                        'respuesta' => 'error',
+                    );
+                };
+                $stmt->close();
+                $db->close();
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
         elseif ($_POST['tipo']=='participante'){
             try {
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
                 $stmt->bind_param("i", $id);
+                $stmt->execute();
+                if ($stmt->affected_rows){
+                    $respuesta= array(
+                        'respuesta' => 'exito',
+                    );
+                }else{
+                    $respuesta= array(
+                        'respuesta' => 'error',
+                    );
+                };
+                $stmt->close();
+                $db->close();
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        }
+        elseif ($_POST['tipo']=='sin-confirmar'){
+            $id_evento= $_SESSION['id_evento'];
+            try {
+                $condicion=0;
+                $stmt= $db->prepare("DELETE FROM participante WHERE id_evento=? AND pago_confirmado=?");
+                $stmt->bind_param("ii", $id_evento, $condicion);
                 $stmt->execute();
                 if ($stmt->affected_rows){
                     $respuesta= array(
@@ -510,6 +552,7 @@
     }
 
     elseif (isset($_POST['crear-inscripto'])){
+        $id_evento= $_SESSION['id_evento'];
         $nombre= $_POST['nombre'];
         $apellido= $_POST['apellido'];
         $email= $_POST['email'];
@@ -531,12 +574,9 @@
             $stmt= $db->prepare("INSERT INTO usuario (email, clave, dni, nombre, apellido, telefono, calle, numero, ciudad, provincia, pais, trabajo_cientifico, institucion, cargo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             $stmt->bind_param("ssissisisssiss", $email, $clave, $dni, $nombre, $apellido, $telefono, $calle, $numero, $ciudad, $provincia, $pais, $trabajo_cientifico, $institucion, $cargo);
             $stmt->execute();
-            echo "id:  " . mysqli_insert_id($db);
             if (mysqli_insert_id($db) > 0){ 
                 $id_user= mysqli_insert_id($db);
-                echo " adentro";
-            }else{
-                echo "Error: " . $db->error;
+            }else{  //si el usuario ya esta registrado
                 $tupla = $db->query("SELECT u.id_user FROM usuario u WHERE u.dni=" . $dni);
                 $u=$tupla->fetch_assoc();
                 $id_user= $u['id_user'];
@@ -548,11 +588,12 @@
             echo "Error: " . $e->getMessage();
         }
 
-        $categoria= $_POST['categoria']; 
+        $id_categoria= $_POST['categoria']; 
         $fecha_registro= date('Y-m-d',time());
         $forma_pago= $_POST['medio'];
         $importe_abonado= $_POST['importe'];
-        $fecha_pago= $_POST['fecha_pago'];
+        $f= str_replace('/', '-', $_POST['fecha_pago']);
+        $fecha_pago= date_format(date_create($f), 'Y-m-d');
         $comentario= $_POST['comentario'];
         $exento= $_POST['exento'];
         $alojamiento= $_POST['hotel'];
@@ -562,15 +603,31 @@
         $acreditado=0;
         $pago_confirmado=0;
 
-        if (isset($_POST['cuit'])){
-            $facturacion= 1;
-        } else{
-            $facturacion=0;
-        }
         $iva= $_POST['iva'];
         $cuit= $_POST['cuit'];
         $nombre_factura= $_POST['nombre_factura'];
         $adicionales= $_POST['conceptos'];
+
+        try {
+            $sql = "
+                SELECT c.tarifa
+                FROM cat_asociadas c
+                WHERE c.id_evento=" . $id_evento;
+            $tuplas = $db->query($sql);
+          } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+          }
+        $cat = $tuplas->fetch_assoc();
+
+        if ($cat['tarifa']==0){
+            $pago_confirmado=1;
+        }
+
+        if (str_replace(' ', '', $iva)!=""){
+            $facturacion= 1;
+        } else{
+            $facturacion=0;
+        }
 
         $directorio= "../comprobantes/";
         if (!is_dir($directorio)){
@@ -578,9 +635,8 @@
         }
     
         try {
-            echo "id user " . $id_user;
-            $stmtp= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, acreditado,forma_pago, importe_abonado, comprobante, fecha_pago, comentario_pago, pago_confirmado,exento, facturacion,  iva, cuit, adicionales, nombre_factura, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmtp->bind_param("iiisisdsssiiisissssss", $id_user, $id_evento, $id_categoria, $fecha_registro, $acreditado,$forma_pago, $importe_abonado, $comprobante, $fecha_pago, $comentario_pago, $pago_confirmado,$exento, $facturacion, $iva, $cuit, $adicionales, $nombre_factura, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
+            $stmtp= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, acreditado,forma_pago, importe_abonado, fecha_pago, comentario_pago, pago_confirmado,exento, facturacion,  iva, cuit, adicionales, nombre_factura, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            $stmtp->bind_param("iiisisdssiiisissssss", $id_user, $id_evento, $id_categoria, $fecha_registro, $acreditado, $forma_pago, $importe_abonado, $fecha_pago, $comentario, $pago_confirmado, $exento, $facturacion, $iva, $cuit, $adicionales, $nombre_factura, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
             $stmtp->execute();
             
             if ($stmtp->affected_rows){ 
@@ -641,7 +697,7 @@
                     }
                 }else{
                     $respuesta = array(
-                        'respuesta' => "Extensión de archivo no permitida",
+                        'respuesta' => "Extensión incorrecta",
                     );
                 }
             }

@@ -94,8 +94,8 @@ $permiso = $_SESSION['permiso'];
                             </ul>
                           </div>
                           </div>
-                          <a href="#" data-id="<?php echo $evento['id_evento']; ?>" data-tipo="evento" class="btn bg-maroon btn-flat margin borrar-registro">
-                            <i class="fa fa-trash"></i>
+                          <a href="#" data-id="<?php echo $evento['id_evento']; ?>" data-tipo="evento" class="borrar-registro">
+                            <button type="button" class="btn  btn-danger"><i class="fa fa-trash"></i></button>
                           </a>
                         </td>
                       </tr>

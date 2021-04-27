@@ -91,17 +91,16 @@
                             <i class="fa <?php echo $act['icono']; ?>" aria-hidden="true"></i>
                             <?php echo $act['categoria'] ?> </p>
                             <p><?php echo $act['descripcion'] ;?></p>
-                            <p>
+                            
                                 <?php 
                                 foreach($act['oradores'] as $o){
                                     ?>
+                                <p>
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <?php
-                                    echo $o;
-                                    echo "<br>";
-                                }
-                                ?>
-                            </p>
+                                    <?php echo $o; ?>
+                                </p>
+                          <?php
+                                } ?>
                             
                         </div>
                         <!-- <pre>

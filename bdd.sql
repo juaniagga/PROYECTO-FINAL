@@ -20,6 +20,7 @@ CREATE TABLE evento(
     acreditados int not NULL,
     estado TINYINT NOT null,
     organizador varchar(30) not null,
+    limite int(8) UNSIGNED not NULL,
     ubicacion varchar(30) NOT NULL,
     descripcion varchar(1000) NOT NULL,
     info_pago varchar(20) not null,
@@ -85,7 +86,7 @@ CREATE TABLE usuario(
     dni int(8) UNSIGNED NOT NULL,
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
-    telefono int(20) UNSIGNED not null,
+    telefono varchar(20) not null,
     calle varchar(30) NOT NULL,
     numero int NOT NULL,
     ciudad varchar(30) NOT NULL,
@@ -220,9 +221,9 @@ VALUES
 
 
 INSERT INTO
-    categoria_participante(id_categoria, nombre)
+    categoria_participante(id_categoria, nombre, autoreg)
 VALUES
-    (1,'estudiante');
+    (1,'estudiante',1);
 
 INSERT INTO
     cat_asociadas(id_evento, id_categoria, tarifa)

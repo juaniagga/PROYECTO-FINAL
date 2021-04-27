@@ -22,6 +22,7 @@ $(document).ready(function () {
         search: 'Buscar'
       }
     });
+    
 
     $('.content #btn-new').attr('disabled',true);
 
