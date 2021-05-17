@@ -17,6 +17,8 @@ $(document).ready(function(){
     $('#cargar_comprobante').on('click', function(){
         var id_comprobante= $(this).attr('data-id');
         $('#input_participante').val(id_comprobante);
+        var id_comprobante_e= $(this).attr('data-evento');
+        $('#input_evento').val(id_comprobante_e);
     });
 
     function registro(e){
@@ -46,12 +48,23 @@ $(document).ready(function(){
                         } else {
                             var mensaje;
                             if (data.respuesta=="usuario duplicado"){
-                                mensaje="Ya estas registrado en este evento."
-                            }else{
+                                mensaje="Ya estas registrado en este evento.";
+                            }else
+                                if (data.respuesta=="limite"){
+                                    swal.fire({
+                                        title: 'Sin cupo',
+                                        text: 'No quedan cupos disponibles en este momento.',
+                                        icon: 'error',                                      
+                                    })
+                                }else{
                                 mensaje= "Ha ocurrido un error, vuelva a intetarlo.";
-                            }
-                            error.style.display="block";
-                            error.innerHTML=mensaje;
+                                swal.fire({
+                                    title: 'Error!',
+                                    text: mensaje,
+                                    icon: 'error',                                      
+                                })
+                                }
+                                            
                         }
                     },
                     error: function(XHR,status){
@@ -106,28 +119,16 @@ $(document).ready(function(){
                         break;
                     }
                 } else {
-                    var mensaje;
-                    switch (origen){
-                        case 'crear-user':
-                            if (data.respuesta=="email duplicado"){
-                                mensaje='El email ingresado ya se encuentra registrado.'
-                            }else{
-                                mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
-                            };
-                        case 'editar-user':
-                            mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.';
-                        case 'nueva-clave':
-                            if (data.respuesta=="clave incorrecta"){
-                                mensaje='La contraseña actual es incorrecta.'
-                            }else{
-                                mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
-                            };
-                        break;
+                    var msj;
+                    if (data.respuesta==""){
+                        msj="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde."
+                    }else{
+                        msj= data.respuesta;
                     }
                     swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: mensaje,
+                        text: msj,
                     })
                 }
             },
@@ -238,10 +239,12 @@ $(document).ready(function(){
 
     function infoPago(e){
         e.preventDefault();
+        var id_evento= $(this).attr('data-id');
         $.ajax({
             type: 'post',
             data: {
-                infoPago: 1
+                infoPago: 1,
+                id_evento,
             },
             url: 'usuario/panel.php',
             xhrFields: {

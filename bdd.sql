@@ -13,7 +13,7 @@ CREATE TABLE categoria_act(
 
 CREATE TABLE evento(
     id_evento int NOT NULL AUTO_INCREMENT,
-    nombre varchar(50) NOT NULL,
+    nombre varchar(100) NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     inscriptos int not NULL,
@@ -23,6 +23,7 @@ CREATE TABLE evento(
     limite int(8) UNSIGNED not NULL,
     ubicacion varchar(30) NOT NULL,
     descripcion varchar(1000) NOT NULL,
+    imagen varchar(50) not null,
     info_pago varchar(20) not null,
     PRIMARY KEY(id_evento)
 );
@@ -50,7 +51,7 @@ CREATE TABLE orador(
     nombre varchar(20) NOT NULL,
     apellido varchar(20) NOT NULL,
     biografia text(600) NOT NULL,
-    imagen varchar(20) not null,
+    imagen varchar(50) not null,
     PRIMARY KEY(id_orador),
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
 );
@@ -162,6 +163,13 @@ UPDATE evento
 SET  inscriptos=inscriptos + 1
 WHERE id_evento=NEW.id_evento;
 
+
+CREATE TRIGGER substract_inscripto
+AFTER DELETE ON participante
+FOR EACH ROW 
+UPDATE evento
+SET  inscriptos=inscriptos - 1
+WHERE id_evento=old.id_evento;
 
 
 /* INSERCIONES ------------------------------- */

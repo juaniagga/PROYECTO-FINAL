@@ -17,7 +17,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
           <li>
-            <a href="base-admin.php">
+            <a href="" id="guia-user">
               <i class="fa fa-info"></i>
               <span>Guía de usuario</span>
             </a>
@@ -29,17 +29,14 @@
         <?php
         if (!$permiso) {
         ?>
+
           <li class="treeview">
-            <a href="#">
-              <i class="fa fa-bookmark"></i>
-              <span>Evento</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="editar-evento.php"><i class="fa fa-pencil"></i>Editar información</a></li>
-            </ul>
+            <li>
+              <a href="editar-evento.php">
+                <i class="fa fa-pencil"></i>
+                <span>Editar evento</span>
+              </a>
+            </li>
           </li>
           <li class="treeview">
             <a href="#">
@@ -107,12 +104,12 @@
             </ul>
           </li>
           <li class="treeview">
-          <li>
-            <a href="estadisticas-evento.php">
-              <i class="fa fa-id-card"></i>
-              <span>Estadísticas</span>
-            </a>
-          </li>
+            <li>
+              <a href="estadisticas-evento.php">
+                <i class="fa fa-id-card"></i>
+                <span>Estadísticas</span>
+              </a>
+            </li>
           </li>
           <li class="treeview">
             <a href="#">

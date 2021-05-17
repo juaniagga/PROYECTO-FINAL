@@ -25,7 +25,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="js/demo.js"></script>
 <!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
 <!-- bootstrap datepicker -->
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>

@@ -1,5 +1,5 @@
 <?php include_once 'includes/templates/header.php'; ?>
-
+<?php include_once 'includes/funciones/redirection.php'; ?>
 
 <section class="seccion contenedor">
   <h2> Registro </h2>
@@ -52,7 +52,7 @@
 
         <p>Descargue el siguiente PDF con las indicaciones para realizar el pago, en caso de corresponder.</p>
         <div class="centrar-contenido">
-          <button type="button" id="info-pago" class="button transparente"><i class="fa fa-download"></i> Información de pago</button>
+          <button type="button" id="info-pago" data-id="<?php echo $id_evento;?>" class="button transparente"><i class="fa fa-download"></i> Información de pago</button>
         </div>
 
 

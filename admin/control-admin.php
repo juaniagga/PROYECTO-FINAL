@@ -27,9 +27,15 @@
                         'respuesta' => 'exito',
                     );
                 }else{
-                    $respuesta= array(
-                        'respuesta' => 'error',
-                    );
+                    $msj= $db->error;
+                        if (strpos($msj, "Duplicate entry")!==false){
+                            $respuesta= array(
+                                'respuesta' => 'El nombre de usuario ingresado ya se encuentra registrado. Intente con otro.');
+                        }else{
+                            $respuesta= array(
+                                'respuesta' => $msj,
+                            );
+                        }
                 };
                 $stmt_admin->close();
                 $db->close();
@@ -71,9 +77,15 @@
                     }
                     $stmt_ev->close();
                 }else{
-                    $respuesta= array(
-                        'respuesta' => 'error',
-                    );
+                    $msj= $db->error;
+                        if (strpos($msj, "Duplicate entry")!==false){
+                            $respuesta= array(
+                                'respuesta' => 'El nombre de usuario ingresado ya se encuentra registrado. Intente con otro.');
+                        }else{
+                            $respuesta= array(
+                                'respuesta' => $msj,
+                            );
+                        }
                 };
                 $stmt_admin->close();
                 

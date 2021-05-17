@@ -177,7 +177,7 @@ $id_evento = $_SESSION['id_evento'];
                         <label for="medio" class="col-sm-3 control-label">Categoría del participante *</label>
                         <div class="col-sm-12">
                           <select name="categoria" class="form-control select2" id="categoria" placeholder="" style="width: 20%;" required>
-                            <option value="0">- Seleccione -</option>
+                            <option value="">- Seleccione -</option>
                             <?php
                             try {
                               $sql = "
@@ -296,8 +296,8 @@ $id_evento = $_SESSION['id_evento'];
                           </div>
                       </div>
                       <div class="form-group col-sm-12" style="margin-left: 1rem;">
-                        <label for="pdf">Comprobante de pago <span style="font-weight:300">(Formatos permitidos: "PDF", "JPG", "PNG", "JPEG")</span></label>
-                        <input type="file" id="pdf" name="pdf">
+                        <label for="pdf">Comprobante de pago <span style="font-weight:300">(Formatos permitidos: .PDF, .JPG, .PNG., .JPEG)</span></label>
+                        <input type="file" id="pdf" name="file">
                       </div>
                     
                       <div class="form-group col-sm-12">

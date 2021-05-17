@@ -1,6 +1,8 @@
 <?php include_once 'includes/templates/header.php'; ?>
 
-<?php $id_evento= 1?>   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
+<?php include_once 'includes/funciones/redirection.php'; ?>
+
+<?php ?>   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
 
   
 
@@ -10,7 +12,7 @@
       $sql = "
             SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
             FROM evento e
-            WHERE e.id_evento=1"; //. $_GET['id'];
+            WHERE e.id_evento=" . $id_evento; //. $_GET['id'];
       $tupla = $db->query($sql);
       $evento = $tupla->fetch_assoc();
     } catch (Exception $e) {
@@ -84,7 +86,7 @@
               $sql_oradores="
               SELECT nombre, apellido, o.id_orador, id_actividad
               FROM orador o, dicta d
-              WHERE o.id_orador = d.id_orador
+              WHERE o.id_orador = d.id_orador AND o.id_evento=" . $id_evento . "
               ORDER BY nombre";;
               $tuplas_oradores= $db->query($sql_oradores);
             }
@@ -158,7 +160,7 @@
                 </div><!--#charlas-->
               
             <?php } ?>
-          <a href="calendario.php#seccion" class="button transparente float-right">Ver más</a>
+          <a href="calendario.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente float-right">Ver más</a>
 
 
 
@@ -176,7 +178,7 @@
 
   </section><!--programa-->
 
-  <?php// include_once 'includes/templates/oradores.php'; ?> 
+  <?php // include_once 'includes/templates/oradores.php'; ?> 
   <!-- <section id="invitados" class="invitados contenedor seccion">
     <h2>Nuestros Oradores</h2>
     <ul class="lista-invitados clearfix">
@@ -293,7 +295,7 @@
     }
   ?>
 
-  <section class="seccion">
+  <section class="seccion" id="sec-cuenta">
     <h2>Faltan</h2>
     <div class="cuenta-regresiva contenedor" data-time="<?php echo date_format(date_create($evento['fecha_inicio']), 'Y/m/d') . " " . $primer_act['hora_inicio']; ?>">
       <ul class="clearfix">
@@ -309,7 +311,7 @@
   <div class="newsletter parallax">
     <div class="contenido contenedor">
       <h3><?php echo $evento['nombre']?></h3>
-      <a href="registro.php#seccion" class="button transparente">Registro</a>
+      <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente">Registro</a>
     </div><!--contenido-->
   </div>
   

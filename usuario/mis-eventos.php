@@ -35,10 +35,10 @@ $id_user = $_SESSION['id_user'];
             <td> <?php echo date_format(date_create($evento['fecha_inicio']), 'd-m-Y'); ?></td>
             <td> <?php echo date_format(date_create($evento['fecha_fin']), 'd-m-Y'); ?></td>
             <td>
-              <a href="">
+              <a href="../index.php?id=<?php echo $evento['id_evento']?>" target="_blank">
                 <button type="button" class="btn  btn-success">Ver evento</button>
               </a>
-              <button type="button" id="cargar_comprobante" data-toggle="modal" data-target="#uploadModal" data-id="<?php echo $evento['id_participante'] ?>" class="btn  btn-default"><i class="fa fa-upload"></i> Cargar comprobante de pago</button>
+              <button type="button" id="cargar_comprobante" data-toggle="modal" data-target="#uploadModal" data-evento="<?php echo $evento['id_evento'];?>" data-id="<?php echo $evento['id_participante'] ?>" class="btn  btn-default"><i class="fa fa-upload"></i> Cargar comprobante de pago</button>
 
               <button type="button" id="baja" data-id="<?php echo $evento['id_participante']; ?>" class="btn  btn-danger"><i class="fa fa-trash"></i> Darme de baja</button>
             </td>
@@ -72,8 +72,8 @@ $id_user = $_SESSION['id_user'];
                         <div class="form-group col-sm-4">
                           <label for="medio" class="col-sm-5 control-label">Medio de pago *</label>
                           <div class="col-sm-12">
-                            <select name="medio" class="form-control select2" id="medio" placeholder="" style="width: 100%;">
-                              <option value="0">- Seleccione -</option>
+                            <select name="medio" class="form-control select2" id="medio" placeholder="" style="width: 100%;" required>
+                              <option value="">- Seleccione -</option>
                               <?php
                               try {
                                 $sql = "
@@ -124,6 +124,7 @@ $id_user = $_SESSION['id_user'];
                           <input type='file' name='file' id='file' class='form-control' required><br>
                           <input type="hidden" name="cargar-comprobante" value="1">
                           <input type="hidden" id="input_participante" name="participante">
+                          <input type="hidden" id="input_evento" name="id_evento">
                           </div>
                           
                       </div>      

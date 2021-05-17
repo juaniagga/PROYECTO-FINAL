@@ -88,7 +88,7 @@ $id_evento= $_SESSION['id_evento'];
                           }
                         ?>
                         </td>
-                        <td> <img style="width: 100px;" src="../img/oradores/<?php echo $orador['imagen']; ?>" alt=""></td>
+                        <td> <img style="width: 100px;" src="../img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt=""></td>
                         <td>
                           <a href="editar-orador.php?id=<?php echo urlencode(base64_encode($orador['id_orador'])); ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>

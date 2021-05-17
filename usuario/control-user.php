@@ -29,39 +29,48 @@
                 $pago_confirmado=1;
             }
     
+            $res_e= $db->query("SELECT e.limite, e.inscriptos FROM evento e WHERE e.id_evento=" . $id_evento);
+            $res= $res_e->fetch_assoc();
 
-            try {
-                $stmt= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, pago_confirmado, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?)");
-                $stmt->bind_param("iiisissss", $id_user, $id_evento, $id_categoria, $fecha_registro, $pago_confirmado, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
-                $stmt->execute();
-                
-                if ($stmt->affected_rows){ 
-                    $respuesta= array(
-                        'respuesta' => 'exito',
-                    );
-                }else{
-                    $msj= $db->error;
-                    if (strpos($msj, "Duplicate entry")!==false){
+            if ($res['inscriptos'] < $res['limite'] || $res['limite']==0){
+                try {
+                    $stmt= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, pago_confirmado, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?)");
+                    $stmt->bind_param("iiisissss", $id_user, $id_evento, $id_categoria, $fecha_registro, $pago_confirmado, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
+                    $stmt->execute();
+                    
+                    if ($stmt->affected_rows){ 
                         $respuesta= array(
-                            'respuesta' => 'usuario duplicado',
-                    );
-                    }else{
-                        $respuesta= array(
-                            'respuesta' => 'error',
+                            'respuesta' => 'exito',
                         );
-                    }
-                };
-    
-                $stmt->close();
-                $db->close();
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
+                    }else{
+                        $msj= $db->error;
+                        if (strpos($msj, "Duplicate entry")!==false){
+                            $respuesta= array(
+                                'respuesta' => 'usuario duplicado');
+                        }else{
+                            $respuesta= array(
+                                'respuesta' => 'error',
+                            );
+                        }
+                    };
+        
+                    $stmt->close();
+                    $db->close();
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            }else{
+                $respuesta= array(
+                    'respuesta' => 'limite',
+                );
             }
+            
         echo json_encode($respuesta);
     }
 
     elseif (isset($_POST['cargar-comprobante'])) {
         $id_participante = $_POST['participante'];
+        $id_evento = $_POST['id_evento'];
         $forma_pago= $_POST['medio'];
         $importe_abonado= $_POST['importe'];
         $f= str_replace('/', '-', $_POST['fecha_pago']);
@@ -79,7 +88,7 @@
             $facturacion=0;
         }
 
-        $directorio = "../comprobantes/";
+        $directorio = "../comprobantes/evento_" . $id_evento . "/";
         if (!is_dir($directorio)) {
             mkdir($directorio, 0755, true);
         }
@@ -239,12 +248,12 @@
                     }
                 }else{
                     $respuesta= array(
-                        'respuesta' => "clave incorrecta",
+                        'respuesta' => "La contraseña actual es incorrecta.",
                     );
                 }
             }else{
                 $respuesta= array(
-                    'respuesta'=> 'error',
+                    'respuesta'=> $db->error,
                 );
             };
             $stmt->close();
@@ -254,3 +263,5 @@
         }
         echo json_encode($respuesta);
     }
+
+    

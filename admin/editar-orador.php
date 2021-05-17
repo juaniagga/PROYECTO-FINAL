@@ -132,10 +132,10 @@ if (!filter_var($id_orador,FILTER_VALIDATE_INT)){
                       <div class="form-group">
                         <label for="imagen">Foto actual</label>
                         <br>
-                        <img src="../img/oradores/<?php echo $orador['imagen'];?>" width="40%" alt=" Foto del orador">
+                        <img src="../img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen'];?>" width="40%" alt=" Foto del orador">
                       </div>
                       <div class="form-group">
-                        <label for="imagen">Actualizar foto</label>
+                        <label for="imagen">Actualizar foto <span style="font-weight:300">(Formatos permitidos: .JPG, .JPEG, .PNG)</span></label>
                         <input type="file" id="imagen" name="imagen">
                       </div>
                       <div id="error" style="display: none"></div>

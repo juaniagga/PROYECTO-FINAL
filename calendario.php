@@ -1,26 +1,19 @@
 <?php include_once 'includes/templates/header.php'; ?>
-
-  <!-- <section class="seccion contenedor">
-    <h2> FIESA Mar del Plata 2021</h2>
-      <p>
-        La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.
-      </p>
-  </section> --> <!--seccion-->
+<?php include_once 'includes/funciones/redirection.php'; ?>
 
   <section id="calendario" class="seccion contenedor min-altura">
     <h2>Calendario</h2>
 
     <?php 
         try{
-            require_once('includes/funciones/conexionBDD.php');
             $sql_actividades="
             SELECT nombre_act, descripcion, fecha, hora_inicio, hora_fin, id_actividad,c.nombre as nombre_cat, icono
             FROM actividad a, categoria_act c
-            WHERE a.id_categoria=c.id_categoria";
+            WHERE a.id_categoria=c.id_categoria AND a.id_evento=" . $id_evento;
             $sql_oradores="
             SELECT nombre, apellido, o.id_orador, id_actividad
             FROM orador o, dicta d
-            WHERE o.id_orador = d.id_orador";
+            WHERE o.id_orador = d.id_orador AND o.id_evento=" . $id_evento;
             $tuplas_actividades= $db->query($sql_actividades);
             $tuplas_oradores= $db->query($sql_oradores);    //oradores con el id_actividad
         }

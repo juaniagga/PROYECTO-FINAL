@@ -38,6 +38,8 @@ $(document).ready(function(){
 
     $('#exportar').on('click', exportarInscriptos);
 
+    $('#guia-user').on('click', guia);
+
     function actualizar(e){
         e.preventDefault();
         let datos= $(this).serializeArray();
@@ -68,20 +70,46 @@ $(document).ready(function(){
                         var mensaje;
                         switch (origen){
                             case 'crear-admin':
-                                mensaje='Nombre de usuario no disponible. Intente otro.';
+                                if (data.respuesta!=""){
+                                    mensaje= data.respuesta;
+                                }else
+                                    mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
+                                    swal.fire({
+                                        icon: 'error',
+                                        title: 'Error!',
+                                        text: mensaje,
+                                    });
+                            break;
                             case 'nueva-clave':
                                 if (data.respuesta=="clave incorrecta"){
                                     mensaje='La contraseña actual es incorrecta.'
                                 }else{
                                     mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
                                 };
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: mensaje,
+                            });
+                            break;  
+                            default:
+                                if (data.respuesta!=''){
+                                    msj= "Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde. Referencia: " + data.respuesta;
+                                    swal.fire({
+                                        icon: 'error',
+                                        title: 'Error!',
+                                        text: msj,
+                                      })
+                                }else {
+                                    swal.fire(
+                                        'Hecho!',
+                                        '',
+                                        'success'
+                                      )
+                                }
                             break;
                         }
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: mensaje,
-                          })
+                        
                     }
                 },
                 error: function(XHR,status){
@@ -130,11 +158,22 @@ $(document).ready(function(){
                             'success'
                           )
                     } else {
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Usuario no disponible',
-                          })
+                        var msj;
+                        if (data.respuesta!=''){
+                            msj= data.respuesta;
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: msj,
+                              })
+                        }else {
+                            swal.fire(
+                                'Hecho!',
+                                '',
+                                'success'
+                              )
+                        }
+                        
                     }
                 },
                 error: function(XHR,status){
@@ -178,20 +217,16 @@ $(document).ready(function(){
                     )
                 } else {
                     var msj;
-                        if (data.respuesta=='Extensión incorrecta'){
-                            msj= "Formato de archivo incorrecto. Revise los formatos permitidos."
-                        } else{
-                            if (data.respuesta!=''){
-                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde. Referencia: " + data.respuesta;
-                            }else {
-                                msj= "Ha ocurrido un error. Recargue la página y vuelva a intentarlo más tarde.";
-                            }
-                        }
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: msj,
-                          })
+                    if (data.respuesta!=''){
+                        msj= data.respuesta;
+                    }else {
+                        msj= "Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
+                    }
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: msj,
+                    })
                 }
             },
             error: function (XHR, status) {
@@ -293,16 +328,24 @@ $(document).ready(function(){
                 responseType: 'blob'
             },
             success: function(data){
-                var a = document.createElement('a');
-                var url = window.URL.createObjectURL(data);
-                a.href = url;
-                a.download = 'pago_'+id+'.pdf';
-                a.click();
-                window.URL.revokeObjectURL(url);
+                console.log(data);
+                if (data!=null){
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'pago_'+id+'.pdf';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else{
+                    
+                }
             },
             error: function(XHR,status){
-                console.log(XHR);
-                console.log(status);
+                swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'No se ha encontrado el comprobante.',
+                  })
             }
         });
     }
@@ -357,6 +400,32 @@ $(document).ready(function(){
                 var url = window.URL.createObjectURL(data);
                 a.href = url;
                 a.download = 'planilla_inscriptos.xlsx';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
+
+    function guia(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            data: {
+                guia: 1
+            },
+            url: 'control-evento.php',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'guia_usuario.pdf';
                 a.click();
                 window.URL.revokeObjectURL(url);
             },

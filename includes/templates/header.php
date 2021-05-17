@@ -48,19 +48,21 @@
 
 <body class="<?php echo $pagina; ?>">
 
-  <?php $id_evento = 1 ?>
+  <?php $id_evento= $_GET['id'];?>
   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
   <?php
   setlocale(LC_TIME, 'es_RA');
   setlocale(LC_TIME, 'spanish');
   try {
-    require_once('includes/funciones/conexionBDD.php');
     $sql = "
-            SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
+            SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion, e.imagen, e.estado, e.organizador
             FROM evento e
-            WHERE e.id_evento=1"; //. $_GET['id'];
+            WHERE e.id_evento=". $id_evento;
     $tupla = $db->query($sql);
-    $evento = $tupla->fetch_assoc();
+    if (!($evento = $tupla->fetch_assoc())){
+      header("Location: usuario/not-found.php");
+      exit();
+    }
   } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
   }
@@ -68,7 +70,7 @@
   ?>
 
   <header class="site-header">
-    <div class="hero">
+    <div class="hero" style="background-image: url(img/<?php echo $evento['imagen'];?>);">
       <div class="contenido-header">
         <nav class="redes-sociales">
           <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -88,10 +90,12 @@
 
               ?></p>
             <p class="ciudad"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion'] ?> </p>
+              
+            <p>Organiza <?php echo $evento['organizador'];?></p>
           </div>
           <br><br>
           <h1 class="nombre-sitio"><?php echo $evento['nombre'] ?></h1>
-          <p class="slogan"> Feria Internacional de Educación Superior Argentina</p>
+          
 
         </div> <!-- informacion evento-->
 
@@ -113,11 +117,11 @@
           <img src="img/logoUNMDP.svg" alt="logo UNMDP">
         </div>
         <nav class="navegacion-principal clearfix">
-          <a href="index.php">Evento</a>
-          <a href="calendario.php#seccion">Programa</a>
-          <a href="oradores.php#seccion">Oradores</a>
-          <a href="galeria.php#seccion">Galería</a>
-          <a href="registro.php#seccion">Inscripción</a>
+          <a href="index.php?id=<?php echo $evento['id_evento']?>">Evento</a>
+          <a href="calendario.php?id=<?php echo $evento['id_evento']?>#seccion">Programa</a>
+          <a href="oradores.php?id=<?php echo $evento['id_evento']?>#seccion">Oradores</a>
+          <a href="galeria.php?id=<?php echo $evento['id_evento']?>#seccion">Galería</a>
+          <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion">Inscripción</a>
           <?php
             if (isset($_SESSION['id_user'])){
               ?>

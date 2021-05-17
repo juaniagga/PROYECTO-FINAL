@@ -75,11 +75,11 @@
                 $msj= $db->error;
                 if (strpos($msj, "Duplicate entry")!==false){
                     $respuesta= array(
-                        'respuesta' => 'email duplicado',
+                        'respuesta' => 'El email ingresado ya se encuentra registrado.',
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 }
                 

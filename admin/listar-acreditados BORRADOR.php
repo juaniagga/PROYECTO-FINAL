@@ -1,55 +1,24 @@
 <?php
 include_once 'funciones/sesion-admin.php';
-include_once 'templates/header.php';
-
-$permiso = $_SESSION['permiso'];
-if ($permiso) {
-  $id_evento = $_GET['id'];
-} else {
-  $id_evento = $_SESSION['id_evento'];
+try {
+    include_once 'funciones/funciones.php';
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
+
+if (isset($_POST['exportar'])){
+  setlocale(LC_TIME, 'es_RA');
+  setlocale(LC_TIME,'spanish');
+  $permiso = $_SESSION['permiso'];
+  if ($permiso){
+    $id_evento= $_GET['id'];
+  }else{
+    $id_evento= $_SESSION['id_evento'];
+  };
 ?>
-
-<body class="hold-transition skin-blue sidebar-mini">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-
-    <?php
-    include_once 'templates/barra.php';
-    ?>
-
-    <!-- =============================================== -->
-    <?php
-    include_once 'templates/navegacion.php';
-    ?>
-    <!-- =============================================== -->
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          Inscriptos al evento
-        </h1>
-      </section>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="row centrar-contenido">
-          <div class="col-xs-12">
-            <!-- BOX ADMIN SISTEMA -->
-            <div class="box">
-              <!-- /.box-header -->
-              <div class="box-body">
-                <div class="">
                   <table id="dtHorizontalVerticalExample" class="text-center table table-striped table-bordered table-sm " cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <?php
-                        if (!$permiso) {
-                        ?>
-                          <th class="col-xs-2">Acciones</th>
-                        <?php } ?>
                         <th class="col-xs-3">Nombre</th>
                         <th class="col-xs-3">Apellido</th>
                         <th class="col-xs-3">Email</th>
@@ -98,7 +67,7 @@ if ($permiso) {
                       p.fecha_partida, p.traslado, c.tarifa, p.comprobante, p.id_participante, p.id_categoria, cp.nombre as nombre_categoria
                     FROM (usuario u INNER JOIN participante p ON u.id_user=p.id_user) INNER JOIN cat_asociadas c
                     ON c.id_categoria=p.id_categoria INNER JOIN categoria_participante cp ON c.id_categoria=cp.id_categoria
-                    WHERE p.id_evento=" . $id_evento . "
+                    WHERE p.id_evento=" . $id_evento . " and p.acreditado=1
                     ORDER BY u.apellido";
                         $tuplas = $db->query($sql);
                       } catch (Exception $e) {
@@ -115,18 +84,6 @@ if ($permiso) {
                           }
                       ?>
                           <tr>
-                            <?php
-                            if (!$permiso) {
-                            ?>
-                              <td>
-
-                                <button type="button" id="acreditar" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa fa-check"></i> Acreditar</button>
-                                <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-check"></i> Confirmar pago</button>
-                                <button type="button" id="comprobante" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
-                                <button type="button" data-id="<?php echo $user['id_participante']; ?>" url="control-evento.php" data-tipo="participante" class="btn  btn-danger borrar-registro"><i class="fa fa-trash"></i></button>
-
-                              </td>
-                            <?php } ?>
                             <td><?php echo $user['nombre']; ?></td>
                             <td><?php echo $user['apellido']; ?></td>
                             <td> <?php echo $user['email']; ?></td>
@@ -224,67 +181,6 @@ if ($permiso) {
 
                       </tfoot>
                   </table>
-                </div>
-
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-            
-            <h2 class="title-section">Acciones</h2>
-            <div class="row">
-              <div class="col-lg-2 centrar-contenido">
-                <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
-              </div>
-              <div class="col-lg-2 centrar-contenido">
-                <a href="lista-acreditados.php">
-                  <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-check-square-o"></i> Listado de acreditados</button>
-                </a>
-              </div>
-              <?php
-              if (!$permiso) {
-                ?>
-              <div class="col-lg-4">
-                <div class="col-12">
-                  
-                  <button type="button" data-id="0" url="control-evento.php" data-tipo="sin-confirmar" class="btn  btn-danger borrar-registro"><i class="fa fa-trash" style="margin-right: 1rem;"></i> Inscriptos sin pago confirmado</button>
-                </div>
-              </div>
-                <?php } ?>
-            </div>
-            <?php
-            if (!$permiso) {
-              ?>
-            <h3 class="title-section">Envío de emails</h3>
-            <div class="row">
-              <div class="col-lg-2 centrar-contenido">
-                
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_inscriptos ?>" target="_blank">
-                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A todos los inscriptos</button>
-                </a>
-              </div>
-              <div class="col-lg-4">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_sin_confirmar?>" target="_blank">
-                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A inscriptos sin pago confirmado</button>
-                </a>
-              </div>
-
-            </div>
-            <?php } ?>
-
-
-
-
-
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <?php
-    include_once 'templates/footer.php';
-    ?>
+<?php
+}
+?>

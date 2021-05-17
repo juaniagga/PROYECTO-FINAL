@@ -106,16 +106,45 @@ legend {
     height: auto !important;
 }
 
-
+form img{
+    width: 210px;
+    height: 140px;
+    object-fit: contain;
+    object-position: center;
+}
+table img{
+    width: 100px;
+    height: 66px;
+    object-fit: contain;
+    object-position: center;
+}
 
 .registro .box-body, .registro .box, .registro .form-horizontal, .registro form, .registro .box-footer{
     background-color: #f2f2f2;
 }
 
 .swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel{
-    font-size: 1.3em;
+    font-size: 1.3em !important;
+}
+.swal2-content {
+    font-size: 1.4em !important;
 }
 
+.swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: .25em;
+    background: initial;
+    background-color: rgb(48, 133, 214) !important;
+    color: #fff;
+    font-size: 1em;
+}
+.swal2-html-container {
+    font-size: 1.4em !important;
+    padding: 1em 0em;
+}
+.swal2-popup{
+    width: 40em !important;
+}
 .title-section{
     margin: 5rem 0 2rem 0 !important;
 }
@@ -130,3 +159,4 @@ i.fa-trash{
 button.btn.btn-success.dropdown-toggle {
     border-radius: 4px;
 }
+

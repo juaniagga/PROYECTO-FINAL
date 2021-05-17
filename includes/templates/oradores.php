@@ -2,8 +2,9 @@
         try{
             require_once('includes/funciones/conexionBDD.php');
             $sql_oradores="
-            SELECT nombre, apellido, biografia, imagen, dni
-            FROM orador";
+            SELECT nombre, apellido, biografia, imagen, dni, id_evento
+            FROM orador o
+            WHERE o.id_evento=" . $id_evento;
             $tuplas_oradores= $db->query($sql_oradores);    //oradores con el id_actividad
         }
         catch(Exception $e){
@@ -34,7 +35,7 @@
                         <li>
                             <div class="invitado">
                                 <a class="invitado-info" href="#orador<?php echo $orador['dni']; ?>">
-                                    <img src= "img/oradores/<?php echo $orador['imagen']; ?>" alt="imagen orador">
+                                    <img src= "img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt="imagen orador">
                                     <p> <?php echo $orador['nombre_ape']; ?> </p>
                                 </a>
                             </div>

@@ -36,6 +36,12 @@
   <script src="js/jquery.countdown.js"></script>
   <script src="js/jquery.colorbox-min.js"></script>
   <script src="js/lightbox.js"></script>
+  <!-- SweetAlert -->
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
 
 <script src="js/user-ajax.js"></script>
 

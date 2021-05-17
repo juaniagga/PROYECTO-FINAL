@@ -6,48 +6,8 @@
 
     if (isset($_POST['eliminar'])){
         $id= $_POST['id'];
-        if ($_POST['tipo']=='actividad'){
-            try {
-                $stmt= $db->prepare("DELETE FROM actividad WHERE id_actividad=?");
-                $stmt->bind_param("i", $id);
-                $stmt->execute();
-                if ($stmt->affected_rows){
-                    $respuesta= array(
-                        'respuesta' => 'exito',
-                    );
-                }else{
-                    $respuesta= array(
-                        'respuesta' => 'error',
-                    );
-                };
-                $stmt->close();
-                $db->close();
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-            }
-        }
-        elseif ($_POST['tipo']=='orador'){
-            try {
-                $stmt= $db->prepare("DELETE FROM orador WHERE id_orador=?");
-                $stmt->bind_param("i", $id);
-                $stmt->execute();
-                if ($stmt->affected_rows){
-                    $respuesta= array(
-                        'respuesta' => 'exito',
-                    );
-                }else{
-                    $respuesta= array(
-                        'respuesta' => 'error',
-                    );
-                };
-                $stmt->close();
-                $db->close();
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-            }
-        }
 
-        elseif ($_POST['tipo']=='participante'){
+        if ($_POST['tipo']=='participante'){
             try {
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
                 $stmt->bind_param("i", $id);
@@ -176,8 +136,8 @@
 
     
     elseif (isset($_POST['infoPago'])) {
-
-        $filename = "info_pago.pdf";
+        $id_evento= $_POST['id_evento'];
+        $filename = "info_pago_" . $id_evento . ".pdf";
         $filepath = '../archivos/'. $filename;
 
         // header('Content-Description: File Transfer');

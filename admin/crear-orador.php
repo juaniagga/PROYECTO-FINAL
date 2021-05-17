@@ -98,7 +98,7 @@ $id_evento = $_SESSION['id_evento'];
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="imagen">Añadir foto</label>
+                        <label for="imagen">Añadir foto <span style="font-weight:300">(Formatos permitidos: .JPG, .JPEG, .PNG)</span></label>
                         <input type="file" id="imagen" name="imagen">
                       </div>
                       <div id="error" style="display: none"></div>

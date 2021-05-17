@@ -54,7 +54,7 @@ $permiso = $_SESSION['permiso'];
                 try {
                   include_once 'funciones/funciones.php';
                   $sql = "
-                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.organizador, e.ubicacion, e.estado, e.limite
+                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.organizador, e.ubicacion, e.estado, e.limite, e.imagen
                       FROM evento e
                       WHERE e.id_evento=" . $_SESSION['id_evento'];
                   $tupla = $db->query($sql);
@@ -107,7 +107,23 @@ $permiso = $_SESSION['permiso'];
                         <label for="limite" class="control-label">Limite de participantes</label>
                         <input name="limite" type="text" class="form-control" id="limite" placeholder="" value="<?php echo $evento['limite'] ?>">
                       </div>
-
+                      <div class="form-group">
+                        <label for="">Foto del foto actual</label>
+                        <br>
+                        <img src="../img/<?php echo $evento['imagen']?>" width="40%" alt=" Foto del evento">
+                      </div>
+                      <div class="form-group">
+                        <label for="imagen">Actualizar foto <span style="font-weight:300">(Formatos permitidos: .JPG, .JPEG, .PNG)</span></label>
+                        <?php if($evento['imagen']!=""){?>
+                          <input type="file" id="imagen" name="imagen">
+                        <?php
+                        }else{?>
+                            <input type="file" id="imagen" name="imagen" required>
+                        <?php
+                        }
+                        ?>
+                        
+                      </div>
                       <div class="form-group">
                         <label for="" class="control-label">Estado</label>
                         <?php
