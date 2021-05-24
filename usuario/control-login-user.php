@@ -24,12 +24,12 @@
                     
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'clave incorrecta',
+                        'respuesta' => 'Contraseña incorrecta.',
                     );
                 };
             }else{
                 $respuesta= array(
-                    'respuesta'=> 'no existe',
+                    'respuesta'=> 'El email ingresado no está registrado.',
                 );
             };
             $stmt->close();

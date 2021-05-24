@@ -1,6 +1,10 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="../index.php?id=<?php echo $_SESSION['id_evento']?>" class="logo" target="_blank">
+    <?php if (!$permiso){?>
+      <a href="../index.php?id=<?php echo $_SESSION['id_evento']?>" class="logo" target="_blank">
+    <?php }else{?>
+      <a class="logo" target="_blank">
+      <?php }?>
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><img src="../img/favicon.png" alt=""></span>
       <!-- logo for regular state and mobile devices -->

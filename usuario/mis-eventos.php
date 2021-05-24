@@ -22,7 +22,7 @@ $id_user = $_SESSION['id_user'];
           $sql = "
                       SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, p.id_participante
                       FROM evento e INNER JOIN participante p on e.id_evento=p.id_evento
-                      WHERE p.id_user=" . $id_user . "
+                      WHERE p.id_user=" . $id_user . " and e.estado=1
                       ORDER BY e.fecha_inicio, e.nombre";
           $tuplas = $db->query($sql);
         } catch (Exception $e) {
@@ -40,7 +40,7 @@ $id_user = $_SESSION['id_user'];
               </a>
               <button type="button" id="cargar_comprobante" data-toggle="modal" data-target="#uploadModal" data-evento="<?php echo $evento['id_evento'];?>" data-id="<?php echo $evento['id_participante'] ?>" class="btn  btn-default"><i class="fa fa-upload"></i> Cargar comprobante de pago</button>
 
-              <button type="button" id="baja" data-id="<?php echo $evento['id_participante']; ?>" class="btn  btn-danger"><i class="fa fa-trash"></i> Darme de baja</button>
+              <button type="button" id="baja" data-id="<?php echo $evento['id_participante']; ?>" data-evento="<?php echo $evento['id_evento'];?>" class="btn  btn-danger"><i class="fa fa-trash"></i> Darme de baja</button>
             </td>
           </tr>
         <?php

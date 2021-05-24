@@ -70,7 +70,7 @@
   ?>
 
   <header class="site-header">
-    <div class="hero" style="background-image: url(img/<?php echo $evento['imagen'];?>);">
+    <div class="hero" style="background-image: url(img/<?php echo "evento_" . $id_evento . "/" . $evento['imagen'];?>);">
       <div class="contenido-header">
         <nav class="redes-sociales">
           <a href="#"><i class="fab fa-facebook-f"></i></a>

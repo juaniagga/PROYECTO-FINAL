@@ -76,7 +76,7 @@ $id_evento = $_SESSION['id_evento'];
                       </div>
                       <div class="form-group">
                         <label>Actividades dictadas</label>
-                        <select name="actividades[]" id="actividades" class="form-control select2" multiple="multiple" data-placeholder="Selecciones las actividades" style="width: 100%;">
+                        <select name="actividades[]" id="actividades" class="form-control select2" multiple="multiple" data-placeholder="Selecciones las actividades" style="width: 100%;" required>
                           <?php
                           try {
                             $sql = "

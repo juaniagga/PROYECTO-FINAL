@@ -43,27 +43,19 @@ $(document).ready(function(){
                         console.log(data);
                         if (data.respuesta=="exito"){
                             setTimeout(function(){
-                                window.location.href= 'registro-exitoso.php#seccion';
+                                window.location.href= 'registro-exitoso.php?id=1#seccion';
                             },500);
                         } else {
                             var mensaje;
-                            if (data.respuesta=="usuario duplicado"){
-                                mensaje="Ya estas registrado en este evento.";
+                            if (data.respuesta==""){
+                                mensaje="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
                             }else
-                                if (data.respuesta=="limite"){
-                                    swal.fire({
-                                        title: 'Sin cupo',
-                                        text: 'No quedan cupos disponibles en este momento.',
-                                        icon: 'error',                                      
-                                    })
-                                }else{
-                                mensaje= "Ha ocurrido un error, vuelva a intetarlo.";
-                                swal.fire({
-                                    title: 'Error!',
-                                    text: mensaje,
-                                    icon: 'error',                                      
-                                })
-                                }
+                                mensaje=data.respuesta;
+                            swal.fire({
+                                title: 'Error!',
+                                text: mensaje,
+                                icon: 'error',                                      
+                            })
                                             
                         }
                     },
@@ -140,7 +132,6 @@ $(document).ready(function(){
 
     }
 
-
     function actualizarFiles(e){
         e.preventDefault();
         var datos= new FormData(this); //Para usar files
@@ -191,49 +182,6 @@ $(document).ready(function(){
                 }
             });
         
-    }
-
-    function altaInscripto(e) {
-        e.preventDefault();
-        let datos = new FormData(this); //Para usar files
-        var error = document.getElementById('error');
-        let campos= $(this).serializeArray();
-        console.log(campos);
-        datosAux= camposVacios(datos);
-        console.log(campos);
-        error.style.display = 'none';
-        $.ajax({
-            type: $(this).attr('method'),
-            data: datosAux,
-            url: $(this).attr('action'),
-            dataType: 'json',
-            /* Para trabajar con files: */
-            contentType: false,
-            processData: false,
-            async: true,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-                if (data.respuesta == 'exito') {
-                    swal.fire(
-                        'Hecho!',
-                        '',
-                        'success'
-                    )
-                } else {
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Usuario no disponible',
-                    })
-                }
-            },
-            error: function (XHR, status) {
-                console.log(XHR);
-                console.log(status);
-            }
-        });
-
     }
 
 
@@ -291,11 +239,12 @@ $(document).ready(function(){
                         window.history.back();
                     },2000);
                 } else {
+                    let msj= data.respuesta;
                     swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Usuario o contraseña incorrectos',
-                      })
+                        text: msj,
+                    })
                 }
             },
             error: function(XHR,status){
@@ -310,6 +259,7 @@ $(document).ready(function(){
     $('.box-body #baja').on('click', function(e){
         e.preventDefault();
         const id= $(this).attr('data-id');
+        const id_evento= $(this).attr('data-evento');
         swal.fire({
             title: '¿Está seguro que desea darse de baja del evento?',
             text: "No podrá deshacer esta acción",
@@ -322,17 +272,17 @@ $(document).ready(function(){
           }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    type: 'POST',
+                    type: 'post',
                     data:{
                         id: id,
-                        baja: 1
+                        baja: 1,
+                        id_evento: id_evento,
                     },
                     url: 'control-user.php',
                     dataType: 'json',
-                    complete: function(data){
-                        console.log(data);
-                        if (data.statusText== 'OK'){
-
+                    success: function(data){
+                        console.log(data.respuesta);  
+                        if (data.respuesta=="exito"){
                             swal.fire(
                                 'Hecho!',
                                 '',//'Administrador creado correctamente',
@@ -342,46 +292,28 @@ $(document).ready(function(){
                                 jQuery('[data-id="'+ id +'"]').parents('tr').remove();
                             },1000);
                         } else {
+                            var msj;
+                            if (data.respuesta!=""){
+                                msj= data.respuesta;
+                            }else {
+                                msj="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
+                            }
                             swal.fire({
                                 icon: 'error',
                                 title: 'Error!',
-                                text: '',
+                                text: msj,
                             })
                         }
+                    },
+                    error: function(XHR,status){
+                        console.log(XHR);
+                        console.log(status);
                     }
                 })
             }
         })
 
     });
-
-    //activar/desactivar pagos
-    $('.content #btn-pago').on('click', function(e){
-        e.preventDefault();
-
-        const accion= $(this).attr('data');
-        const id= $(this).attr('data-id');
-
-        $.ajax({
-            type: 'POST',
-            data:{
-                medios: 1,
-                id: id,
-                accion: accion,
-            },
-            url: 'control-evento.php',
-            dataType: 'json',
-            complete: function(data){
-                if (data.statusText== 'OK'){
-                    setTimeout(function(){
-                        window.location.href= 'medios-pago.php';
-                    },500);
-                }
-            }
-        })
-    
-    });
-
     
 
     $('.content #usuario').keypress(function(tecla){
@@ -394,18 +326,6 @@ $(document).ready(function(){
         $('login-admin #user').attr('autocomplete','on');
         $('login-admin #pass').attr('autocomplete','on');
     });
-
-    function validarcampos(datos){
-        var i=0;
-        while ((i < datos.length) && (datos[i].value!='')){
-            i++;
-        };
-        if (i < datos.length){
-            return 0;   //hay un campo en blanco
-        }else{
-            return 1;
-        }
-    }
 
     function camposVacios(datos){
         var i=0;

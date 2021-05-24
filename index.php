@@ -133,8 +133,8 @@
           
           <!-- Actividades del programa -->
           <?php
-            setlocale(LC_TIME, 'es_RA');
-            setlocale(LC_TIME,'spanish');
+            
+            
 					
               foreach ($actividades as $cat => $lista_act){ ?>
                 <div id="<?php echo $cat?>" class="info-curso ocultar clearfix">

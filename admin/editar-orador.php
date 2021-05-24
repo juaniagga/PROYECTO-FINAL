@@ -96,13 +96,13 @@ if (!filter_var($id_orador,FILTER_VALIDATE_INT)){
                           <?php
                           try {
                             //actividades actuales del orador
+
                             $sql_act = "
                             SELECT a.nombre_act, a.id_actividad
-                            FROM dicta d INNER JOIN actividad a ON a.id_actividad=d.id_actividad
-                            WHERE d.id_orador=" . $id_orador . "
+                            FROM orador o INNER JOIN dicta d ON o.id_orador=d.id_orador INNER JOIN actividad a ON a.id_actividad=d.id_actividad
+                            WHERE d.id_orador=" . $id_orador . " and o.id_evento=" . $id_evento . "
                             ORDER BY a.nombre_act";
-                            $tuplas_act = $db->query($sql_act);
-
+                            $tuplas_dicta = $db->query($sql_act);
 
                             $sql = "
                             SELECT a.id_actividad, a.nombre_act
@@ -113,19 +113,20 @@ if (!filter_var($id_orador,FILTER_VALIDATE_INT)){
                           } catch (Exception $e) {
                             echo "Error: " . $e->getMessage();
                           }
-
+                          $act_selected= array();
+                          while($dicta= $tuplas_dicta->fetch_assoc()){
+                            ?>
+                            <option value="<?php echo $dicta['id_actividad']; ?>" selected><?php echo $dicta['nombre_act']; ?></option>
+                            <?php
+                            $act_selected[]=$dicta['id_actividad'];
+                          }
                           while ($actividades = $tuplas->fetch_assoc()) {
-                            $act= $tuplas_act->fetch_assoc();
-                            if ($act && $actividades['id_actividad'] == $act['id_actividad']) {
+                            if (!in_array($actividades['id_actividad'], $act_selected)) {
                               ?>
-                                  <option value="<?php echo $actividades['id_actividad']; ?>" selected><?php echo $actividades['nombre_act']; ?></option>
-                                <?php
-                            } else {
-                                ?>
-                                  <option value="<?php echo $actividades['id_actividad']; ?>"><?php echo $actividades['nombre_act']; ?></option>
+                              <option value="<?php echo $actividades['id_actividad']; ?>"><?php echo $actividades['nombre_act']; ?></option>
                               <?php
-                             } //if
-                            } //while
+                            } //if
+                          } //while
                               ?>
                         </select>
                       </div>

@@ -43,12 +43,8 @@ $(document).ready(function(){
     function actualizar(e){
         e.preventDefault();
         let datos= $(this).serializeArray();
-        /* datos.push({name:'evento', value: nombre_evento});  //no manda evento
-        console.log(datos); */
         var error= document.getElementById('error');
-
         const origen=$(this).attr('id'); 
-
         console.log(datos);
 
         if (validarcampos(datos)){
@@ -70,31 +66,24 @@ $(document).ready(function(){
                         var mensaje;
                         switch (origen){
                             case 'crear-admin':
+                            case 'nueva-clave':
+                            case 'crear-actividad':
+                            case 'crear-categoria':
+                            case 'crear-orador':
+                            case 'crear-pago':
                                 if (data.respuesta!=""){
                                     mensaje= data.respuesta;
                                 }else
                                     mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
-                                    swal.fire({
-                                        icon: 'error',
-                                        title: 'Error!',
-                                        text: mensaje,
-                                    });
-                            break;
-                            case 'nueva-clave':
-                                if (data.respuesta=="clave incorrecta"){
-                                    mensaje='La contraseña actual es incorrecta.'
-                                }else{
-                                    mensaje='Ha ocurrido un error. Vuelva a intentarlo más tarde.'
-                                };
-                            swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: mensaje,
-                            });
-                            break;  
+                                swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: mensaje,
+                                });
+                            break; 
                             default:
                                 if (data.respuesta!=''){
-                                    msj= "Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde. Referencia: " + data.respuesta;
+                                    msj= data.respuesta;
                                     swal.fire({
                                         icon: 'error',
                                         title: 'Error!',
@@ -240,12 +229,14 @@ $(document).ready(function(){
     function acreditar(e){
         e.preventDefault();
         const id= $(this).attr('data-id');
+        const tipo= $(this).attr('data-tipo');
         console.log(id);
         $.ajax({
             type: 'post',
             data: {
                 id: id,
-                acreditar: 1
+                acreditar: 1,
+                tipo: tipo,
             },
             url: 'control-evento.php',
             dataType: 'json',
@@ -258,14 +249,29 @@ $(document).ready(function(){
                         'success'
                       )
                     setTimeout(function(){
-                        jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-green">Acreditado</span>');
+                        if (tipo=="add"){
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').html('<i class="fa  fa-close"></i> Desacreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').attr('data-tipo','remove');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-green">Acreditado</span>');
+                        } else{
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').html('<i class="fa  fa-check"></i> Acreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').attr('data-tipo','add');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-red">No acreditado</span>');
+                        }
+                        
                     },1000);
                 } else {
+                    var msj;
+                    if (data.respuesta!=''){
+                        msj= data.respuesta;
+                    }else {
+                        msj="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
+                    }
                     swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Vuelva a intentarlo',
-                      })
+                        text: msj,
+                    })
                 }
             },
             error: function(XHR,status){
@@ -299,11 +305,21 @@ $(document).ready(function(){
                         jQuery('[data-id="'+ id +'"]').parents('tr').find("#pago-confirmado").replaceWith('<span class="badge bg-green">Confirmado</span>');
                     },1000);
                 } else {
-                    swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Vuelva a intentarlo',
-                      })
+                    var msj;
+                    if (data.respuesta!=''){
+                        msj= data.respuesta;
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: msj,
+                            })
+                    }else {
+                        swal.fire(
+                            'Hecho!',
+                            '',
+                            'success'
+                            )
+                    }
                 }
             },
             error: function(XHR,status){
@@ -464,11 +480,12 @@ $(document).ready(function(){
                         //window.location.href= 'base-'+ tipo +'.php';
                     },2000);
                 } else {
+                    let msj= data.respuesta;
                     swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Usuario o contraseña incorrectos',
-                      })
+                        text: msj,
+                    })
                 }
             },
             error: function(XHR,status){
@@ -513,12 +530,12 @@ $(document).ready(function(){
                     },
                     url: url,
                     dataType: 'json',
-                    complete: function(data){
+                    success: function(data){
                         console.log(data);
-                        if (data.statusText== 'OK'){
+                        if (data.respuesta== 'exito'){
                             swal.fire(
                                 'Eliminado!',
-                                '',//'Administrador creado correctamente',
+                                '',
                                 'success'
                             )
                             if (tipo=="sin-confirmar"){
@@ -532,12 +549,20 @@ $(document).ready(function(){
                             }
                             
                         } else {
+                            if (data.respuesta!=""){
+                                mensaje= data.respuesta;
+                            }else
+                                mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
                             swal.fire({
                                 icon: 'error',
                                 title: 'Error!',
-                                text: '',
-                            })
+                                text: mensaje,
+                            });
                         }
+                    },
+                    error: function(XHR,status){
+                        console.log(XHR);
+                        console.log(status);
                     }
                 })
             }
@@ -561,66 +586,30 @@ $(document).ready(function(){
             },
             url: 'control-evento.php',
             dataType: 'json',
-            complete: function(data){
-                if (data.statusText== 'OK'){
+            success: function(data){
+                if (data.respuesta== 'exito'){
                     setTimeout(function(){
                         window.location.href= 'medios-pago.php';
                     },500);
+                } else{
+                    if (data.respuesta!=""){
+                        mensaje= data.respuesta;
+                    }else
+                        mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: mensaje,
+                    });
                 }
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
             }
         })
     
     });
-
-
-    /* $('.borrar-registro').on('click', function(e){
-        e.preventDefault();
-        const tipo= $(this).attr('data-tipo');  //admin o admin-sistema
-        const user= $(this).attr('data-id');
-        swal.fire({
-            title: '¿Está seguro que desea eliminarlo?',
-            text: "No podrá recuperarlo",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'POST',
-                    data:{
-                        usuario: user,
-                        tipo: tipo,
-                        eliminar: 1
-                    },
-                    url: 'control-admin-sistema.php',
-                    dataType: 'json',
-                    complete: function(data){
-                        console.log(data);
-                        if (data.statusText== 'OK'){
-                            JQuery('[data-id="'+ user +'"]').parents('tr').remove();
-                            
-                        } else {
-                            swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: '',
-                              });
-                        }
-                    }
-                })
-                swal.fire(
-                    'Eliminado!',
-                    '',
-                    'success'
-                );
-            }
-          });
-        
-
-    }); */
 
     
 

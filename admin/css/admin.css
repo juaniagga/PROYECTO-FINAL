@@ -37,7 +37,10 @@ h3{
 .login-page form{
     margin-bottom: 1rem;
 }
-
+.login-logo a:hover{
+    text-decoration: none;
+    color: #444;
+}
 table td{
     font-size: 16px;
 }
@@ -159,4 +162,14 @@ i.fa-trash{
 button.btn.btn-success.dropdown-toggle {
     border-radius: 4px;
 }
+button#acreditar{
+    width: 135px;
+}
+.btn-success{
+    background-color: #00a65a;
+    border-color: #00a65a;
+}
 
+.btn-success:hover{
+    background-color: #018e4d;
+}

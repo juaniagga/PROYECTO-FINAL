@@ -13,7 +13,7 @@ if ($out) {
 
     <div class="login-box">
       <div class="login-logo">
-        <a href="../index.php"><b>UNMDP </b>Eventos</a>
+        <a><b>UNMDP </b>Eventos</a>
       </div>
       <!-- /.login-logo -->
       <div class="login-box-body">
@@ -21,7 +21,7 @@ if ($out) {
 
         <form name="login-user" id="login-user" method="post" action="control-login-user.php">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
             <span class="form-control-feedback"><i class="fa fa-user"></i></span>
           </div>
           <div class="form-group has-feedback">

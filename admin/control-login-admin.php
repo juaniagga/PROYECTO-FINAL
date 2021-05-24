@@ -40,12 +40,12 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'clave incorrecta',
+                        'respuesta' => 'Contraseña incorrecta',
                     );
                 };
             }else{
                 $respuesta= array(
-                    'respuesta'=> 'no existe',
+                    'respuesta'=> 'El usuario ingresado no está registrado.',
                 );
             };
             $stmt->close();

@@ -56,8 +56,6 @@
 				<h3>    <!-- Muestro fecha -->
 					<i class="fa fa-calendar"></i>
 					<?php
-					setlocale(LC_TIME, 'es_RA');
-					setlocale(LC_TIME,'spanish');
 					echo utf8_encode(strftime("%A, %d de %B del %Y", strtotime($dia)));
 					?>  
 				</h3>

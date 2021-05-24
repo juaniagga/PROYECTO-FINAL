@@ -10,11 +10,8 @@
         $nombre= $_POST['nombre'];
         $email= $_POST['email'];
         $tipo= $_POST['tipo-admin'];
-        /* $opciones= array(
-        'cost'=> 12
-        ); */
 
-        $password_hashed= password_hash($password, PASSWORD_BCRYPT);/* , $opciones */
+        $password_hashed= password_hash($password, PASSWORD_BCRYPT);
         $respuesta=array();
         if ($tipo){                                                                 // agrego ADMIN SISTEMA
             try {
@@ -50,7 +47,6 @@
                 $id_admin= mysqli_insert_id($db);
 
                 if ($id_admin > 0){  
-                    echo "es mayor";  
                     $respuesta= array(
                         'respuesta' => 'exito',
                         'id' => $id_admin
@@ -58,34 +54,36 @@
 
                     if ($permiso){                  //soy admin-sistema
                         $nombre_evento= $_POST['evento'];
-
-                        $stmt_ev= $db->prepare("INSERT INTO evento (nombre) VALUES(?)");
-                        $stmt_ev->bind_param("s", $nombre_evento);
+                        $fecha_inicio= date('Y-m-d',time());
+                        $fecha_fin= date('Y-m-d',time());
+                        $stmt_ev= $db->prepare("INSERT INTO evento (nombre, fecha_inicio, fecha_fin) VALUES(?,?,?)");
+                        $stmt_ev->bind_param("sss", $nombre_evento, $fecha_inicio, $fecha_fin);
                         $stmt_ev->execute();
-
                         $id_evento= mysqli_insert_id($db);
-
-                        echo "id_evento: " . $id_evento; 
                     } else{
                         $id_evento= $_SESSION['id_evento'];
                     };
     
-                    if ($id_evento){
+                    if ($id_evento>0){
                         $stmt_ev= $db->prepare("INSERT INTO administrado (id_admin, id_evento) VALUES(?,?)");
                         $stmt_ev->bind_param("ii", $id_admin, $id_evento);
                         $stmt_ev->execute();
+                    }else{
+                        $respuesta= array(
+                            'respuesta' => $db->error,
+                        );
                     }
                     $stmt_ev->close();
                 }else{
                     $msj= $db->error;
-                        if (strpos($msj, "Duplicate entry")!==false){
-                            $respuesta= array(
-                                'respuesta' => 'El nombre de usuario ingresado ya se encuentra registrado. Intente con otro.');
-                        }else{
-                            $respuesta= array(
-                                'respuesta' => $msj,
-                            );
-                        }
+                    if (strpos($msj, "Duplicate entry")!==false){
+                        $respuesta= array(
+                            'respuesta' => 'El nombre de usuario ingresado ya se encuentra registrado. Intente con otro.');
+                    }else{
+                        $respuesta= array(
+                            'respuesta' => $msj,
+                        );
+                    }
                 };
                 $stmt_admin->close();
                 
@@ -172,12 +170,12 @@
                     }
                 }else{
                     $respuesta= array(
-                        'respuesta' => "clave incorrecta",
+                        'respuesta' => "La contraseña actual es incorrecta.",
                     );
                 }
-            }else{
+            }else{                
                 $respuesta= array(
-                    'respuesta'=> 'error',
+                    'respuesta'=> $db->error,
                 );
             };
             $stmt->close();
@@ -200,7 +198,7 @@
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
             $stmt->close();

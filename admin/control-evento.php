@@ -2,7 +2,7 @@
     include_once 'funciones/sesion-admin.php';
     include_once 'funciones/funciones.php';
     
-    
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
 
     if (isset($_POST['crear-actividad'])){
         $nombre= $_POST['nombre'];
@@ -19,13 +19,13 @@
             $stmt_act->bind_param("sssssii", $nombre, $fecha, $hora_inicio, $hora_fin, $descripcion, $id_categoria, $id_evento);
             $stmt_act->execute();
 
-            if ($stmt_act->affected_rows){ 
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
 
@@ -55,7 +55,7 @@
             WHERE id_actividad=?");
             $stmt_act->bind_param("sssssii", $nombre, $fecha, $hora_inicio, $hora_fin, $descripcion, $id_categoria, $id_actividad);
             $stmt_act->execute();
-
+            
             if ($stmt_act->affected_rows){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
@@ -135,16 +135,19 @@
             $filename = $_FILES['imagen']['name'];
 
             // Location
-            $location = "../img/" . $filename;
+            $directorio2= "../img/evento_" . $id_evento . "/";
 
+            if (!is_dir($directorio2)){
+                mkdir($directorio2,0755, true);
+            }
             // file extension
-            $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+            $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
             $file_extension = strtolower($file_extension);
           // Valid extensions
             $file_ext = array("jpg", "png", "jpeg");
             $img= "";
             if (in_array($file_extension, $file_ext)) {
-                if (move_uploaded_file($_FILES['imagen']['tmp_name'], "../img/imagen_evento_" . $id_evento . "." . $file_extension)){
+                if (move_uploaded_file($_FILES['imagen']['tmp_name'], $directorio2 . "imagen_evento_" . $id_evento . "." . $file_extension)){
                     $img= "imagen_evento_" . $id_evento . "." . $file_extension;
                 }
             }else{
@@ -187,6 +190,7 @@
     }
 
     elseif (isset($_POST['eliminar'])){
+        $id_evento=$_SESSION['id_evento'];
         $id= $_POST['id'];
         if ($_POST['tipo']=='actividad'){
             try {
@@ -199,7 +203,7 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
                 $stmt->close();
@@ -219,7 +223,7 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
                 $stmt->close();
@@ -239,7 +243,7 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
                 $stmt->close();
@@ -251,7 +255,7 @@
         elseif ($_POST['tipo']=='participante'){
             try {
                 $filename="";
-                $file = "../comprobantes/pago_". $id;
+                $file = "../comprobantes/evento_" . $id_evento . "/pago_". $id;
                 if (file_exists($file . ".pdf")){
                     $filename = $file . ".pdf";
                 } elseif(file_exists($file . ".jpg")){
@@ -264,6 +268,10 @@
                 if ($filename!=""){
                     unlink($filename);
                 }
+                $acreditado= $db->query("SELECT p.acreditado FROM participante p WHERE p.id_participante=" . $id);
+                $acreditado= $acreditado->fetch_assoc();
+                if ($acreditado['acreditado'])
+                    $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
@@ -273,7 +281,7 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
                 $stmt->close();
@@ -285,6 +293,27 @@
         elseif ($_POST['tipo']=='sin-confirmar'){
             $id_evento= $_SESSION['id_evento'];
             try {
+                $total= $db->query("SELECT COUNT(*) as total FROM participante p WHERE p.id_evento=" . $id_evento . " and p.acreditado=1");
+                $total->fetch_assoc();
+                $sql= $db->query("SELECT p.acreditado, p.id_participante FROM participante p WHERE p.id_evento=" . $id_evento . " and p.acreditado=1");
+                while ($p= $sql->fetch_assoc()){
+                    $filename="";
+                    $file = "../comprobantes/evento_" . $id_evento . "/pago_". $p['id_participante'];
+                    if (file_exists($file . ".pdf")){
+                        $filename = $file . ".pdf";
+                    } elseif(file_exists($file . ".jpg")){
+                        $filename = $file . ".jpg";
+                    } elseif(file_exists($file . ".png")){
+                        $filename = $file . ".png";
+                    } elseif(file_exists($file . ".jpeg")){
+                        $filename = $file . ".jpeg";
+                    }
+                    if ($filename!=""){
+                        unlink($filename);
+                    }
+                }
+                if ($total['total']>0)
+                    $db->query("UPDATE evento SET acreditados=acreditados-" . $total['total'] . " WHERE id_evento=" . $id_evento);
                 $condicion=0;
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_evento=? AND pago_confirmado=?");
                 $stmt->bind_param("ii", $id_evento, $condicion);
@@ -295,7 +324,7 @@
                     );
                 }else{
                     $respuesta= array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
                 $stmt->close();
@@ -308,7 +337,7 @@
         echo json_encode($respuesta);
     }
 
-    elseif (isset($_POST['medios'])){
+    elseif (isset($_POST['medios'])){ //cambiar el estado del medio de pago
         try {
             $stmt= $db->prepare("UPDATE medios_pago SET estado=? WHERE id_medio=?");
             $stmt->bind_param("ii", $_POST['accion'], $_POST['id']);
@@ -320,7 +349,7 @@
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
 
@@ -342,13 +371,13 @@
             $stmt->bind_param("si", $nombre, $autoreg);
             $stmt->execute();
 
-            if ($stmt->affected_rows){ 
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
 
@@ -370,14 +399,20 @@
             $stmt->bind_param("iid", $id_evento, $id_categoria, $tarifa);
             $stmt->execute();
 
-            if ($stmt->affected_rows){ 
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
             }else{
-                $respuesta= array(
-                    'respuesta' => 'error',
-                );
+                $msj= $db->error;
+                if (strpos($msj, "Duplicate entry")!==false){
+                    $respuesta= array(
+                        'respuesta' => 'La categoría seleccionada ya se encuentra añadida al evento.');
+                }else{
+                    $respuesta= array(
+                        'respuesta' => $msj,
+                    );
+                }
             };
 
             $stmt->close();
@@ -488,7 +523,7 @@
             $stmt_o->bind_param("iissss", $id_evento, $dni, $nombre, $apellido, $biografia, $imagen_url);
             $stmt_o->execute();
 
-            if ($stmt_o->affected_rows){ 
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
@@ -510,7 +545,7 @@
                 
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
             $stmt_o->close();
@@ -536,37 +571,28 @@
         if (!is_dir($directorio)){
             mkdir($directorio,0755, true);
         }
-        if (isset($_FILES['imagen']) && $_FILES['imagen']['name']!=""){
-            // file name
-            $filename = $_FILES['imagen']['name'];
-
-            // file extension
-            $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $file_extension = strtolower($file_extension);
-          // Valid extensions
-            $file_ext = array("jpg", "png", "jpeg");
-            $img= "";
-            if (in_array($file_extension, $file_ext)) {
-                if (move_uploaded_file($_FILES['imagen']['tmp_name'], $directorio . $_FILES['imagen']['name'])){
-                    $imagen_url= $_FILES['imagen']['name'];
-                }
-            }else{
-                $respuesta= array(
-                    'respuesta' => "El formato de la imagen es incorrecto. Formatos permitidos: .JPG, .PNG, .JPEG",
-                );
-                echo exit(json_encode($respuesta));
-            }
-        }else{
-            $resp= $db->query("SELECT o.imagen FROM orador o WHERE o.id_orador=". $id);
-            $resp= $resp->fetch_assoc();
-            if ($resp['imagen']!=""){
-                $imagen_url= $resp['imagen'];
-            }else
-                $imagen_url="";
-        }
 
         try {
             if ($_FILES['imagen']['size'] > 0){
+                    // file name
+                $filename = $_FILES['imagen']['name'];
+
+                // file extension
+                $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
+                $file_extension = strtolower($file_extension);
+                // Valid extensions
+                $file_ext = array("jpg", "png", "jpeg");
+                $img= "";
+                if (in_array($file_extension, $file_ext)) {
+                    if (move_uploaded_file($_FILES['imagen']['tmp_name'], $directorio . $_FILES['imagen']['name'])){
+                        $imagen_url= $_FILES['imagen']['name'];
+                    }
+                }else{
+                    $respuesta= array(
+                        'respuesta' => "El formato de la imagen es incorrecto. Formatos permitidos: .JPG, .PNG, .JPEG",
+                    );
+                    echo exit(json_encode($respuesta));
+                }
                 $stmt_o= $db->prepare("UPDATE orador SET id_evento=?, dni=?, nombre=?, apellido=?, biografia=?, imagen=? WHERE id_orador=?");
                 $stmt_o->bind_param("iissssi", $id_evento, $dni, $nombre, $apellido, $biografia, $imagen_url, $id);
             }else {
@@ -579,9 +605,13 @@
                     'respuesta' => 'exito',
                 );
             } else {
-                $respuesta = array(
-                    'respuesta' => 'error',
-                );
+                $msj= $db->error;
+                if ($msj!=""){
+                    $respuesta= array(
+                        'respuesta' => $msj,
+                    );
+                    echo exit(json_encode($respuesta));
+                }
             };
         //borro los registros de dicta
         $stmt = $db->prepare("DELETE FROM dicta WHERE id_orador=?");
@@ -596,13 +626,13 @@
                 $stmt_d->bind_param("ii", $id, $id_actividad);
                 $stmt_d->execute();
 
-                if ($stmt_d->affected_rows){ 
+                if (mysqli_insert_id($db) > 0){ 
                     $respuesta= array(
                         'respuesta' => 'exito',
                     );
                 } else {
                     $respuesta = array(
-                        'respuesta' => 'error',
+                        'respuesta' => $db->error,
                     );
                 };
             } catch (Exception $e) {
@@ -627,13 +657,13 @@
             $stmt->bind_param("si", $nombre, $estado);
             $stmt->execute();
 
-            if ($stmt->affected_rows){ 
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
 
@@ -673,7 +703,7 @@
         if (isset($_FILES['file']) && $_FILES['file']['name']!=""){
             // file name
             $filename = $_FILES['file']['name'];
-
+            
             // Location
             $location = $directorio . $filename;
 
@@ -699,21 +729,19 @@
             if (mysqli_insert_id($db) > 0){ 
                 $id_user= mysqli_insert_id($db);
             }else{  //si el usuario ya esta registrado
-                $tupla = $db->query("SELECT u.id_user FROM usuario u WHERE u.email=" . $email);
-                $u=$tupla->fetch_assoc();
-                if (!$u){
-                    throw new Exception("Usuario incorrecto.");
+                $tupla = $db->query("SELECT u.id_user FROM usuario u WHERE u.email='" . $email . "'");
+                if ($tupla){
+                    $u=$tupla->fetch_assoc();
+                    $id_user= $u['id_user'];
+                }else{
+                    throw new Exception($db->error);
                 }
-                $id_user= $u['id_user'];
-            };
-
-            
-           
+            };   
         } catch (Exception $e) {
             $respuesta= array(
                 'respuesta' => $e->getMessage(),
             );
-            echo exit(json_encode($respuesta));
+            exit(json_encode($respuesta));
         }
 
         $id_categoria= $_POST['categoria']; 
@@ -763,22 +791,26 @@
             $stmtp= $db->prepare("INSERT INTO participante (id_user, id_evento, id_categoria, fecha_registro, acreditado,forma_pago, importe_abonado, fecha_pago, comentario_pago, pago_confirmado,exento, facturacion,  iva, cuit, adicionales, nombre_factura, alojamiento,fecha_arribo, fecha_partida, traslado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             $stmtp->bind_param("iiisisdssiiisissssss", $id_user, $id_evento, $id_categoria, $fecha_registro, $acreditado, $forma_pago, $importe_abonado, $fecha_pago, $comentario, $pago_confirmado, $exento, $facturacion, $iva, $cuit, $adicionales, $nombre_factura, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
             $stmtp->execute();
-            
-            if ($stmtp->affected_rows){ 
+            $id_participante= mysqli_insert_id($db);
+            if (mysqli_insert_id($db) > 0){ 
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
-                $tupla = $db->query("SELECT p.id_participante FROM participante p WHERE p.id_user=" . $id_user . " and p.id_evento=" . $id_evento);
-                $p=$tupla->fetch_assoc();
-                $id_participante= $p['id_participante'];
-                
             }else{
-                $respuesta= array(
-                    'respuesta' => $db->error,
-                );
+                $msj= $db->error;
+                if (strpos($msj, "Duplicate entry")!==false){
+                    $respuesta= array(
+                        'respuesta' => 'El usuario ingresado ya se encuentra registrado en el evento.');
+                }else{
+                    $respuesta= array(
+                        'respuesta' => $msj,
+                    );
+                }
+                exit(json_encode($respuesta));
             };
 
             if (isset($_FILES['file']) && $_FILES['file']['name']!=""){
+                $directorio= "../comprobantes/evento_" . $id_evento . "/";
                 $new_name = "pago_" . $id_participante;
                 // Upload file
                 if (move_uploaded_file($_FILES['file']['tmp_name'], $directorio . $new_name . "." . $file_extension)) {
@@ -823,7 +855,11 @@
     elseif (isset($_POST['acreditar'])){
         $id_participante= $_POST['id'];
         $id_evento= $_SESSION['id_evento'];
-        $valor= 1;
+        $tipo= $_POST['tipo'];
+        if ($tipo=="add")
+            $valor= 1;
+        else
+            $valor=0;
         try {
             $stmt= $db->prepare("UPDATE participante SET acreditado=? WHERE id_participante=?");
             $stmt->bind_param("ii", $valor, $id_participante);
@@ -833,10 +869,13 @@
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
-                $db->query("UPDATE evento SET acreditados=acreditados+1 WHERE id_evento=" . $id_evento);
+                if ($valor==1)
+                    $db->query("UPDATE evento SET acreditados=acreditados+1 WHERE id_evento=" . $id_evento);
+                else
+                    $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
             $stmt->close();
@@ -860,10 +899,9 @@
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
-                $id_admin= $db->insert_id;
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
             $stmt->close();
@@ -894,15 +932,8 @@
         
         if ($filename!=""){
             $filepath = $directorio . $filename;
-
-            // header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="' . $filename . '"');
-            /* header('Expires: 0');
-                    header('Cache-Control: must-revalidate');
-                    header('Pragma: public');
-                    header('Content-Lenght: '.filesize($filepath));
-                    header('Content-Transfer-Encoding: binary'); */
             readfile($filepath);
             exit;
         }

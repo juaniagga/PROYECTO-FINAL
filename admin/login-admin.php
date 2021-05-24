@@ -14,7 +14,7 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="../index.php"><b>UNMDP </b>Eventos</a>
+    <a><b>UNMDP </b>Eventos</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

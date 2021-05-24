@@ -119,9 +119,12 @@ if ($permiso) {
                             if (!$permiso) {
                             ?>
                               <td>
-
-                                <button type="button" id="acreditar" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa fa-check"></i> Acreditar</button>
-                                <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-check"></i> Confirmar pago</button>
+                                <?php if ($user['acreditado']) { ?>
+                                  <button type="button" id="acreditar" data-tipo="remove" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa  fa-close"></i> Desacreditar</button>
+                                <?php }else{ ?>
+                                  <button type="button" id="acreditar" data-tipo="add" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa  fa-check"></i> Acreditar</button>
+                                <?php } ?>
+                                <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-thumbs-up"></i> Confirmar pago</button>
                                 <button type="button" id="comprobante" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
                                 <button type="button" data-id="<?php echo $user['id_participante']; ?>" url="control-evento.php" data-tipo="participante" class="btn  btn-danger borrar-registro"><i class="fa fa-trash"></i></button>
 

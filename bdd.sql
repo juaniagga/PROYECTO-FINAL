@@ -101,7 +101,7 @@ CREATE TABLE usuario(
 
 CREATE TABLE participante(
     id_participante int NOT NULL AUTO_INCREMENT,
-    id_user int NOT NULL UNIQUE,
+    id_user int NOT NULL,
     id_evento int NOT NULL,
     id_categoria int NOT NULL,
     fecha_registro DATE NOT NULL,
@@ -123,6 +123,7 @@ CREATE TABLE participante(
     fecha_partida date not null,
     traslado varchar(20) not null,
     PRIMARY KEY(id_participante),
+    UNIQUE KEY (id_user,id_evento),
     FOREIGN KEY(id_user) REFERENCES usuario(id_user) ON DELETE CASCADE,
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE,
     FOREIGN KEY(id_categoria) REFERENCES categoria_participante(id_categoria) ON DELETE CASCADE
@@ -185,7 +186,7 @@ VALUES
 INSERT INTO
     evento(nombre,fecha_inicio,fecha_fin,inscriptos, acreditados, organizador, ubicacion, descripcion)
 VALUES
-    ('Fiesa','2021-03-16','2021-03-17', 0, 0, 'UNMdP','Deán Funes 3350','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.');
+    ('Fiesa','2021-11-16','2021-11-17', 0, 0, 'UNMdP','Deán Funes 3350','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.');
 
 
 INSERT INTO

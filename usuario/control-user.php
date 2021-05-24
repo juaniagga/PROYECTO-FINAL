@@ -2,7 +2,7 @@
     include_once '../includes/funciones/sesion-user.php';
     include_once '../includes/funciones/conexionBDD.php';
     $id_user= $_SESSION['id_user'];
-
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
     if (isset($_POST['nuevo-registro'])){
             $id_categoria= $_POST['id_categoria']; 
             $id_evento= $_POST['id_evento']; 
@@ -38,7 +38,7 @@
                     $stmt->bind_param("iiisissss", $id_user, $id_evento, $id_categoria, $fecha_registro, $pago_confirmado, $alojamiento, $fecha_arribo, $fecha_partida, $traslado);
                     $stmt->execute();
                     
-                    if ($stmt->affected_rows){ 
+                    if (mysqli_insert_id($db) > 0){ 
                         $respuesta= array(
                             'respuesta' => 'exito',
                         );
@@ -46,10 +46,10 @@
                         $msj= $db->error;
                         if (strpos($msj, "Duplicate entry")!==false){
                             $respuesta= array(
-                                'respuesta' => 'usuario duplicado');
+                                'respuesta' => 'Ya estás registrado en este evento.');
                         }else{
                             $respuesta= array(
-                                'respuesta' => 'error',
+                                'respuesta' => $db->error,
                             );
                         }
                     };
@@ -61,7 +61,7 @@
                 }
             }else{
                 $respuesta= array(
-                    'respuesta' => 'limite',
+                    'respuesta' => 'No quedan cupos disponibles en este momento.',
                 );
             }
             
@@ -149,10 +149,29 @@
     }
 
     elseif (isset($_POST['baja'])){
-        $id_evento= $_POST['id'];
+        $id_participante= $_POST['id'];
+        $id_evento= $_POST['id_evento'];
+        $acreditado= $db->query("SELECT p.acreditado FROM participante p WHERE p.id_participante=" . $id_participante);
+        $acreditado= $acreditado->fetch_assoc();
+        $filename="";
+        $file = "../comprobantes/evento_" . $id_evento . "/pago_". $id_participante;
+        if (file_exists($file . ".pdf")){
+            $filename = $file . ".pdf";
+        } elseif(file_exists($file . ".jpg")){
+            $filename = $file . ".jpg";
+        } elseif(file_exists($file . ".png")){
+            $filename = $file . ".png";
+        } elseif(file_exists($file . ".jpeg")){
+            $filename = $file . ".jpeg";
+        }
+        if ($filename!=""){
+            unlink($filename);
+        }
+        if ($acreditado['acreditado'])
+            $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
         try {
             $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
-            $stmt->bind_param("i", $id_evento);
+            $stmt->bind_param("i", $id_participante);
             $stmt->execute();
             if ($stmt->affected_rows){
                 $respuesta= array(
@@ -160,7 +179,7 @@
                 );
             }else{
                 $respuesta= array(
-                    'respuesta' => 'error',
+                    'respuesta' => $db->error,
                 );
             };
             $stmt->close();
@@ -168,9 +187,6 @@
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
-        $respuesta= array(
-            'respuesta' => 'exito',
-        );
         echo json_encode($respuesta);
     }
     elseif (isset($_POST['editar-user'])){
