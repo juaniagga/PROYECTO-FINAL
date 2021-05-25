@@ -207,18 +207,16 @@ if ($permiso) {
                       </tfoot>
                   </table>
                 </div>
-
+                <div class="row">
+                  <div class="col-lg-2 centrar-contenido">
+                    <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Descargar planilla</button>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
             </div>
             <!-- /.box -->
-
-            <h2 class="title-section">Acciones</h2>
-            <div class="row">
-              <div class="col-lg-2 centrar-contenido">
-                <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Descargar planilla</button>
-              </div>
-            </div>
+            
           </div>
           <!-- /.col -->
         </div>

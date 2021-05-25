@@ -15,10 +15,11 @@ if (isset($_SESSION['id_user'])){
   <!-- Site wrapper -->
   <div class="wrapper">
 
-
-    <div class="centrar-contenido">
+  <section class="seccion contenedor min-altura margin-barra">
+    <h2> Nuevo usuario </h2>
+    <div class="">
       <!-- Main content -->
-      <div class="row col-sm-9 main">
+      <div class="main">
         <section class="content">
 
           <div class="box">
@@ -39,18 +40,18 @@ if (isset($_SESSION['id_user'])){
                       <div class="form-group col-sm-12">
                         <label for="email" class="col-sm-1 control-label">Email *</label>
                         <div class="col-sm-12 ">
-                          <input name="email" type="email" class="form-control" id="email" placeholder="" style="width: 30%;" required>
+                          <input name="email" type="email" class="form-control" id="email" placeholder="" required>
                         </div>
                       </div>
                     </div>
                     <div class="form-row">
-                      <div class="form-group col-sm-3">
+                      <div class="form-group col-sm-6">
                         <label for="password" class="col-sm-2 control-label">Contraseña *</label>
                         <div class="col-sm-12">
                           <input name="password" type="password" class="form-control" id="password" placeholder="Contraseña" required>
                         </div>
                       </div>
-                      <div class="form-group col-sm-3">
+                      <div class="form-group col-sm-6">
                         <label for="password" class="col-sm-2 control-label">Repetir contraseña *</label>
                         <div class="col-sm-12">
                           <input name="password_repit" type="password" class="form-control" id="password_repit" placeholder="Contraseña" required>
@@ -97,7 +98,7 @@ if (isset($_SESSION['id_user'])){
                     <div class="form-group col-sm-12">
                       <label for="dni" class="col-sm-3 control-label">DNI/pasaporte *</label>
                       <div class="col-sm-12">
-                        <input name="dni" type="number" class="form-control" id="dni" placeholder="" style="width: 30%;" required>
+                        <input name="dni" type="number" class="form-control" id="dni" placeholder="" required>
                       </div>
                     </div>
                     <div class="form-row">
@@ -110,7 +111,7 @@ if (isset($_SESSION['id_user'])){
                       <div class="form-group col-sm-3">
                         <label for="numero" class="col-sm-2 control-label">Número *</label>
                         <div class="col-sm-12">
-                          <input name="numero" type="number" class="form-control" id="numero" placeholder="" style="width: 50%;" required>
+                          <input name="numero" type="number" class="form-control" id="numero" placeholder="" required>
                         </div>
                       </div>
                     </div>
@@ -119,7 +120,7 @@ if (isset($_SESSION['id_user'])){
                     <div class="form-group col-sm-12">
                       <label for="hotel" class="col-sm-3 control-label">Hotel / lugar de alojamiento</label>
                       <div class="col-sm-12">
-                        <input name="hotel" type="text" class="form-control" id="hotel" placeholder="" style="width: 50%;">
+                        <input name="hotel" type="text" class="form-control" id="hotel" placeholder="">
                       </div>
                     </div>
                     <div class="form-row">
@@ -161,7 +162,7 @@ if (isset($_SESSION['id_user'])){
                       <div class="form-group col-sm-6">
                         <label for="telefono" class="col-sm-2 control-label">Teléfono *</label>
                         <div class="col-sm-12">
-                          <input name="telefono" type="number" class="form-control" id="telefono" placeholder="Número de teléfono celular" style="width: 50%;" required>
+                          <input name="telefono" type="number" class="form-control" id="telefono" placeholder="Número de teléfono celular" required>
                         </div>
                       </div>
                     </div>
@@ -218,7 +219,8 @@ if (isset($_SESSION['id_user'])){
         <!-- /.content -->
       </div> <!-- row -->
     </div>
-
+  </section>
+<!--seccion-->
 
 
 <!-- =============================================== -->

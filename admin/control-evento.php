@@ -270,8 +270,10 @@
                 }
                 $acreditado= $db->query("SELECT p.acreditado FROM participante p WHERE p.id_participante=" . $id);
                 $acreditado= $acreditado->fetch_assoc();
-                if ($acreditado['acreditado'])
-                    $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
+                $aux= $db->query("SELECT p.id_categoria FROM participante p WHERE p.id_participante=" . $id);
+                $aux= $aux->fetch_assoc();
+                $cat= $db->query("SELECT c.autoreg FROM categoria_participante c WHERE c.id_categoria=" . $aux['id_categoria']);
+                $cat= $cat->fetch_assoc();
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_participante=?");
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
@@ -279,6 +281,12 @@
                     $respuesta= array(
                         'respuesta' => 'exito',
                     );
+                    if ($acreditado['acreditado'])
+                        $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
+                    
+                    if ($cat['autoreg']){
+                        $db->query("UPDATE evento SET inscriptos=inscriptos-1 WHERE id_evento=" . $id_evento);
+                    }
                 }else{
                     $respuesta= array(
                         'respuesta' => $db->error,
@@ -293,8 +301,9 @@
         elseif ($_POST['tipo']=='sin-confirmar'){
             $id_evento= $_SESSION['id_evento'];
             try {
-                $total= $db->query("SELECT COUNT(*) as total FROM participante p WHERE p.id_evento=" . $id_evento . " and p.acreditado=1");
-                $total->fetch_assoc();
+                $total= $db->query("SELECT COUNT(*) as total FROM participante p WHERE p.id_evento=" . $id_evento . " and p.acreditado=1 and pago_confirmado=0");
+                $total=$total->fetch_assoc();
+
                 $sql= $db->query("SELECT p.acreditado, p.id_participante FROM participante p WHERE p.id_evento=" . $id_evento . " and p.acreditado=1");
                 while ($p= $sql->fetch_assoc()){
                     $filename="";
@@ -312,8 +321,8 @@
                         unlink($filename);
                     }
                 }
-                if ($total['total']>0)
-                    $db->query("UPDATE evento SET acreditados=acreditados-" . $total['total'] . " WHERE id_evento=" . $id_evento);
+                $ins= $db->query("SELECT COUNT(*) as total FROM participante p WHERE p.id_evento=" . $id_evento . " and pago_confirmado=0");
+                $ins= $ins->fetch_assoc();
                 $condicion=0;
                 $stmt= $db->prepare("DELETE FROM participante WHERE id_evento=? AND pago_confirmado=?");
                 $stmt->bind_param("ii", $id_evento, $condicion);
@@ -322,6 +331,10 @@
                     $respuesta= array(
                         'respuesta' => 'exito',
                     );
+                    if ($total)
+                        $db->query("UPDATE evento SET acreditados=acreditados-" . $total['total'] . " WHERE id_evento=" . $id_evento);
+                    if ($ins)
+                        $db->query("UPDATE evento SET inscriptos=inscriptos-" . $ins['total'] . " WHERE id_evento=" . $id_evento);
                 }else{
                     $respuesta= array(
                         'respuesta' => $db->error,
@@ -768,14 +781,14 @@
             $sql = "
                 SELECT c.tarifa
                 FROM cat_asociadas c
-                WHERE c.id_evento=" . $id_evento;
+                WHERE c.id_evento=" . $id_evento . " and c.id_categoria=" . $id_categoria;
             $tuplas = $db->query($sql);
           } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
           }
         $cat = $tuplas->fetch_assoc();
 
-        if ($cat['tarifa']==0){
+        if ($cat['tarifa']==0){    // si no abona o si la categoria no es autoregistrable
             $pago_confirmado=1;
         }
 
@@ -796,6 +809,11 @@
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
+                $cat_reg= $db->query("SELECT c.autoreg FROM categoria_participante c WHERE c.id_categoria=" . $id_categoria);
+                $cat_reg= $cat_reg->fetch_assoc();
+                if ($cat_reg['autoreg']){
+                    $db->query("UPDATE evento SET inscriptos=inscriptos+1 WHERE id_evento=" . $id_evento);
+                }
             }else{
                 $msj= $db->error;
                 if (strpos($msj, "Duplicate entry")!==false){
@@ -957,6 +975,46 @@
                 header('Content-Transfer-Encoding: binary'); */
         readfile($filepath);
         exit;
+    }
+
+    elseif (isset($_POST['cargar-certificados'])){
+        $id_evento= $_SESSION['id_evento'];
+        $directorio= "../certificados/evento_" . $id_evento . "/";
+
+        if (!is_dir($directorio)){
+            mkdir($directorio,0755, true);
+        }
+        $countfiles = count($_FILES['file']['name']);
+        // Looping all files
+        for($i=0; $i < $countfiles; $i++){
+          $filename = $_FILES['file']['name'][$i];
+
+            // file extension
+            $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
+            $file_extension = strtolower($file_extension);
+
+            // Valid extensions
+            $file_ext = array("pdf");
+
+            if (in_array($file_extension, $file_ext)){
+                if (move_uploaded_file($_FILES['file']['tmp_name'][$i], $directorio . $filename)){
+                    $respuesta= array(
+                        'respuesta' => 'exito',
+                    );
+                }else{
+                    $respuesta= array(
+                        'respuesta' => $db->error,
+                    );
+                    exit(json_encode($respuesta));
+                }
+            }else{
+                $respuesta= array(
+                    'respuesta' => "El formato de uno o más documentos es incorreto. El formato debe ser .PDF",
+                );
+                exit(json_encode($respuesta));
+            }
+        }
+        echo json_encode($respuesta);
     }
 
 ?>

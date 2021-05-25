@@ -2,10 +2,10 @@
 $id_user = $_SESSION['id_user'];
 ?>
 <!-- ----------------------------------------------------------------------------- -->
-<section class="seccion contenedor min-altura margin-barra">
+<section id="mis-eventos" class="seccion contenedor min-altura margin-barra">
   <h2> Mis eventos </h2>
 
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table id="registros" class="table table-bordered table-striped text-center">
       <thead>
         <tr>

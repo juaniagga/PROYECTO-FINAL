@@ -63,7 +63,7 @@ label {
     width: auto !important;
 }
 legend:not(:first-child) {
-    margin: 3rem 0 2rem 0;
+    margin: 7rem 0 2rem 0;
 }
 legend {
     font-weight: 600;
@@ -172,4 +172,23 @@ button#acreditar{
 
 .btn-success:hover{
     background-color: #018e4d;
+}
+
+
+.pagination{
+    padding-top: 1em !important;
+}
+#acciones{
+    padding-bottom: 1em
+}
+@media (max-width: 991px){
+    #acciones .btn{
+        margin-bottom: 1em;
+    }
+}
+
+@media (max-width: 767px){
+    .hidden-xs {
+        display: block!important;
+    }
 }

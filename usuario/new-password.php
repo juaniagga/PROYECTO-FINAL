@@ -18,9 +18,9 @@ $id_user = $_SESSION['id_user'];
   }
   ?>
 
-  <div class="centrar-contenido">
+  <div class="">
     <!-- Main content -->
-    <div class="row col-sm-9 main">
+    <div class=" main">
       <section class="content">
 
         <div class="box">

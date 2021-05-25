@@ -1,7 +1,7 @@
 <?php include_once 'includes/templates/header.php'; ?>
 <?php include_once 'includes/funciones/redirection.php'; ?>
 
-<section class="seccion contenedor">
+<section id="registro" class="seccion contenedor">
   <h2> Registro </h2>
   <h3>Valor de inscripción</h3>
 
@@ -62,7 +62,7 @@
           <div class="form-group col-sm-12">
             <label for="hotel" class="col-sm-3 control-label">Hotel / lugar de alojamiento</label>
             <div class="col-sm-12">
-              <input name="hotel" type="text" class="form-control" id="hotel" placeholder="" style="width: 50%;">
+              <input name="hotel" type="text" class="form-control" id="hotel" placeholder="" style="width: 30%;">
             </div>
           </div>
           <div class="form-row">
@@ -98,7 +98,9 @@
           <input type="hidden" name="nuevo-registro" value="1">
           <input type="hidden" name="id_evento" value="<?php echo $id_evento ?>">
           
-          <input id="btnRegistro" type="submit" class="button transparente" value="REGISTRARSE">
+          <div class="centrar-contenido">
+            <input id="btnRegistro" type="submit" class="button transparente" value="REGISTRARSE">
+          </div>
         </div>
         <!-- /.box-footer -->
       </form>

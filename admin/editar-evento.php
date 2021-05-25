@@ -108,7 +108,7 @@ $permiso = $_SESSION['permiso'];
                         <input name="limite" type="text" class="form-control" id="limite" placeholder="" value="<?php echo $evento['limite'] ?>">
                       </div>
                       <div class="form-group">
-                        <label for="">Foto del foto actual</label>
+                        <label for="">Foto actual del evento</label>
                         <br>
                         <img src="../img/<?php echo $evento['imagen']?>" width="40%" alt=" Foto del evento">
                       </div>

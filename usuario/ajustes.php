@@ -19,9 +19,9 @@ $id_user = $_SESSION['id_user'];
   }
   ?>
 
-  <div class="centrar-contenido">
+  <div class="">
     <!-- Main content -->
-    <div class="row col-sm-9 main">
+    <div class="main">
       <section class="content">
 
         <div class="box">
@@ -88,7 +88,7 @@ $id_user = $_SESSION['id_user'];
                   <div class="form-group col-sm-12">
                     <label for="dni" class="col-sm-3 control-label">DNI/pasaporte *</label>
                     <div class="col-sm-12">
-                      <input name="dni" type="number" class="form-control" id="dni" placeholder="" style="width: 30%;" value="<?php echo $user['dni'] ?>" required>
+                      <input name="dni" type="number" class="form-control" id="dni" placeholder="" value="<?php echo $user['dni'] ?>" required>
                     </div>
                   </div>
                   <div class="form-row">
@@ -101,7 +101,7 @@ $id_user = $_SESSION['id_user'];
                     <div class="form-group col-sm-4">
                       <label for="numero" class="col-sm-2 control-label">Número *</label>
                       <div class="col-sm-12">
-                        <input name="numero" type="number" class="form-control" id="numero" placeholder="" style="width: 50%;" value="<?php echo $user['numero'] ?>" required>
+                        <input name="numero" type="number" class="form-control" id="numero" placeholder="" value="<?php echo $user['numero'] ?>" required>
                       </div>
                     </div>
                   </div>
@@ -113,7 +113,7 @@ $id_user = $_SESSION['id_user'];
                     <div class="form-group col-sm-6">
                       <label for="telefono" class="col-sm-2 control-label">Teléfono *</label>
                       <div class="col-sm-12">
-                        <input name="telefono" type="number" class="form-control" id="telefono" placeholder="Número de teléfono celular" value="<?php echo $user['telefono'] ?>" style="width: 50%;" required>
+                        <input name="telefono" type="number" class="form-control" id="telefono" placeholder="Número de teléfono celular" value="<?php echo $user['telefono'] ?>" required>
                       </div>
                     </div>
                   </div>

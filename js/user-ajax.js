@@ -14,6 +14,8 @@ $(document).ready(function(){
 
     $('#upload').on('submit', actualizarFiles);
 
+    $('#certificado').on('click', descargarCertificado);
+
     $('#cargar_comprobante').on('click', function(){
         var id_comprobante= $(this).attr('data-id');
         $('#input_participante').val(id_comprobante);
@@ -192,7 +194,7 @@ $(document).ready(function(){
             type: 'post',
             data: {
                 infoPago: 1,
-                id_evento,
+                id_evento:id_evento,
             },
             url: 'usuario/panel.php',
             xhrFields: {
@@ -213,6 +215,35 @@ $(document).ready(function(){
         });
     }
 
+    function descargarCertificado(e){
+        e.preventDefault();
+        let id_evento= $(this).attr('evento');
+        let id_participante= $(this).attr('data-id');
+        $.ajax({
+            type: 'post',
+            data: {
+                certificado: 1,
+                id_evento: id_evento,
+                id_participante: id_participante,
+            },
+            url: 'control-user.php',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'certificado_'+id_participante+'.pdf';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    }
 
     $('#login-user').on('submit', logeo);
     

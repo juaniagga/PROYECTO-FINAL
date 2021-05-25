@@ -38,7 +38,7 @@
                 <h3 class="box-title">Gestiones los administradores</h3>
               </div>
               <!-- /.box-header -->
-              <div class="box-body">
+              <div class="box-body table-responsive">
                 <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                   <tr>

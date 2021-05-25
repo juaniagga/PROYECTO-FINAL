@@ -18,7 +18,7 @@
                 $sql = "
                     SELECT c.tarifa
                     FROM cat_asociadas c
-                    WHERE c.id_evento=" . $id_evento;
+                    WHERE c.id_evento=" . $id_evento . " and c.id_categoria=" . $id_categoria;
                 $tuplas = $db->query($sql);
               } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
@@ -42,6 +42,7 @@
                         $respuesta= array(
                             'respuesta' => 'exito',
                         );
+                        $db->query("UPDATE evento SET inscriptos=inscriptos+1 WHERE id_evento=" . $id_evento);
                     }else{
                         $msj= $db->error;
                         if (strpos($msj, "Duplicate entry")!==false){
@@ -177,6 +178,7 @@
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
+                $db->query("UPDATE evento SET inscriptos=inscriptos-1 WHERE id_evento=" . $id_evento);
             }else{
                 $respuesta= array(
                     'respuesta' => $db->error,
@@ -280,4 +282,21 @@
         echo json_encode($respuesta);
     }
 
+    elseif (isset($_POST['certificado'])) {
+        $id_evento= $_POST['id_evento'];
+        $id_participante= $_POST['id_participante'];
+        $filename = "certificado_" . $id_participante . ".pdf";
+        $filepath = '../certificados/evento_' . $id_evento . "/" . $filename;
+
+        // header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        /* header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Lenght: '.filesize($filepath));
+                header('Content-Transfer-Encoding: binary'); */
+        readfile($filepath);
+        exit;
+    }
     

@@ -32,7 +32,7 @@ if ($out) {
             <div class="recordarme col-xs-12">
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox"> Recordarme
+                  <input type="checkbox" name="remember"> Recordarme
                 </label>
               </div>
             </div>

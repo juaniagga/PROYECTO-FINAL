@@ -108,8 +108,12 @@ if ($permiso) {
                       if ($tuplas) {
                         $emails_inscriptos="";
                         $emails_sin_confirmar="";
+                        $emails_acreditados="";
                         while ($user = $tuplas->fetch_assoc()) {
                           $emails_inscriptos= $emails_inscriptos . $user['email'] . ",";
+                          if ($user['acreditado']){
+                            $emails_acreditados= $emails_acreditados . $user['email'] . ",";
+                          }
                           if (!$user['pago_confirmado']){
                             $emails_sin_confirmar= $emails_sin_confirmar . $user['email'] . ",";
                           }
@@ -227,48 +231,64 @@ if ($permiso) {
 
                       </tfoot>
                   </table>
-                </div>
 
+                  <div id="acciones" class="row">
+                    <div class="col-md-3 text-center">
+                      <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
+                    </div>
+                    <div class="col-md-3 text-center">
+                      <a href="lista-acreditados.php">
+                        <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-check-square-o"></i> Listado de acreditados</button>
+                      </a>
+                    </div>
+                    <?php
+                    if (!$permiso) {
+                      ?>
+                    <div class="col-md-3 text-center">
+                      <div class="col-12">
+                        <button type="button" data-id="0" url="control-evento.php" data-tipo="sin-confirmar" class="btn  btn-danger borrar-registro"><i class="fa fa-trash" style="margin-right: 1rem;"></i> Inscriptos sin pago confirmado</button>
+                      </div>
+                    </div>
+                      <?php } ?>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
             </div>
             <!-- /.box -->
             
-            <h2 class="title-section">Acciones</h2>
-            <div class="row">
-              <div class="col-lg-2 centrar-contenido">
-                <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
-              </div>
-              <div class="col-lg-2 centrar-contenido">
-                <a href="lista-acreditados.php">
-                  <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-check-square-o"></i> Listado de acreditados</button>
-                </a>
-              </div>
-              <?php
-              if (!$permiso) {
-                ?>
-              <div class="col-lg-4">
-                <div class="col-12">
-                  
-                  <button type="button" data-id="0" url="control-evento.php" data-tipo="sin-confirmar" class="btn  btn-danger borrar-registro"><i class="fa fa-trash" style="margin-right: 1rem;"></i> Inscriptos sin pago confirmado</button>
-                </div>
-              </div>
-                <?php } ?>
-            </div>
+            
+            
             <?php
             if (!$permiso) {
               ?>
-            <h3 class="title-section">Envío de emails</h3>
+            <h2 class="title-section">Certificados</h2>
+            <div class="row" style="margin-left: 0.1em;">
+              <div class="col-md-4">
+                <form name="cargar-certificados" id="cargar-certificados" method="post" action="control-evento.php">
+                  <label for="file">Seleccione los certificados que desea enviar (Formato: .PDF)</label>
+                  <input type="file" id="pdf" name="file[]" multiple required>
+                  <input type="hidden" name="cargar-certificados" value="1">
+                  <button type="submit" class="btn btn-default" style="margin-top: 1em;"><i class="fa fa-upload"></i> Enviar</button>
+                </form>
+              </div>
+
+            </div>
+            <h2 class="title-section">Envío de emails</h2>
             <div class="row">
-              <div class="col-lg-2 centrar-contenido">
-                
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_inscriptos ?>" target="_blank">
-                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A todos los inscriptos</button>
+              <div class="col-12">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_inscriptos;?>" target="_blank">
+                  <button type="button" class="btn btn-default" style="margin-left: 2em;"><i class="fa fa-send"></i> A todos los inscriptos</button>
                 </a>
               </div>
-              <div class="col-lg-4">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_sin_confirmar?>" target="_blank">
-                  <button type="button" class="btn btn-default"><i class="fa fa-send"></i> A inscriptos sin pago confirmado</button>
+              <div class="col-12">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_acreditados;?>" target="_blank">
+                  <button type="button" class="btn btn-default" style="margin-left: 2em;margin-top: 1em;"><i class="fa fa-send"></i> A todos los acreditados</button>
+                </a>
+              </div>
+              <div class="col-12">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_sin_confirmar;?>" target="_blank">
+                  <button type="button" class="btn btn-default" style="margin-left: 2em;margin-top: 1em;"><i class="fa fa-send"></i> A inscriptos sin pago confirmado</button>
                 </a>
               </div>
 

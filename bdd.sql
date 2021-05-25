@@ -156,21 +156,7 @@ CREATE TABLE medios_pago(
 );
 
 
-/* -- TRIGGER ---------------------------- */
-CREATE TRIGGER add_inscripto
-AFTER INSERT ON participante
-FOR EACH ROW 
-UPDATE evento
-SET  inscriptos=inscriptos + 1
-WHERE id_evento=NEW.id_evento;
 
-
-CREATE TRIGGER substract_inscripto
-AFTER DELETE ON participante
-FOR EACH ROW 
-UPDATE evento
-SET  inscriptos=inscriptos - 1
-WHERE id_evento=old.id_evento;
 
 
 /* INSERCIONES ------------------------------- */

@@ -73,14 +73,15 @@
     <div class="hero" style="background-image: url(img/<?php echo "evento_" . $id_evento . "/" . $evento['imagen'];?>);">
       <div class="contenido-header">
         <nav class="redes-sociales">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/unmdp"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com/unmdp"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com/user/canalunmdp"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/unmdp_oficial/?hl=es-la"><i class="fab fa-instagram"></i></a>
         </nav>
         <div class="informacion-evento">
-          <div class="clearfix">
-            <p class="fecha"><i class="far fa-calendar-alt"></i>
+          <div class="info-evento">
+            <p class="item-info">Organizado por <?php echo $evento['organizador'];?></p>
+            <p class="fecha item-info"><i class="far fa-calendar-alt"></i>
               <?php
               if ($evento['fecha_inicio'] == $evento['fecha_fin']) {
                 echo utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_inicio'])));
@@ -88,10 +89,10 @@
                 echo utf8_encode(strftime("%d %B - ", strtotime($evento['fecha_inicio']))) . utf8_encode(strftime("%d %B, %Y", strtotime($evento['fecha_fin'])));
               }
 
-              ?></p>
-            <p class="ciudad"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion'] ?> </p>
+              ?>
+            </p>
+            <p class="ciudad item-info"><i class="fas fa-map-marker-alt"></i> <?php echo $evento['ubicacion'] ?> </p>
               
-            <p>Organiza <?php echo $evento['organizador'];?></p>
           </div>
           <br><br>
           <h1 class="nombre-sitio"><?php echo $evento['nombre'] ?></h1>

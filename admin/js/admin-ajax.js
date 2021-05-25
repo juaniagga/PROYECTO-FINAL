@@ -38,6 +38,8 @@ $(document).ready(function(){
 
     $('#exportar').on('click', exportarInscriptos);
 
+    $('#cargar-certificados').on('submit', enviarCertificados);
+
     $('#guia-user').on('click', guia);
 
     function actualizar(e){
@@ -58,7 +60,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.respuesta=="exito"){
                         swal.fire(
-                            'Hecho!',
+                            '¡Hecho!',
                             '',
                             'success'
                           )
@@ -77,7 +79,7 @@ $(document).ready(function(){
                                     mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
                                 swal.fire({
                                     icon: 'error',
-                                    title: 'Error!',
+                                    title: '¡Error!',
                                     text: mensaje,
                                 });
                             break; 
@@ -86,12 +88,12 @@ $(document).ready(function(){
                                     msj= data.respuesta;
                                     swal.fire({
                                         icon: 'error',
-                                        title: 'Error!',
+                                        title: '¡Error!',
                                         text: msj,
                                       })
                                 }else {
                                     swal.fire(
-                                        'Hecho!',
+                                        '¡Hecho!',
                                         '',
                                         'success'
                                       )
@@ -127,7 +129,6 @@ $(document).ready(function(){
         console.log(campos);
 
         if (validarcampos(campos)){
-            error.style.display='none';
             $.ajax({
                 type: $(this).attr('method'),
                 data: datos,
@@ -142,7 +143,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.respuesta=='exito'){
                         swal.fire(
-                            'Hecho!',
+                            '¡Hecho!',
                             '',
                             'success'
                           )
@@ -152,12 +153,12 @@ $(document).ready(function(){
                             msj= data.respuesta;
                             swal.fire({
                                 icon: 'error',
-                                title: 'Error!',
+                                title: '¡Error!',
                                 text: msj,
                               })
                         }else {
                             swal.fire(
-                                'Hecho!',
+                                '¡Hecho!',
                                 '',
                                 'success'
                               )
@@ -200,7 +201,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta == 'exito') {
                     swal.fire(
-                        'Hecho!',
+                        '¡Hecho!',
                         '',
                         'success'
                     )
@@ -213,7 +214,7 @@ $(document).ready(function(){
                     }
                     swal.fire({
                         icon: 'error',
-                        title: 'Error!',
+                        title: '¡Error!',
                         text: msj,
                     })
                 }
@@ -244,7 +245,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta=="exito"){
                     swal.fire(
-                        'Hecho!',
+                        '¡Hecho!',
                         '',
                         'success'
                       )
@@ -269,7 +270,7 @@ $(document).ready(function(){
                     }
                     swal.fire({
                         icon: 'error',
-                        title: 'Error!',
+                        title: '¡Error!',
                         text: msj,
                     })
                 }
@@ -297,7 +298,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta=="exito"){
                     swal.fire(
-                        'Hecho!',
+                        '¡Hecho!',
                         '',
                         'success'
                       )
@@ -310,12 +311,12 @@ $(document).ready(function(){
                         msj= data.respuesta;
                         swal.fire({
                             icon: 'error',
-                            title: 'Error!',
+                            title: '¡Error!',
                             text: msj,
                             })
                     }else {
                         swal.fire(
-                            'Hecho!',
+                            '¡Hecho!',
                             '',
                             'success'
                             )
@@ -352,59 +353,73 @@ $(document).ready(function(){
                     a.download = 'pago_'+id+'.pdf';
                     a.click();
                     window.URL.revokeObjectURL(url);
-                } else{
-                    
                 }
             },
             error: function(XHR,status){
                 swal.fire({
                     icon: 'error',
-                    title: 'Error!',
+                    title: '¡Error!',
                     text: 'No se ha encontrado el comprobante.',
                   })
             }
         });
     }
 
-    function exportar(e){
+   
+    function enviarCertificados(e){
         e.preventDefault();
-        const id= $(this).attr('data-id');
-        console.log(id);
+        let datos= new FormData(this); //Para usar files
+        let campos= $(this).serializeArray();
+        console.log(campos);
         $.ajax({
-            type: 'post',
-            data: {
-                id: id,
-                descargar: 1
-            },
-            url: 'exportar.php?id='+id,
-            xhrFields: {
-                responseType: 'blob'
-            },
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            /* Para trabajar con files: */
+            contentType: false,
+            processData: false,
+            async: true,
+            cache:false,
             success: function(data){
-                var a = document.createElement('a');
-                var url = window.URL.createObjectURL(data);
-                a.href = url;
-                a.download = 'planilla_inscriptos.xlsx';
-                a.click();
-                window.URL.revokeObjectURL(url);
+                console.log(data);
+                if (data.respuesta=='exito'){
+                    swal.fire(
+                        '¡Hecho!',
+                        'Envíe un mail a los participantes acreditados informando que ya tienen el certificado disponible para su descarga desde su panel de usuario.',
+                        'success'
+                        )
+                } else {
+                    var msj;
+                    if (data.respuesta!=''){
+                        msj= data.respuesta;
+                    }else {
+                        msj='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
+                    }
+                    swal.fire({
+                        icon: 'error',
+                        title: '¡Error!',
+                        text: msj,
+                    })
+                    
+                }
             },
             error: function(XHR,status){
                 console.log(XHR);
                 console.log(status);
             }
         });
+        
     }
 
     function exportarInscriptos(e){
         e.preventDefault();
         const id= $(this).attr('data-id');
         const tabla= $('#dtHorizontalVerticalExample').prop('outerHTML');
-        console.log(id);
+        console.log(tabla);
         $.ajax({
             type: 'post',
             data: {
-                id: id,
-                descargar: 1,
                 tabla: tabla
             },
             url: 'exportar-inscriptos.php?id='+id,
@@ -483,7 +498,7 @@ $(document).ready(function(){
                     let msj= data.respuesta;
                     swal.fire({
                         icon: 'error',
-                        title: 'Error!',
+                        title: '¡Error!',
                         text: msj,
                     })
                 }
@@ -555,7 +570,7 @@ $(document).ready(function(){
                                 mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
                             swal.fire({
                                 icon: 'error',
-                                title: 'Error!',
+                                title: '¡Error!',
                                 text: mensaje,
                             });
                         }
@@ -598,7 +613,7 @@ $(document).ready(function(){
                         mensaje='Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.';
                     swal.fire({
                         icon: 'error',
-                        title: 'Error!',
+                        title: '¡Error!',
                         text: mensaje,
                     });
                 }

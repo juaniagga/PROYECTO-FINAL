@@ -215,8 +215,16 @@ h2{
 
 /** Header **/
   
+.info-evento{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+p.ciudad, p.fecha{
+  padding-top: 1em;
+}
 div.hero{
-  height:100vh;
+  height:91vh;
   background-position: top center;
   background-size: cover;
 }
@@ -268,19 +276,11 @@ div.informacion-evento{
 div.informacion-evento p{
   margin:0;
   display: inline;
-  font-size:20px;
-
+  font-size:22px;
 }
 div.informacion-evento p i{
   color: var(--unmdp-color);
-  font-size: 2.4rem;
-}
-p.fecha{
-  float:left;
-}
-p.ciudad{
-  float:right;
-  text-align: right;
+  font-size: 1.8rem;
 }
 p.slogan{
   text-transform: none!important;
@@ -293,8 +293,8 @@ p.slogan span{
 h1.nombre-sitio{
   font-size: 5.9vw;
   font-family: 'PT Sans', sans-serif;
-  padding-top: 10%;
-  text-align: start;
+  padding-top: 5%;
+  text-align: center;
 }
 
 @media only screen and (min-width:768px){
@@ -753,7 +753,6 @@ div.cuenta-regresiva{
 footer{
   background-color: #585858;
   padding-top:40px;
-  margin-top:20px;
 }
 footer .contenedor > div{
   color:#ffffff;
@@ -779,6 +778,11 @@ footer h3 span{
 }
 footer .ultimos-tweets li{
   margin-bottom:10px;
+}
+@media (max-width: 767px){
+  footer .ultimos-tweets{
+    margin:2rem 0 2rem 0;
+  }
 }
 footer nav.redes-sociales{
   text-align: left;
@@ -902,10 +906,24 @@ div.resumen input{
   display:none;
 }
 
+#registro input[type="text"]{
+  height: 25px;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  border-width: thin;
+}
+#registro label{
+  font-size: 16px;
+  margin-bottom: 0.5em;
+}
+
 /* CALENDARIO ------------------------------------------------------------------------------------------------ */
 
+#calendario, #invitados, #registro, #mis-eventos, #mis-certificados{
+  padding-bottom: 10em;
+}
 
-.calendario h3 {
+#calendario h3 {
   background-color: var(--unmdp-color);
   clear: both;
   color: white;
@@ -929,6 +947,7 @@ div.resumen input{
   float: left;
   border: 2px solid #e1e1e1;
   transition: all .3s ease;
+  padding: 1em 2em;
 }
 
 @media (min-with: 768px){
@@ -955,6 +974,20 @@ div.resumen input{
   font-size: 1.2em;
 }
 
+@media (max-width: 767px){
+  .dia{
+    flex-direction: column;
+  }
+  .actividad{
+    width: 100%;
+    padding: 0;
+  }
+  .lista-precios{
+    flex-direction: column;
+    width: 60%;
+    margin: auto;
+  }
+}
 
 /* ==========================================================================
    Helper classes
@@ -1148,6 +1181,7 @@ div.resumen input{
   font-size: 1rem;
   padding-left: 20px;
   padding-right: 20px;
+  margin-bottom: 3em;
 }
 
 

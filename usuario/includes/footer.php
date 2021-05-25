@@ -7,13 +7,12 @@
       <div class="menu">
         <h3>Redes <span>Sociales</span></h3>
         <nav class="redes-sociales">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-pinterest-p"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/unmdp"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com/unmdp"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com/user/canalunmdp"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/unmdp_oficial/?hl=es-la"><i class="fab fa-instagram"></i></a>
         </nav>
       </div>
     </div>
-    <p class="copyright"> Todos los derechos reservados FIESA UNMDP 2021</p>
+    <p class="copyright"> Todos los derechos reservados UNMDP</p>
 </footer>

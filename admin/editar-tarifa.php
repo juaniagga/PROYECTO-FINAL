@@ -40,7 +40,7 @@
 
     <div class="centrar-contenido">
 <!-- Main content -->
-<div class="row col-md-3">
+<div class="row col-lg-3">
       <section class="content">
 
         <!-- Default box -->

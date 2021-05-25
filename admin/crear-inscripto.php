@@ -100,13 +100,13 @@ $id_evento = $_SESSION['id_evento'];
                           </div>
                       </div>
                       <div class="form-row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-6">
                           <label for="calle" class="col-sm-2 control-label">Calle *</label>
                           <div class="col-sm-12">
                             <input name="calle" type="text" class="form-control" id="calle" placeholder="" required>
                           </div>
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-6">
                           <label for="numero" class="col-sm-2 control-label">Número *</label>
                           <div class="col-sm-12">
                             <input name="numero" type="number" class="form-control" id="numero" placeholder="" style="width: 50%;" required>
@@ -176,7 +176,7 @@ $id_evento = $_SESSION['id_evento'];
                       <div class="form-group col-sm-12">
                         <label for="medio" class="col-sm-3 control-label">Categoría del participante *</label>
                         <div class="col-sm-12">
-                          <select name="categoria" class="form-control select2" id="categoria" placeholder="" style="width: 20%;" required>
+                          <select name="categoria" class="form-control select2" id="categoria" placeholder="" style="width: 50%;" required>
                             <option value="">- Seleccione -</option>
                             <?php
                             try {
