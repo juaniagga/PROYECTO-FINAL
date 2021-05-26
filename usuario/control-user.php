@@ -8,6 +8,16 @@
             $id_evento= $_POST['id_evento']; 
             $fecha_registro= date('Y-m-d',time());   
             
+            $fecha= $db->query("SELECT e.fecha_fin FROM evento e WHERE e.id_evento=" . $id_evento);
+            $fecha= $fecha->fetch_assoc();
+            if ($fecha['fecha_fin'] < $fecha_registro){
+                $respuesta= array(
+                    'respuesta' => "Las inscripciones para este evento han cerrado.",
+                );
+                exit(json_encode($respuesta));
+            }
+
+
             $alojamiento= $_POST['hotel'];
             $fecha_arribo= $_POST['arribo'];
             $fecha_partida= $_POST['partida'];
@@ -288,15 +298,22 @@
         $filename = "certificado_" . $id_participante . ".pdf";
         $filepath = '../certificados/evento_' . $id_evento . "/" . $filename;
 
-        // header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        /* header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Lenght: '.filesize($filepath));
-                header('Content-Transfer-Encoding: binary'); */
-        readfile($filepath);
-        exit;
+
+        if (file_exists($filepath)) {
+            // header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            /* header('Expires: 0');
+                    header('Cache-Control: must-revalidate');
+                    header('Pragma: public');
+                    header('Content-Lenght: '.filesize($filepath));
+                    header('Content-Transfer-Encoding: binary'); */
+            readfile($filepath);
+            exit;
+        } else {
+            header("HTTP/1.1 403 Forbidden");
+        }
+
+        
     }
     

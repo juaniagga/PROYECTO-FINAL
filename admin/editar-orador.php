@@ -8,7 +8,7 @@ try {
 }
 
 $permiso = $_SESSION['permiso'];
-$id_orador =  base64_decode(urldecode($_GET['id']));
+$id_orador= urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));
 $id_evento = $_SESSION['id_evento'];
 
 if (!filter_var($id_orador,FILTER_VALIDATE_INT)){

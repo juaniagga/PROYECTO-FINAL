@@ -139,7 +139,7 @@ textarea {
   }
 }
 .seccion{
-  padding:30px 0;
+  padding: 3em 0 10em 0;
 }
 .seccion p{
   font-size: 1.2em;
@@ -731,7 +731,7 @@ div.newsletter .contenido h3{
   color:#ffffff;
   font-size:3.5em;
   font-family:'PT Sans', sans-serif;
-  padding: 1em 0;
+  padding: 2em 0 1em 0;
 }
 
 /**cuenta regresiva**/
@@ -936,14 +936,12 @@ div.resumen input{
   display: block;
   content: '';
 }
-
-.dia {
-  clear:both;
-  display: flex;
+.dia{
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
 }
 
 .actividad {
-  width: 50%;
   float: left;
   border: 2px solid #e1e1e1;
   transition: all .3s ease;
@@ -976,11 +974,7 @@ div.resumen input{
 
 @media (max-width: 767px){
   .dia{
-    flex-direction: column;
-  }
-  .actividad{
-    width: 100%;
-    padding: 0;
+    grid-template-columns: 100%;
   }
   .lista-precios{
     flex-direction: column;

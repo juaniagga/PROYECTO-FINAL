@@ -12,7 +12,7 @@
       $sql = "
             SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, e.descripcion, e.ubicacion
             FROM evento e
-            WHERE e.id_evento=" . $id_evento; //. $_GET['id'];
+            WHERE e.id_evento=" . $id_evento;
       $tupla = $db->query($sql);
       $evento = $tupla->fetch_assoc();
     } catch (Exception $e) {
@@ -142,9 +142,9 @@
                   foreach($lista_act as $a){ ?>
                     <div class="detalle-evento">
                       <h3><?php echo $a['nombre_act'] ?></h3>
-                      <p><i class="fa fa-clock"></i> <?php echo $a['horario'] ?> hs </p>
-                      <p><i class="fa fa-calendar"></i> <?php echo utf8_encode(strftime("%d de %B del %Y", strtotime($a['fecha']))); ?> </p>
                       
+                      <p><i class="fa fa-calendar"></i> <?php echo utf8_encode(strftime("%d de %B del %Y", strtotime($a['fecha']))); ?> </p>
+                      <p><i class="fa fa-clock"></i> <?php echo $a['horario'] ?> hs </p>
                         <?php 
                         foreach($a['oradores'] as $o){?>
                           <p>
@@ -310,7 +310,7 @@
 
   <div class="newsletter parallax">
     <div class="contenido contenedor">
-      <h3><?php echo $evento['nombre']?></h3>
+      <h3>¡Regístrate al evento!</h3>
       <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente">Registro</a>
     </div><!--contenido-->
   </div>

@@ -27,12 +27,8 @@ $(document).ready(function(){
         e.preventDefault();
         let datos= $(this).serializeArray();
         var error= document.getElementById('error');
-
         const origen=$(this).attr('id'); 
-
-        console.log(datos);
-
-        console.log($('#sesion').val());
+        const id_url=$('#id-evento').attr('value');
         if ($('#sesion').val()){ //si tiene la sesion iniciada
             if (datos[0].name=="id_categoria"){
                 error.style.display='none';
@@ -45,7 +41,7 @@ $(document).ready(function(){
                         console.log(data);
                         if (data.respuesta=="exito"){
                             setTimeout(function(){
-                                window.location.href= 'registro-exitoso.php?id=1#seccion';
+                                window.location.href= 'registro-exitoso.php?id='+ id_url +'#seccion';
                             },500);
                         } else {
                             var mensaje;
@@ -239,6 +235,11 @@ $(document).ready(function(){
                 window.URL.revokeObjectURL(url);
             },
             error: function(XHR,status){
+                swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: "El certificado no está disponible para su descarga.",
+                })
                 console.log(XHR);
                 console.log(status);
             }
@@ -286,6 +287,55 @@ $(document).ready(function(){
         })
     }
 
+    $('#forgotpass').on('click', forgotPass);
+    
+    function forgotPass(e){
+        e.preventDefault();
+        let email=$('#email').val();
+        if (email!="")
+            $.ajax({
+                type: 'post',
+                data: {
+                    forgotpass: 1,
+                    email: email,
+                },
+                url: 'control-login-user.php',
+                dataType: 'json',
+                success: function(data){
+                    
+                    if (data.respuesta== 'exito'){
+                        swal.fire(
+                            'Bienvenido!',
+                            "Se ha enviado un mail a su casilla de correo con su nueva contraseña.",
+                            'success'
+                        )
+                    } else {
+                        let msj;
+                        if (data.respuesta!="")
+                            msj= data.respuesta;
+                        else
+                            msj="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: msj,
+                        })
+                    }
+                },
+                error: function(XHR,status){
+                    console.log(XHR);
+                    console.log(status);
+                }
+
+            })
+        else{
+            swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Debe ingresar el email.',
+            })
+        }
+    }
 
     $('.box-body #baja').on('click', function(e){
         e.preventDefault();

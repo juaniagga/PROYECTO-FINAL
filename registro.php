@@ -105,6 +105,8 @@
         <!-- /.box-footer -->
       </form>
       <input type="hidden" value="<?php echo isset($_SESSION['id_user']);?>" id="sesion">
+      <?php $encrypt= openssl_encrypt($id_evento,"AES-128-ECB","unmdp2021"); ?>
+      <input type="hidden" value="<?php echo urlencode($encrypt);?>" id="id-evento">
     </div>
   </div>
   <!-- /.box-body -->

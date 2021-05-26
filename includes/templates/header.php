@@ -48,7 +48,7 @@
 
 <body class="<?php echo $pagina; ?>">
 
-  <?php $id_evento= $_GET['id'];?>
+  <?php $id_evento= urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));?>
   <!-- OBTENER EL ID DE ALGUNA MANERA !!!!!!!!! podria ser de la url-->
   <?php
   setlocale(LC_TIME, 'es_RA');
@@ -59,9 +59,11 @@
             FROM evento e
             WHERE e.id_evento=". $id_evento;
     $tupla = $db->query($sql);
-    if (!($evento = $tupla->fetch_assoc())){
+    if (!($tupla)){
       header("Location: usuario/not-found.php");
       exit();
+    }else{
+      $evento = $tupla->fetch_assoc();
     }
   } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
@@ -118,11 +120,12 @@
           <img src="img/logoUNMDP.svg" alt="logo UNMDP">
         </div>
         <nav class="navegacion-principal clearfix">
-          <a href="index.php?id=<?php echo $evento['id_evento']?>">Evento</a>
-          <a href="calendario.php?id=<?php echo $evento['id_evento']?>#seccion">Programa</a>
-          <a href="oradores.php?id=<?php echo $evento['id_evento']?>#seccion">Oradores</a>
-          <a href="galeria.php?id=<?php echo $evento['id_evento']?>#seccion">Galería</a>
-          <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion">Inscripción</a>
+          <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>
+          <a href="index.php?id=<?php echo urlencode($encrypt);?>">Evento</a>
+          <a href="calendario.php?id=<?php echo urlencode($encrypt);?>#seccion">Programa</a>
+          <a href="oradores.php?id=<?php echo urlencode($encrypt);?>#seccion">Oradores</a>
+          <a href="galeria.php?id=<?php echo urlencode($encrypt);?>#seccion">Galería</a>
+          <a href="registro.php?id=<?php echo urlencode($encrypt);?>#seccion">Inscripción</a>
           <?php
             if (isset($_SESSION['id_user'])){
               ?>

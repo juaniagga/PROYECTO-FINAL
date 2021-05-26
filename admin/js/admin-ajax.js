@@ -512,6 +512,56 @@ $(document).ready(function(){
     }
 
 
+    $('#forgotpass').on('click', forgotPass);
+    
+    function forgotPass(e){
+        e.preventDefault();
+        let usuario=$('#usuario').val();
+        if (usuario!="")
+            $.ajax({
+                type: 'post',
+                data: {
+                    forgotpass: 1,
+                    usuario: usuario,
+                },
+                url: 'control-login-admin.php',
+                dataType: 'json',
+                success: function(data){
+                    
+                    if (data.respuesta== 'exito'){
+                        swal.fire(
+                            'Bienvenido!',
+                            "Se ha enviado un mail a su casilla de correo con su nueva contraseña.",
+                            'success'
+                        )
+                    } else {
+                        let msj;
+                        if (data.respuesta!="")
+                            msj= data.respuesta;
+                        else
+                            msj="Ha ocurrido un error inesperado. Recargue la página y vuelva a intentarlo más tarde.";
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: msj,
+                        })
+                    }
+                },
+                error: function(XHR,status){
+                    console.log(XHR);
+                    console.log(status);
+                }
+
+            })
+        else{
+            swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Debe ingresar el usuario.',
+            })
+        }
+    }
+
     $('.borrar-registro').on('click', function(e){
         e.preventDefault();
         const tipo= $(this).attr('data-tipo');  //admin o admin-sistema .. no se usa

@@ -21,7 +21,7 @@ if ($out) {
 
         <form name="login-user" id="login-user" method="post" action="control-login-user.php">
           <div class="form-group has-feedback">
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
             <span class="form-control-feedback"><i class="fa fa-user"></i></span>
           </div>
           <div class="form-group has-feedback">
@@ -44,7 +44,7 @@ if ($out) {
             <!-- /.col -->
           </div>
         </form>
-        <a href="#">Olvidé mi contraseña</a><br>
+        <a id="forgotpass">Olvidé mi contraseña</a><br>
         <div class="row">
           <div class="col-xs-12">
             <a href="crear-cuenta.php">

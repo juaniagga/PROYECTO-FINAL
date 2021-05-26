@@ -24,7 +24,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Guía de uso del sistema
+        ¡Bienvenido!
       </h1>
     </section>
 
@@ -34,22 +34,22 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
+          <h3 class="">Primeros pasos</h3>
         </div>
-        <div class="box-body">
-          Start creating your amazing application!
+        <div class="box-body instrucciones">
+          Para comenzar a utilizar el sistema, se recomienda que descargue y lea la guía de usuario haciendo click en <b>Guía de usuario</b> en el menú.
+          Además, también puede visualizar el siguiente video tutorial que muestra las distintas funcionalidades:
+          <a href=""></a>
+          <br>
+          <?php if (!$permiso){?>
+          <h3>Aclaración:</h3>
+          Por defecto el estado del evento es <b>desactivado</b>. En este estado sólo usted y los demás administradores podrán acceder a la página del evento. <br>
+          Cambie el estado a <b>activado</b> una vez que haya completado toda la información y desee habilitar las inscripciones. <br>
+          Asímismo, las inscripciones al público son inhabilitadas una vez pasada la fecha de finalización del evento. Si desea inhabilitar las inscripciones antes de dicha fecha, cambie el estado del evento a <b>desactivado</b> nuevamente.
+          <?php } ?>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
         </div>
         <!-- /.box-footer-->
       </div>

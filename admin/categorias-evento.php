@@ -70,7 +70,8 @@ $permiso = $_SESSION['permiso'];
                         <td><?php echo $cat['nombre']; ?></td>
                         <td> <?php echo $cat['tarifa']; ?></td>
                         <td>
-                          <a href="editar-tarifa.php?id=<?php echo $cat['id_categoria']; ?>" class="btn bg-orange btn-flat margin">
+                          <?php $encrypt= openssl_encrypt($cat['id_categoria'],"AES-128-ECB","unmdp2021"); ?>
+                          <a href="editar-tarifa.php?id=<?php echo urlencode($encrypt); ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a>
                         </td>

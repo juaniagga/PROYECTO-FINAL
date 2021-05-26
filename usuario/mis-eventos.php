@@ -35,7 +35,8 @@ $id_user = $_SESSION['id_user'];
             <td> <?php echo date_format(date_create($evento['fecha_inicio']), 'd-m-Y'); ?></td>
             <td> <?php echo date_format(date_create($evento['fecha_fin']), 'd-m-Y'); ?></td>
             <td>
-              <a href="../index.php?id=<?php echo $evento['id_evento']?>" target="_blank">
+              <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>
+              <a href="../index.php?id=<?php echo urlencode($encrypt);?>" target="_blank">
                 <button type="button" class="btn  btn-success">Ver evento</button>
               </a>
               <button type="button" id="cargar_comprobante" data-toggle="modal" data-target="#uploadModal" data-evento="<?php echo $evento['id_evento'];?>" data-id="<?php echo $evento['id_participante'] ?>" class="btn  btn-default"><i class="fa fa-upload"></i> Cargar comprobante de pago</button>

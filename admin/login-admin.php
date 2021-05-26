@@ -22,7 +22,7 @@
 
     <form name="login-admin" id="login-admin" method="post" action="control-login-admin.php" data-tipo="admin">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
         <span class="form-control-feedback"><i class="fa fa-user"></i></span>
       </div>
       <div class="form-group has-feedback">
@@ -33,7 +33,7 @@
         <div class="recordarme col-xs-12">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Recordarme
+              <input type="checkbox" name="remember"> Recordarme
             </label>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <!-- /.col -->
       </div>
     </form>
-    <a href="#">Olvidé mi contraseña</a><br>
+    <a id="forgotpass">Olvidé mi contraseña</a><br>
 
 
   </div>

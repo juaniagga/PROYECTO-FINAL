@@ -75,7 +75,8 @@ $id_evento= $_SESSION['id_evento'];
                         <td> <?php echo date_format(date_create($actividad['hora_inicio']), 'H:i'); ?></td>
                         <td> <?php echo date_format(date_create($actividad['hora_fin']), 'H:i'); ?></td>
                         <td>
-                          <a href="editar-actividad.php?id=<?php echo $actividad['id_actividad']; ?>" class="btn bg-orange btn-flat margin">
+                          <?php $encrypt= openssl_encrypt($actividad['id_actividad'],"AES-128-ECB","unmdp2021"); ?>
+                          <a href="editar-actividad.php?id=<?php echo urlencode($encrypt); ?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a>
                           <a href="#" data-id="<?php echo $actividad['id_actividad']; ?>" data-tipo="actividad" url="control-evento.php" class="btn bg-maroon btn-flat margin borrar-registro">

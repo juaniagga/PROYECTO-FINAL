@@ -6,7 +6,7 @@
   }catch(Exception $e){
     echo "Error: " . $e->getMessage();
   }
-  $id_categoria= $_GET['id'];
+  $id_categoria= urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));
   $permiso= $_SESSION['permiso'];
 
   if (!filter_var($id_categoria,FILTER_VALIDATE_INT)){

@@ -34,7 +34,7 @@ h3{
     margin-top: 3rem;
 }
 
-.login-page form{
+.login-page form, #login-user{
     margin-bottom: 1rem;
 }
 .login-logo a:hover{
@@ -191,4 +191,37 @@ button#acreditar{
     .hidden-xs {
         display: block!important;
     }
+}
+
+#forgotpass:hover{
+    cursor: pointer;
+
+}
+#forgotpass{
+    font-size: 14px;
+}
+
+.logo:hover{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.skin-blue .main-header .navbar {
+    background-color: #4f73ba;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #ecf0f5;
+    color: #04c;
+    border-bottom: 0 solid transparent;
+}
+.skin-blue .main-header .logo:hover {
+    background-color: #ecf0f5;
+    color: #04c;
+    border-bottom: 0 solid transparent;
+}
+
+.instrucciones{
+    font-size: 16px;
+    line-height: 35px;
 }

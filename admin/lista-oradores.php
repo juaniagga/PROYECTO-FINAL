@@ -90,9 +90,11 @@ $id_evento= $_SESSION['id_evento'];
                         </td>
                         <td> <img style="width: 100px;" src="../img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt=""></td>
                         <td>
-                          <a href="editar-orador.php?id=<?php echo urlencode(base64_encode($orador['id_orador'])); ?>" class="btn bg-orange btn-flat margin">
+                          <?php $encrypt= openssl_encrypt($orador['id_orador'],"AES-128-ECB","unmdp2021"); ?>
+                          <a href="editar-orador.php?id=<?php echo urlencode($encrypt);?>" class="btn bg-orange btn-flat margin">
                             <i class="fa fa-pencil"></i>
                           </a>
+                          <!-- urlencode(base64_encode($orador['id_orador'])) -->
                           <a href="#" data-id="<?php echo $orador['id_orador']; ?>" data-tipo="orador" url="control-evento.php" class="btn bg-maroon btn-flat margin borrar-registro">
                             <i class="fa fa-trash"></i>
                           </a>

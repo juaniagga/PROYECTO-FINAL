@@ -6,7 +6,7 @@ try {
 } catch (Exception $e) {
   echo "Error: " . $e->getMessage();
 }
-$id_actividad = $_GET['id'];
+$id_actividad = urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));
 $permiso = $_SESSION['permiso'];
 $id_evento = $_SESSION['id_evento'];
 

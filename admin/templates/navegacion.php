@@ -15,21 +15,28 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
+        
+        <li class="treeview">
+            <li>
+              <a href="base-admin.php" id="instrucciones">
+                <i class="fa fa-info"></i>
+                <span>Instrucciones</span>
+              </a>
+            </li>
+        </li>
         <li class="treeview">
           <li>
             <a href="" id="guia-user">
-              <i class="fa fa-info"></i>
+              <i class="fa fa-book"></i>
               <span>Guía de usuario</span>
             </a>
           </li>
         </li>
-
-
         <!-- ADMIN de EVENTO -->
         <?php
         if (!$permiso) {
         ?>
-
+          
           <li class="treeview">
             <li>
               <a href="editar-evento.php">
