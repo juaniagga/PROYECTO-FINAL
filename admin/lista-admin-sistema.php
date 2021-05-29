@@ -31,7 +31,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row centrar-contenido">
-        <div class="col-xs-9">
+        <div class="col-xs-12">
             <!-- BOX ADMIN SISTEMA -->
             <div class="box">
               <div class="box-header">

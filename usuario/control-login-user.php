@@ -57,7 +57,7 @@
         $pais= $_POST['pais'];
         $provincia= $_POST['provincia'];
         $ciudad= $_POST['ciudad'];
-        $calle= $ciudad= $_POST['calle'];
+        $calle= $_POST['calle'];
         $numero= $_POST['numero'];
 
         $institucion = $_POST['institucion'];

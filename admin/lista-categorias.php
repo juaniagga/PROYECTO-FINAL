@@ -32,7 +32,7 @@ $permiso = $_SESSION['permiso'];
       <!-- Main content -->
       <section class="content">
         <div class="row centrar-contenido">
-          <div class="col-xs-8">
+          <div class="col-xs-12 col-lg-8">
             <!-- BOX ADMIN EVENTOS -->
             <div class="box">
               <div class="box-header">
@@ -40,7 +40,7 @@ $permiso = $_SESSION['permiso'];
 
               </div>
               <!-- /.box-header -->
-              <div class="box-body">
+              <div class="box-body table-responsive">
                 <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                     <tr>

@@ -31,14 +31,14 @@
       <!-- Main content -->
       <section class="content" style="width: 100%;">
         <div class="row centrar-contenido">
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-lg-6">
               <!-- BOX ADMIN SISTEMA -->
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Gestiones los medios de pago</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body table-responsive">
                   <table id="registros" class="table table-bordered table-striped text-center">
                     <thead>
                     <tr>

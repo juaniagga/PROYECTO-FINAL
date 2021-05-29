@@ -40,19 +40,13 @@
 
     <div class="centrar-contenido">
 <!-- Main content -->
-<div class="row col-lg-3">
+<div class="row">
       <section class="content">
 
         <!-- Default box -->
         <div class="box">
           <div class="box-header with-border">
-            <h3 class="box-title">Edite la información</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                      title="Collapse">
-                <i class="fa fa-minus"></i></button>
-            </div>
+            <h3 class="box-title">Edite la información <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
           </div>
           <div class="box-body">  <!-- CUERPO -->
 
@@ -78,15 +72,15 @@
                 <form class="form-horizontal" name="editar-tarifa" id="editar-tarifa" method="post" action="control-evento.php">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-                      <div class="col-sm-10">
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" value="<?php echo $cat['nombre'] ?>" disabled>
+                      <label for="nombre" class="col-sm-2 control-label">Nombre *</label>
+                      <div class="col-sm-12">
+                        <input name="nombre" type="text" class="form-control" id="nombre" required placeholder="Nombre" value="<?php echo $cat['nombre'] ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="tarifa" class="col-sm-2 control-label">Tarifa</label>
-                      <div class="col-sm-10">
-                        <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="tarifa" value="<?php echo $cat['tarifa'] ?>">
+                      <label for="tarifa" class="col-sm-2 control-label">Tarifa *</label>
+                      <div class="col-sm-12">
+                        <input name="tarifa" type="number" step="0.01" class="form-control" required id="tarifa" placeholder="tarifa" value="<?php echo $cat['tarifa'] ?>">
                       </div>
                     </div>
                     <div id="error" style="display: none"></div>

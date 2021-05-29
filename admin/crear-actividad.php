@@ -35,22 +35,15 @@ $id_evento = $_SESSION['id_evento'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-6">
+        <div class="col-lg-6">
           <section class="content">
 
             <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Complete el formulario</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fa fa-times"></i></button>
-                </div>
+                <h3 class="box-title">Complete el formulario <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -61,13 +54,13 @@ $id_evento = $_SESSION['id_evento'];
                   <form class="form-horizontal" name="crear-actividad" id="crear-actividad" method="post" action="control-evento.php">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Nombre</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre de la actividad">
+                        <label for="nombre" class="control-label">Nombre *</label>
+                        <input name="nombre" type="text" class="form-control" id="nombre" required placeholder="Nombre de la actividad">
                       </div>
                       <div class="form-group">
-                        <label for="categoria" class="control-label">Categoría</label>
-                        <select name="categoria" class="form-control select2" id="categoria" placeholder="categoria" style="width: 100%;">
-                          <option value="0">- Seleccione -</option>
+                        <label for="categoria" class="control-label">Categoría *</label>
+                        <select name="categoria" class="form-control select2" id="categoria" required placeholder="categoria" style="width: 100%;">
+                          <option value="">- Seleccione -</option>
                           <?php
                           try {
                             $sql = "
@@ -87,23 +80,23 @@ $id_evento = $_SESSION['id_evento'];
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="descripcion" class="control-label">Descripción</label>
-                        <textarea name="descripcion" type="text" class="form-control" rows="3" id="descripcion" placeholder="Descripción de la actividad"></textarea>
+                        <label for="descripcion" class="control-label">Descripción *</label>
+                        <textarea name="descripcion" type="text" class="form-control" rows="3" required  id="descripcion" placeholder="Descripción de la actividad"></textarea>
                       </div>
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Fecha</label>
+                        <label for="nombre" class="control-label">Fecha *</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha">
+                          <input type="text" class="form-control pull-right" id="datepicker" required name="fecha">
                         </div>
                       </div>
                       <div class="bootstrap-timepicker">
                         <div class="form-group">
-                          <label>Hora inicio</label>
+                          <label>Hora inicio *</label>
                           <div class="input-group">
-                            <input type="text" class="form-control timepicker" id="hora_inicio" name="hora_inicio">
+                            <input type="text" class="form-control timepicker" id="hora_inicio" required name="hora_inicio">
 
                             <div class="input-group-addon">
                               <i class="fa fa-clock-o"></i>
@@ -115,9 +108,9 @@ $id_evento = $_SESSION['id_evento'];
                       </div>
                       <div class="bootstrap-timepicker">
                         <div class="form-group">
-                          <label>Hora fin</label>
+                          <label>Hora fin *</label>
                           <div class="input-group">
-                            <input type="text" class="form-control timepicker" id="hora_fin" name="hora_fin">
+                            <input type="text" class="form-control timepicker" id="hora_fin" required name="hora_fin">
 
                             <div class="input-group-addon">
                               <i class="fa fa-clock-o"></i>

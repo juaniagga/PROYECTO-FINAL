@@ -30,7 +30,7 @@ $excelHTMLReader->loadIntoExisting($tmpfile, $objPHPExcel);
 $objPHPExcel->getActiveSheet()->setTitle('Inscriptos'); // Change sheet's title if you want
 
 unlink($tmpfile); // delete temporary file because it isn't needed anymore
-
+ob_end_clean();
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); // header for .xlxs file
 header('Content-Disposition: attachment;filename='.$filename); // specify the download file name
 header('Cache-Control: max-age=0');

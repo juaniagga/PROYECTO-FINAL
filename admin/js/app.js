@@ -69,7 +69,7 @@ $(document).ready(function () {
 
     const id_evento= $('#procedencia').attr('data-id');
 
-  $.getJSON('servicios/estadisticas-procedencia.php?id='+id_evento, function(data){
+/*   $.getJSON('servicios/estadisticas-procedencia.php?id='+id_evento, function(data){
     datos_procedencia= data;
     donutData = [
       { label: datos_procedencia[0].nombre, data: datos_procedencia[0].valor, color: '#191497' },
@@ -95,8 +95,8 @@ $(document).ready(function () {
       }
     });
   });
-
-  $.getJSON('servicios/estadisticas-ciudad.php?id='+id_evento, function(data){
+ */
+/*   $.getJSON('servicios/estadisticas-ciudad.php?id='+id_evento, function(data){
     datos_ciudad= data;
     console.log(data);
     donutData = [
@@ -124,14 +124,51 @@ $(document).ready(function () {
     });
   });
 
-  
-
   function labelFormatter(label, series) {
     return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
       + label
       + '<br>'
       + Math.round(series.percent) + '%</div>'
+  } */
+
+  function getRandomRgb() {
+    var num = Math.round(0xffffff * Math.random());
+    var r = num >> 16;
+    var g = num >> 8 & 255;
+    var b = num & 255;
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
+  //DONUT CHART
+  $.getJSON('servicios/estadisticas-institucion.php?id='+id_evento, function(datos){
+    console.log(datos); 
+    var localidades= [];
+    var colores= [];
+    datos.forEach(element => {
+      colores.push(getRandomRgb());
+      });
+    var donut = new Morris.Donut({
+      element: 'institucion-chart',
+      resize: true,
+      colors: colores,
+      data: datos,
+      hideHover: 'auto'
+    });
+  });
+
+  $.getJSON('servicios/estadisticas-localidad.php?id='+id_evento, function(datos){
+    var localidades= [];
+    var colores= [];
+    datos.forEach(element => {
+      colores.push(getRandomRgb());
+      });
+    var donut = new Morris.Donut({
+      element: 'localidad-chart',
+      resize: true,
+      colors: colores,
+      data: datos,
+      hideHover: 'auto'
+    });
+  });
   /*
    * END estadisticas
   */

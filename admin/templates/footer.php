@@ -39,6 +39,9 @@
 <script src="plugins/jquery.flot.pie.js"></script>
 <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 <script src="plugins/jquery.flot.categories.js"></script>
+<!-- Morris.js charts -->
+<script src="plugins/raphael.min.js"></script>
+<script src="plugins/morris.min.js"></script>
 
 
 <script src="js/admin-ajax.js"></script>

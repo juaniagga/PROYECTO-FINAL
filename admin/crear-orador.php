@@ -35,22 +35,15 @@ $id_evento = $_SESSION['id_evento'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-6">
+        <div class="col-12 col-lg-6">
           <section class="content">
 
             <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Complete el formulario</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fa fa-times"></i></button>
-                </div>
+                <h3 class="box-title">Complete el formulario <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -61,22 +54,22 @@ $id_evento = $_SESSION['id_evento'];
                   <form class="form-horizontal" name="crear-orador" id="crear-orador" method="post" action="control-evento.php" enctype="multipart/form-data">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Nombre</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
-                        <label for="apellido" class="control-label">Apellido</label>
-                        <input name="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido">
+                        <label for="nombre" class="control-label">Nombre *</label>
+                        <input name="nombre" type="text" class="form-control" id="nombre" required placeholder="Nombre">
+                        <label for="apellido" class="control-label">Apellido *</label>
+                        <input name="apellido" type="text" class="form-control" required id="apellido" placeholder="Apellido">
                       </div>
                       <div class="form-group">
-                        <label for="dni" class="control-label">DNI</label>
-                        <input name="dni" type="number" class="form-control" id="dni" placeholder="DNI">
+                        <label for="dni" class="control-label">DNI *</label>
+                        <input name="dni" type="number" class="form-control" required id="dni" placeholder="DNI">
                       </div>
                       <div class="form-group">
-                        <label for="biografia" class="control-label">Biografía</label>
-                        <textarea name="biografia" type="text" class="form-control" rows="3" id="biografia" placeholder="Biografía del orador"></textarea>
+                        <label for="biografia" class="control-label">Biografía *</label>
+                        <textarea name="biografia" type="text" class="form-control" required rows="3" id="biografia" placeholder="Biografía del orador"></textarea>
                       </div>
                       <div class="form-group">
-                        <label>Actividades dictadas</label>
-                        <select name="actividades[]" id="actividades" class="form-control select2" multiple="multiple" data-placeholder="Selecciones las actividades" style="width: 100%;" required>
+                        <label>Actividades dictadas *</label>
+                        <select name="actividades[]" id="actividades" class="form-control select2" required multiple="multiple" data-placeholder="Selecciones las actividades" style="width: 100%;" required>
                           <?php
                           try {
                             $sql = "

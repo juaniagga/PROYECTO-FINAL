@@ -34,20 +34,15 @@ $permiso = $_SESSION['permiso'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-3">
+        <div class="col-sm-6 col-lg-4">
           <section class="content">
 
             <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Complete el formulario</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
+                <h3 class="box-title">Complete el formulario <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -58,9 +53,9 @@ $permiso = $_SESSION['permiso'];
                   <form class="form-horizontal" name="crear-categoria" id="crear-categoria" method="post" action="control-evento.php">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+                        <label for="nombre" class="col-sm-2 control-label">Nombre *</label>
                         <div class="col-sm-10">
-                          <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+                          <input name="nombre" type="text" class="form-control" id="nombre" required placeholder="Nombre">
                         </div>
                       </div>
                       <div class="form-group">

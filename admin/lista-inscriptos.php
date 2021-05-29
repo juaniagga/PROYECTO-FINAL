@@ -4,7 +4,7 @@ include_once 'templates/header.php';
 
 $permiso = $_SESSION['permiso'];
 if ($permiso) {
-  $id_evento = $_GET['id'];
+  $id_evento = urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));
 } else {
   $id_evento = $_SESSION['id_evento'];
 }

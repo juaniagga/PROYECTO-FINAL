@@ -216,7 +216,7 @@ button#acreditar{
     border-bottom: 0 solid transparent;
 }
 .skin-blue .main-header .logo:hover {
-    background-color: #ecf0f5;
+    background-color: #d8dce1;
     color: #04c;
     border-bottom: 0 solid transparent;
 }
@@ -225,3 +225,23 @@ button#acreditar{
     font-size: 16px;
     line-height: 35px;
 }
+
+.chart tspan{
+    font-weight: 600;
+}
+.chart{
+    margin-bottom: 3em;
+}
+
+@media (min-width: 1200px){
+   
+}
+.box-total {
+    width: 80%;
+}
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

@@ -31,7 +31,7 @@ $permiso = $_SESSION['permiso'];
       <!-- Main content -->
       <section class="content">
         <div class="row centrar-contenido">
-          <div class="col-xs-10">
+          <div class="col-xs-12">
 
             <!-- BOX LISTA EVENTOS -->
             <div class="box">
@@ -39,7 +39,7 @@ $permiso = $_SESSION['permiso'];
                 <h3 class="box-title">Visualice los eventos de UNMDP</h3>
               </div>
               <!-- /.box-header -->
-              <div class="box-body">
+              <div class="box-body table-responsive">
                 <table id="registros" class="table table-bordered table-striped text-center">
                   <thead>
                     <tr>
@@ -89,8 +89,9 @@ $permiso = $_SESSION['permiso'];
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">VER
                               <span class="fa fa-caret-down"></span></button>
                             <ul class="dropdown-menu">
-                              <li><a href="lista-inscriptos.php?id=<?php echo $evento['id_evento']; ?>">Listado inscriptos</a></li>
-                              <li><a href="estadisticas-evento.php?id=<?php echo $evento['id_evento']; ?>">Estadísticas</a></li>
+                              <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>
+                              <li><a href="lista-inscriptos.php?id=<?php echo urlencode($encrypt); ?>">Listado inscriptos</a></li>
+                              <li><a href="estadisticas-evento.php?id=<?php echo urlencode($encrypt); ?>">Estadísticas</a></li>
                             </ul>
                           </div>
                           </div>

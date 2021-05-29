@@ -34,20 +34,15 @@ $permiso = $_SESSION['permiso'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-4">
+        <div class=" col-lg-4">
           <section class="content">
 
             <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Seleccione la categoría que desee agregar</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -74,8 +69,8 @@ $permiso = $_SESSION['permiso'];
                       <div class="form-group">
                         <label for="categoria" class="col-sm-3 control-label">Categoría</label>
                         <div class="col-sm-12">
-                        <select name="categoria" class="form-control select2" id="categoria" placeholder="categoria" style="width: 100%;">
-                          <option value="0">- Seleccione -</option>
+                        <select name="categoria" class="form-control select2" id="categoria" placeholder="categoria" style="width: 100%;" required>
+                          <option value="">- Seleccione -</option>
                           <?php
                           try {
                             $sql = "
@@ -99,7 +94,7 @@ $permiso = $_SESSION['permiso'];
                       <div class="form-group">
                         <label for="tarifa" class="col-sm-3 control-label">Tarifa</label>
                         <div class="col-sm-12">
-                          <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="Tarifa">
+                          <input name="tarifa" type="number" step="0.01" class="form-control" id="tarifa" placeholder="Tarifa" required>
                         </div>
                       </div>
                       <div id="error" style="display: none"></div>

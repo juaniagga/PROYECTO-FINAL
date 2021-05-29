@@ -30,7 +30,6 @@
             };
 
             $stmt_act->close();
-            $stmt_d->close();
             $db->close();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -700,7 +699,7 @@
         $pais= $_POST['pais'];
         $provincia= $_POST['provincia'];
         $ciudad= $_POST['ciudad'];
-        $calle= $ciudad= $_POST['calle'];
+        $calle= $_POST['calle'];
         $numero= $_POST['numero'];
 
         $institucion = $_POST['institucion'];

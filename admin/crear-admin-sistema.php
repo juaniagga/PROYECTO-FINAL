@@ -31,20 +31,15 @@ $permiso = $_SESSION['permiso'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-6 main">
+        <div class="col-xs-12 col-lg-6 main">
           <section class="content">
 
             <!-- admin-sistema box -->
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Complete el formulario</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
+                <h3 class="box-title">Complete el formulario <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -54,33 +49,33 @@ $permiso = $_SESSION['permiso'];
                   <form class="form-horizontal" name="crear-admin" id="crear-admin" method="post" action="control-admin.php">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="usuario" class="col-sm-2 control-label">Usuario</label>
+                        <label for="usuario" class="col-sm-2 control-label">Usuario *</label>
                         <div class="col-sm-12">
-                          <input name="usuario" type="text" class="form-control" id="usuario" placeholder="Nombre de usuario">
+                          <input name="usuario" type="text" class="form-control" id="usuario" required placeholder="Nombre de usuario">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+                        <label for="nombre" class="col-sm-2 control-label">Nombre *</label>
                         <div class="col-sm-12">
-                          <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre y apellido">
+                          <input name="nombre" type="text" class="form-control" id="nombre" required placeholder="Nombre y apellido">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="email" class="col-sm-2 control-label">Email</label>
+                        <label for="email" class="col-sm-2 control-label">Email *</label>
                         <div class="col-sm-12">
-                          <input name="email" type="email" class="form-control" id="email" placeholder="Email">
+                          <input name="email" type="email" class="form-control" id="email" required placeholder="Email">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Contraseña</label>
+                        <label for="password" class="col-sm-2 control-label">Contraseña *</label>
                         <div class="col-sm-12">
-                          <input name="password" type="password" class="form-control" id="password" placeholder="Contraseña">
+                          <input name="password" type="password" class="form-control" id="password" required placeholder="Contraseña">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Repetir contraseña</label>
+                        <label for="password" class="col-sm-2 control-label">Repetir contraseña *</label>
                         <div class="col-sm-12">
-                          <input name="password_repit" type="password" class="form-control" id="password_repit" placeholder="Contraseña">
+                          <input name="password_repit" type="password" class="form-control" id="password_repit" required placeholder="Contraseña">
                           <span id="resultado_password" class="help-block"></span>
                         </div>
                       </div>

@@ -3,10 +3,10 @@ include_once 'funciones/sesion-admin.php';
 include_once 'templates/header.php';
 
 $permiso = $_SESSION['permiso'];
-if ($permiso){
-  $id_evento= $_GET['id'];
-}else{
-  $id_evento= $_SESSION['id_evento'];
+if ($permiso) {
+  $id_evento = urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB", "unmdp2021"));
+} else {
+  $id_evento = $_SESSION['id_evento'];
 }
 
 ?>
@@ -50,10 +50,10 @@ if ($permiso){
 
       <!-- Main content -->
       <section class="content" style="width: 100%;">
-        <div class="row centrar-contenido">
-          <div class="col-lg-3 col-xs-6">
+        <div class="row text-center">
+          <div class="col-sm-6 col-xs-12">
             <!-- small box -->
-            <div class="small-box bg-yellow">
+            <div class="box-total small-box bg-yellow center-block">
               <div class="inner">
                 <h3><?php echo $evento['inscriptos']; ?></h3>
 
@@ -66,9 +66,9 @@ if ($permiso){
           </div>
           <!-- /.col -->
 
-          <div class="col-lg-3 col-xs-6">
+          <div class="col-sm-6 col-xs-12">
             <!-- small box -->
-            <div class="small-box bg-green">
+            <div class="box-total small-box bg-green center-block">
               <div class="inner">
                 <h3><?php echo $evento['acreditados']; ?></h3>
 
@@ -82,26 +82,34 @@ if ($permiso){
           <!-- /.col -->
         </div>
         <!-- /.row -->
-        <h3>Estadísticas de los participantes</h3>
-        <div class="row centrar-contenido">
+        <h2>Estadísticas de los participantes acreditados</h2>
+        <div class="">
 
-          <div class="col-xs-4 box-body centrar-contenido">
-            <h3>Institución</h3>
-            <div id="procedencia" data-id="<?php echo $id_evento?>" style="width:250px; height: 250px;"></div>
+          <div class="row">
+            <div class="col-xs-12 text-center col-lg-6">
+              <h2>Institución (%)</h2>
+              <div class="box-body chart-responsive">
+                <div class="chart" id="institucion-chart" style="position: relative;"></div>
+              </div>
+            </div>
+            <div class="col-xs-12 text-center col-lg-6">
+              <h2>Localidad (%)</h2>
+              <div class="box-body chart-responsive">
+                <div class="chart" id="localidad-chart" style="position: relative;"></div>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-4 box-body centrar-contenido">
-            <h3>Localidad</h3>
-            <div id="ciudad" style="width:250px; height: 250px;"></div>
-          </div>
+
+
         </div>
         <!-- /.row -->
+
       </section>
       <!-- /.content -->
 
 
     </div>
     <!-- /.content-wrapper -->
-
     <?php
     include_once 'templates/footer.php';
     ?>

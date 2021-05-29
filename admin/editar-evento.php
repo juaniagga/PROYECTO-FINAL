@@ -33,20 +33,15 @@ $permiso = $_SESSION['permiso'];
           Editar evento
         </h1>
       </section>
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-md-6">
+        <div class="col-lg-7">
           <section class="content">
 
             <!-- Default box -->
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Edite la información</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
+                <h3 class="box-title">Edite la información <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -70,42 +65,42 @@ $permiso = $_SESSION['permiso'];
                   <form class="form-horizontal" name="editar-evento" id="editar-evento" method="post" action="control-evento.php">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Nombre del evento</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre de nombre" value="<?php echo $evento['nombre'] ?>">
+                        <label for="nombre" class="control-label">Nombre del evento *</label>
+                        <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre de nombre" required value="<?php echo $evento['nombre'] ?>">
                       </div>
                       <div class="form-group">
-                        <label for="descripcion" class="control-label">Descripción del evento</label>
-                        <textarea name="descripcion" type="text" class="form-control" rows="3" id="descripcion" placeholder="Descripción del evento"><?php echo $evento['descripcion'] ?></textarea>
+                        <label for="descripcion" class="control-label">Descripción del evento *</label>
+                        <textarea name="descripcion" type="text" class="form-control" rows="3" id="descripcion" required placeholder="Descripción del evento"><?php echo $evento['descripcion'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label for="organizador" class="control-label">Organizador</label>
-                        <input name="organizador" type="text" class="form-control" id="organizador" placeholder="Organizador del evento" value="<?php echo $evento['organizador'] ?>">
+                        <label for="organizador" class="control-label">Organizador *</label>
+                        <input name="organizador" type="text" class="form-control" id="organizador" required placeholder="Organizador del evento" value="<?php echo $evento['organizador'] ?>">
                       </div>
                       <div class="form-group">
-                        <label for="ubicacion" class="control-label">Ubicación</label>
-                        <input name="ubicacion" type="text" class="form-control" id="ubicacion" placeholder="Ubicación" value="<?php echo $evento['ubicacion'] ?>">
+                        <label for="ubicacion" class="control-label">Ubicación *</label>
+                        <input name="ubicacion" type="text" class="form-control" id="ubicacion" required placeholder="Ubicación" value="<?php echo $evento['ubicacion'] ?>">
                       </div>
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Fecha inicio</label>
+                        <label for="nombre" class="control-label">Fecha inicio *</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_inicio" value="<?php echo date_format(date_create($evento['fecha_inicio']), 'd/m/Y'); ?>">
+                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_inicio" required value="<?php echo date_format(date_create($evento['fecha_inicio']), 'd/m/Y'); ?>">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="nombre" class="control-label">Fecha fin</label>
+                        <label for="nombre" class="control-label">Fecha fin *</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_fin" value="<?php echo date_format(date_create($evento['fecha_fin']), 'd/m/Y'); ?>">
+                          <input type="text" class="form-control pull-right" id="datepicker" name="fecha_fin" required value="<?php echo date_format(date_create($evento['fecha_fin']), 'd/m/Y'); ?>">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="limite" class="control-label">Limite de participantes</label>
-                        <input name="limite" type="text" class="form-control" id="limite" placeholder="" value="<?php echo $evento['limite'] ?>">
+                        <label for="limite" class="control-label">Limite de participantes *</label>
+                        <input name="limite" type="text" class="form-control" id="limite" placeholder="" required value="<?php echo $evento['limite'] ?>">
                       </div>
                       <div class="form-group">
                         <label for="">Foto actual del evento</label>
@@ -125,7 +120,7 @@ $permiso = $_SESSION['permiso'];
                         
                       </div>
                       <div class="form-group">
-                        <label for="" class="control-label">Estado</label>
+                        <label for="" class="control-label">Estado *</label>
                         <?php
                         if ($evento['estado']) {
                         ?>

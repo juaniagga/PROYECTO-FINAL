@@ -49,7 +49,6 @@ $(document).ready(function(){
         const origen=$(this).attr('id'); 
         console.log(datos);
 
-        if (validarcampos(datos)){
             $.ajax({
                 type: $(this).attr('method'),
                 data: datos,
@@ -114,10 +113,6 @@ $(document).ready(function(){
                     console.log("Status: " + textStatus, "Error: " + errorThrown);
                 } */
             });
-        }else{
-            error.style.display="block";
-            error.innerHTML="* Todos los campos son obligatorios";
-        }
         
     }
 
@@ -128,7 +123,6 @@ $(document).ready(function(){
         let campos= $(this).serializeArray();
         console.log(campos);
 
-        if (validarcampos(campos)){
             $.ajax({
                 type: $(this).attr('method'),
                 data: datos,
@@ -171,10 +165,6 @@ $(document).ready(function(){
                     console.log(status);
                 }
             });
-        }else{
-            error.style.display="block";
-            error.innerHTML="* Todos los campos son obligatorios";
-        }
         
     }
 

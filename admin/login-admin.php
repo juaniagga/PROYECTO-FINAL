@@ -22,11 +22,11 @@
 
     <form name="login-admin" id="login-admin" method="post" action="control-login-admin.php" data-tipo="admin">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
+        <input type="text" class="form-control" id="usuario" name="usuario" required placeholder="Usuario" value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>">
         <span class="form-control-feedback"><i class="fa fa-user"></i></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" id="pass" name="password" placeholder="Contraseña">
+        <input type="password" class="form-control" id="pass" name="password" required placeholder="Contraseña">
         <span class="form-control-feedback"><i class="fa fa-unlock-alt"></i></span>
       </div>
       <div class="row">

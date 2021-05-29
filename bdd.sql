@@ -6,25 +6,25 @@ USE proyecto_final;
 
 CREATE TABLE categoria_act(
     id_categoria int NOT NULL AUTO_INCREMENT,
-    nombre varchar(20) NOT NULL,
+    nombre varchar(50) NOT NULL,
     icono varchar(20) not NULL,
     PRIMARY KEY(id_categoria)
 );
 
 CREATE TABLE evento(
     id_evento int NOT NULL AUTO_INCREMENT,
-    nombre varchar(100) NOT NULL,
+    nombre varchar(200) NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     inscriptos int not NULL,
     acreditados int not NULL,
     estado TINYINT NOT null,
-    organizador varchar(30) not null,
+    organizador varchar(100) not null,
     limite int(8) UNSIGNED not NULL,
     ubicacion varchar(30) NOT NULL,
     descripcion varchar(1000) NOT NULL,
     imagen varchar(50) not null,
-    info_pago varchar(20) not null,
+    info_pago varchar(30) not null,
     PRIMARY KEY(id_evento)
 );
 
@@ -32,11 +32,11 @@ CREATE TABLE evento(
 
 CREATE TABLE actividad(
     id_actividad int NOT NULL AUTO_INCREMENT,
-    nombre_act varchar(30) NOT NULL,
+    nombre_act varchar(100) NOT NULL,
     fecha DATE NOT NULL,
     hora_inicio time NOT NULL,
     hora_fin time NOT NULL,
-    descripcion varchar(130) NOT NULL,
+    descripcion varchar(1000) NOT NULL,
     id_categoria INT NOT NULL,
     id_evento int NOT NULL,
     PRIMARY KEY(id_actividad),
@@ -48,9 +48,9 @@ CREATE TABLE orador(
     id_orador int NOT NULL AUTO_INCREMENT,
     id_evento int NOT NULL,
     dni int(8) UNSIGNED NOT NULL,
-    nombre varchar(20) NOT NULL,
-    apellido varchar(20) NOT NULL,
-    biografia text(600) NOT NULL,
+    nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
+    biografia text(1000) NOT NULL,
     imagen varchar(50) not null,
     PRIMARY KEY(id_orador),
     FOREIGN KEY(id_evento) REFERENCES evento(id_evento) ON DELETE CASCADE
@@ -66,7 +66,7 @@ CREATE TABLE dicta(
 
 CREATE TABLE categoria_participante(
     id_categoria int NOT NULL AUTO_INCREMENT,
-    nombre varchar(20) NOT NULL,
+    nombre varchar(50) NOT NULL,
     autoreg TINYINT not NULL,
     PRIMARY KEY(id_categoria)
 );
@@ -82,20 +82,20 @@ CREATE TABLE cat_asociadas(
 
 CREATE TABLE usuario(
     id_user int NOT NULL AUTO_INCREMENT,  
-    email varchar(40) NOT NULL UNIQUE,
+    email varchar(50) NOT NULL UNIQUE,
     clave varchar(255) NOT NULL,
     dni int(8) UNSIGNED NOT NULL,
-    nombre varchar(20) NOT NULL,
-    apellido varchar(20) NOT NULL,
+    nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
     telefono varchar(20) not null,
-    calle varchar(30) NOT NULL,
+    calle varchar(50) NOT NULL,
     numero int NOT NULL,
-    ciudad varchar(30) NOT NULL,
-    provincia varchar(20) NOT NULL,
-    pais varchar(20) NOT NULL,
+    ciudad varchar(40) NOT NULL,
+    provincia varchar(30) NOT NULL,
+    pais varchar(30) NOT NULL,
     trabajo_cientifico TINYINT not NULL,
-    institucion varchar(30) not null,
-    cargo varchar(20) not null,
+    institucion varchar(100) not null,
+    cargo varchar(30) not null,
     PRIMARY KEY(id_user)
 );
 
@@ -106,22 +106,22 @@ CREATE TABLE participante(
     id_categoria int NOT NULL,
     fecha_registro DATE NOT NULL,
     acreditado TINYINT not NULL,
-    forma_pago varchar(30) not null,
+    forma_pago varchar(40) not null,
     importe_abonado float not null,
     comprobante varchar(50) not null,
     fecha_pago date not null,
-    comentario_pago varchar(300) not null,
+    comentario_pago varchar(600) not null,
     pago_confirmado TINYINT not NULL,
     exento TINYINT not NULL,
     facturacion TINYINT not NULL,
     iva varchar(15) not null,
     cuit int(12) not null,
-    adicionales varchar(50) not null,
-    nombre_factura varchar(30) not null,
-    alojamiento varchar(30) not null,
+    adicionales varchar(600) not null,
+    nombre_factura varchar(50) not null,
+    alojamiento varchar(100) not null,
     fecha_arribo date not null,
     fecha_partida date not null,
-    traslado varchar(20) not null,
+    traslado varchar(50) not null,
     PRIMARY KEY(id_participante),
     UNIQUE KEY (id_user,id_evento),
     FOREIGN KEY(id_user) REFERENCES usuario(id_user) ON DELETE CASCADE,
@@ -131,9 +131,9 @@ CREATE TABLE participante(
 
 CREATE TABLE administrador(
     id_admin int NOT NULL AUTO_INCREMENT,
-    usuario varchar(30) NOT NULL UNIQUE,
+    usuario varchar(50) NOT NULL UNIQUE,
     clave varchar(255) NOT NULL,
-    email varchar(40) NOT NULL,
+    email varchar(50) NOT NULL,
     nombre varchar(50) NOT NULL,
     apellido varchar(50) NOT NULL,
     permiso TINYINT NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE administrado(
 
 CREATE TABLE medios_pago(
     id_medio int NOT NULL AUTO_INCREMENT,
-    nombre varchar(30) NOT NULL,
+    nombre varchar(50) NOT NULL,
     estado TINYINT not NULL,
     PRIMARY KEY(id_medio)
 );

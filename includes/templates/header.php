@@ -124,7 +124,6 @@
           <a href="index.php?id=<?php echo urlencode($encrypt);?>">Evento</a>
           <a href="calendario.php?id=<?php echo urlencode($encrypt);?>#seccion">Programa</a>
           <a href="oradores.php?id=<?php echo urlencode($encrypt);?>#seccion">Oradores</a>
-          <a href="galeria.php?id=<?php echo urlencode($encrypt);?>#seccion">Galería</a>
           <a href="registro.php?id=<?php echo urlencode($encrypt);?>#seccion">Inscripción</a>
           <?php
             if (isset($_SESSION['id_user'])){

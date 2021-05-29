@@ -36,20 +36,15 @@ $id_evento = $_SESSION['id_evento'];
         </h1>
       </section>
 
-      <div class="centrar-contenido">
+      <div class="row centrar-contenido">
         <!-- Main content -->
-        <div class="row col-sm-9 main">
+        <div class="col-xs-12 col-lg-9 main">
           <section class="content">
 
             <!-- admin-sistema box -->
             <div class="box">
               <div class="box-header with-border">
                 <h3 class="box-title">Complete el formulario <span style="font-size: 15px;">( * campo obligatorio )</span></h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
               </div>
               <div class="box-body">
                 <!-- CUERPO -->
@@ -94,9 +89,9 @@ $id_evento = $_SESSION['id_evento'];
                         </div>
                       </div>
                       <div class="form-group col-sm-12">
-                          <label for="dni" class="col-sm-3 control-label">DNI/pasaporte *</label>
+                          <label for="dni" class="col-sm-3 control-label">DNI / pasaporte *</label>
                           <div class="col-sm-12">
-                            <input name="dni" type="number" class="form-control" id="dni" placeholder="" style="width: 30%;" required>
+                            <input name="dni" type="number" class="form-control" id="dni" placeholder="" style="width: 40%;" required>
                           </div>
                       </div>
                       <div class="form-row">
