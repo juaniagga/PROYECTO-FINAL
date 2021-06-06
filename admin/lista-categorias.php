@@ -35,10 +35,6 @@ $permiso = $_SESSION['permiso'];
           <div class="col-xs-12 col-lg-8">
             <!-- BOX ADMIN EVENTOS -->
             <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Listado de categorías</h3>
-
-              </div>
               <!-- /.box-header -->
               <div class="box-body table-responsive">
                 <table id="registros" class="table table-bordered table-striped text-center">

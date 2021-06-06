@@ -35,9 +35,6 @@ $permiso = $_SESSION['permiso'];
 
             <!-- BOX LISTA EVENTOS -->
             <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Visualice los eventos de UNMDP</h3>
-              </div>
               <!-- /.box-header -->
               <div class="box-body table-responsive">
                 <table id="registros" class="table table-bordered table-striped text-center">
