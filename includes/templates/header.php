@@ -117,7 +117,9 @@
       </div>
       <div class="contenido-barra">
         <div class="logo">
-          <img src="img/logoUNMDP.svg" alt="logo UNMDP">
+          <a href="https://www.mdp.edu.ar/" target="_blank">
+            <img src="img/logoUNMDP.svg" alt="logo UNMDP">
+          </a>
         </div>
         <nav class="navegacion-principal clearfix">
           <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>

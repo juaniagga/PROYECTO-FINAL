@@ -878,18 +878,23 @@
         else
             $valor=0;
         try {
+            $id_categoria= $db->query("SELECT id_categoria FROM participante WHERE id_participante=". $id_participante);
+            $id_categoria= $id_categoria->fetch_assoc();
+            $cat_reg= $db->query("SELECT c.autoreg FROM categoria_participante c WHERE c.id_categoria=" . $id_categoria['id_categoria']);
+            $cat_reg= $cat_reg->fetch_assoc();
+            
             $stmt= $db->prepare("UPDATE participante SET acreditado=? WHERE id_participante=?");
             $stmt->bind_param("ii", $valor, $id_participante);
             $stmt->execute();
-
             if ($stmt->affected_rows){  //siempre devuelve 0..
                 $respuesta= array(
                     'respuesta' => 'exito',
                 );
-                if ($valor==1)
+                if ($valor==1 && $cat_reg['autoreg']==1)
                     $db->query("UPDATE evento SET acreditados=acreditados+1 WHERE id_evento=" . $id_evento);
                 else
-                    $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
+                    if ($cat_reg['autoreg']==1)
+                        $db->query("UPDATE evento SET acreditados=acreditados-1 WHERE id_evento=" . $id_evento);
             }else{
                 $respuesta= array(
                     'respuesta' => $db->error,

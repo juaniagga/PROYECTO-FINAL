@@ -15,9 +15,9 @@
 
     $sql2 = "
     SELECT COUNT(*) as res
-    FROM participante p
+    FROM categoria_participante c INNER JOIN participante p ON c.id_categoria=p.id_categoria
     WHERE p.id_evento=" . $id_evento . "
-    AND p.acreditado=1";
+    AND p.acreditado=1 AND c.autoreg=1";
     $tupla2 = $db->query($sql2);
     if ($tupla2){
         $total= $tupla2->fetch_assoc();
@@ -30,8 +30,8 @@
     if ($total!=0){
         $sql = "
         SELECT COUNT(*) as total, u.institucion
-        FROM usuario u INNER JOIN participante p on p.id_user=u.id_user
-        WHERE p.id_evento=" . $id_evento . " and p.acreditado=1
+        FROM usuario u INNER JOIN participante p on p.id_user=u.id_user INNER JOIN categoria_participante c ON c.id_categoria=p.id_categoria
+        WHERE p.id_evento=" . $id_evento . " and p.acreditado=1 AND c.autoreg=1
         GROUP BY u.institucion";
         $tupla = $db->query($sql);
         while ($institucion= $tupla->fetch_assoc()){

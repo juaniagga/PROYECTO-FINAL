@@ -776,11 +776,12 @@ footer h3{
 footer h3 span{
   color:var(--unmdp-color);
 }
-footer .ultimos-tweets li{
+footer .info-footer li{
   margin-bottom:10px;
+  font-size: 13px;
 }
 @media (max-width: 767px){
-  footer .ultimos-tweets{
+  footer .info-footer{
     margin:2rem 0 2rem 0;
   }
 }

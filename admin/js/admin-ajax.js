@@ -59,7 +59,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.respuesta=="exito"){
                         swal.fire(
-                            '¡Hecho!',
+                            'La operación se realizó con éxito',
                             '',
                             'success'
                           )
@@ -92,7 +92,7 @@ $(document).ready(function(){
                                       })
                                 }else {
                                     swal.fire(
-                                        '¡Hecho!',
+                                        'La operación se realizó con éxito',
                                         '',
                                         'success'
                                       )
@@ -137,7 +137,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.respuesta=='exito'){
                         swal.fire(
-                            '¡Hecho!',
+                            'La operación se realizó con éxito',
                             '',
                             'success'
                           )
@@ -152,7 +152,7 @@ $(document).ready(function(){
                               })
                         }else {
                             swal.fire(
-                                '¡Hecho!',
+                                'La operación se realizó con éxito',
                                 '',
                                 'success'
                               )
@@ -191,7 +191,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta == 'exito') {
                     swal.fire(
-                        '¡Hecho!',
+                        'La operación se realizó con éxito',
                         '',
                         'success'
                     )
@@ -235,7 +235,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta=="exito"){
                     swal.fire(
-                        '¡Hecho!',
+                        'La operación se realizó con éxito',
                         '',
                         'success'
                       )
@@ -288,7 +288,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta=="exito"){
                     swal.fire(
-                        '¡Hecho!',
+                        'La operación se realizó con éxito',
                         '',
                         'success'
                       )
@@ -306,7 +306,7 @@ $(document).ready(function(){
                             })
                     }else {
                         swal.fire(
-                            '¡Hecho!',
+                            'La operación se realizó con éxito',
                             '',
                             'success'
                             )
@@ -375,7 +375,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta=='exito'){
                     swal.fire(
-                        '¡Hecho!',
+                        'La operación se realizó con éxito',
                         'Envíe un mail a los participantes acreditados informando que ya tienen el certificado disponible para su descarga desde su panel de usuario.',
                         'success'
                         )

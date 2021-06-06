@@ -92,7 +92,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.respuesta == 'exito') {
                     swal.fire(
-                        'Hecho!',
+                        'La operación se realizó con éxito',
                         '',
                         'success'
                     )
@@ -150,7 +150,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.respuesta=='exito'){
                         swal.fire(
-                            'Hecho!',
+                            'La operación se realizó con éxito',
                             '',
                             'success'
                           )
@@ -365,7 +365,7 @@ $(document).ready(function(){
                         console.log(data.respuesta);  
                         if (data.respuesta=="exito"){
                             swal.fire(
-                                'Hecho!',
+                                'La operación se realizó con éxito',
                                 '',//'Administrador creado correctamente',
                                 'success'
                             )

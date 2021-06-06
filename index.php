@@ -314,6 +314,6 @@
       <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente">Registro</a>
     </div><!--contenido-->
   </div>
-  
+
 
   <?php include_once 'includes/templates/footer.php'; ?>

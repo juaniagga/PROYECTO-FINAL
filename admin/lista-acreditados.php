@@ -45,6 +45,7 @@ if ($permiso) {
                   <table id="dtHorizontalVerticalExample" class="text-center table table-striped table-bordered table-sm " cellspacing="0" width="100%">
                     <thead>
                       <tr>
+                        <th class="col-xs-3">ID participante</th>
                         <th class="col-xs-3">Nombre</th>
                         <th class="col-xs-3">Apellido</th>
                         <th class="col-xs-3">Email</th>
@@ -110,6 +111,7 @@ if ($permiso) {
                           }
                       ?>
                           <tr>
+                            <td><?php echo $user['id_participante']; ?></td>
                             <td><?php echo $user['nombre']; ?></td>
                             <td><?php echo $user['apellido']; ?></td>
                             <td> <?php echo $user['email']; ?></td>
