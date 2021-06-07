@@ -18,6 +18,8 @@ $(document).ready(function(){
 
     $('#editar-tarifa').on('submit', actualizar);
 
+    $('#editar-pago').on('submit', actualizar);
+
     $('#editar-categoria').on('submit', actualizar);
 
     $('#agregar-categoria').on('submit', actualizar);

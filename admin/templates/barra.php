@@ -3,13 +3,18 @@
     <?php if (!$permiso){?>
       <?php $encrypt= openssl_encrypt($_SESSION['id_evento'],"AES-128-ECB","unmdp2021"); ?>
       <a href="../index.php?id=<?php echo urlencode($encrypt);?>" class="logo" target="_blank">
-    <?php }else{?>
-      <a class="logo" target="_blank">
-      <?php }?>
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><img src="../img/favicon.png" alt=""></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b></b> Vista previa</span>
+      <span class="logo-lg"><b></b>Vista previa</span>
+    <?php }else{?>
+      <a class="logo" target="_blank">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><img src="../img/favicon.png" alt=""></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b></b>UNMDP</span>
+      <?php }?>
+      
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

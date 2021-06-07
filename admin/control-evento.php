@@ -688,6 +688,34 @@
         echo json_encode($respuesta);
     }
 
+    elseif (isset($_POST['editar-pago'])){
+        $id= $_POST['id_medio'];
+        $nombre= $_POST['nombre'];
+        try {
+            $stmt= $db->prepare("UPDATE medios_pago SET nombre=? WHERE id_medio=?");
+            $stmt->bind_param("si", $nombre, $id);
+            $stmt->execute();
+
+            if ($stmt->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                );
+            } else {
+                $msj = $db->error;
+                $respuesta = array(
+                    'respuesta' => $msj,
+                );
+            };
+
+            $stmt->close();
+            $db->close();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        echo json_encode($respuesta);
+    }
+
     elseif (isset($_POST['crear-inscripto'])){
         $id_evento= $_SESSION['id_evento'];
         $nombre= $_POST['nombre'];

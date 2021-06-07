@@ -31,7 +31,7 @@
       <!-- Main content -->
       <section class="content" style="width: 100%;">
         <div class="row centrar-contenido">
-          <div class="col-xs-12 col-lg-6">
+          <div class="col-xs-12 col-lg-8">
               <!-- BOX ADMIN SISTEMA -->
               <div class="box">
                 <!-- /.box-header -->
@@ -41,7 +41,7 @@
                     <tr>
                       <th>Medio de pago</th>
                       <th class="col-lg-3">Estado</th>
-                      <th class="col-xs-2">Acciones</th>
+                      <th class="col-xs-5">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,13 +67,21 @@
                           echo "Activado  "; ?><i class="fa fa-circle text-success"></i>
                           </td>
                           <td>
-                            <button type="button" id="btn-pago" data="0" data-id="<?php echo $medio['id_medio']; ?>" class="btn btn-block btn-warning" style="width:100%; color:black">Desactivar</button>
+                            <?php $encrypt= openssl_encrypt($medio['id_medio'],"AES-128-ECB","unmdp2021"); ?>
+                            <a href="editar-pago.php?id=<?php echo urlencode($encrypt); ?>" class="btn bg-orange btn-flat margin">
+                              <i class="fa fa-pencil"></i>
+                            </a>
+                            <button type="button" id="btn-pago" data="0" data-id="<?php echo $medio['id_medio']; ?>" class="btn btn-warning" style="width: 90px; color:black">Desactivar</button>
                           </td>
                           <?php
                         }else{
                           echo "Desactivado  ";  ?><i class="fa fa-circle-o text-red"></i>
                           <td>
-                            <button type="button" id="btn-pago" data="1" data-id="<?php echo $medio['id_medio']; ?>"  class="btn btn-block btn-warning" style="width:100%; color:black">Activar</button>
+                            <?php $encrypt= openssl_encrypt($medio['id_medio'],"AES-128-ECB","unmdp2021"); ?>
+                            <a href="editar-pago.php?id=<?php echo urlencode($encrypt); ?>" class="btn bg-orange btn-flat margin">
+                              <i class="fa fa-pencil"></i>
+                            </a>
+                            <button type="button" id="btn-pago" data="1" data-id="<?php echo $medio['id_medio']; ?>"  class="btn btn-warning" style="width: 90px; color:black">Activar</button>
                           </td>
                           <?php
                         }
