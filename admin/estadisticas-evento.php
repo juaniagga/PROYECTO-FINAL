@@ -49,7 +49,7 @@ if ($permiso) {
       ?>
 
       <!-- Main content -->
-      <section class="content" style="width: 100%;">
+      <section class="content page-estadisticas" style="width: 100%;">
         <div class="row text-center">
           <div class="col-sm-6 col-xs-12">
             <!-- small box -->
@@ -84,18 +84,27 @@ if ($permiso) {
         <!-- /.row -->
         <h2>Estadísticas de los participantes acreditados</h2>
         <div class="">
-
+          <div style="display:none;" id="data-evento" data-id="<?php echo $id_evento; ?>">
+          </div>
           <div class="row">
             <div class="col-xs-12 text-center col-lg-6">
               <h2>Institución (%)</h2>
               <div class="box-body chart-responsive">
                 <div class="chart" id="institucion-chart" style="position: relative;"></div>
               </div>
+              <div class="referencia">
+                <ul id="lista-inst">
+                </ul>
+              </div>
             </div>
             <div class="col-xs-12 text-center col-lg-6">
               <h2>Localidad (%)</h2>
               <div class="box-body chart-responsive">
                 <div class="chart" id="localidad-chart" style="position: relative;"></div>
+              </div>
+              <div class="referencia">
+                <ul id="lista-loc">
+                </ul>
               </div>
             </div>
           </div>

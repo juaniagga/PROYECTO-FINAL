@@ -4,7 +4,7 @@ include_once 'templates/header.php';
 
 $permiso = $_SESSION['permiso'];
 if ($permiso) {
-  $id_evento = $_GET['id'];
+  $id_evento = urldecode(openssl_decrypt($_GET['id'], "AES-128-ECB","unmdp2021"));
 } else {
   $id_evento = $_SESSION['id_evento'];
 }
@@ -45,7 +45,6 @@ if ($permiso) {
                   <table id="dtHorizontalVerticalExample" class="text-center table table-striped table-bordered table-sm " cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <th class="col-xs-3">ID participante</th>
                         <th class="col-xs-3">Nombre</th>
                         <th class="col-xs-3">Apellido</th>
                         <th class="col-xs-3">Email</th>
@@ -94,7 +93,7 @@ if ($permiso) {
                       p.fecha_partida, p.traslado, c.tarifa, p.comprobante, p.id_participante, p.id_categoria, cp.nombre as nombre_categoria
                     FROM (usuario u INNER JOIN participante p ON u.id_user=p.id_user) INNER JOIN cat_asociadas c
                     ON c.id_categoria=p.id_categoria INNER JOIN categoria_participante cp ON c.id_categoria=cp.id_categoria
-                    WHERE p.id_evento=" . $id_evento . " and c.id_evento=" . $id_evento . " and p.acreditado=1
+                    WHERE p.id_evento=" . $id_evento . " and c.id_evento=" . $id_evento . "
                     ORDER BY u.apellido, u.nombre";
                         $tuplas = $db->query($sql);
                       } catch (Exception $e) {
@@ -102,16 +101,19 @@ if ($permiso) {
                       }
 
                       if ($tuplas) {
-                        $emails_inscriptos = "";
-                        $emails_sin_confirmar = "";
+                        $emails_inscriptos="";
+                        $emails_sin_confirmar="";
+                        $emails_acreditados="";
                         while ($user = $tuplas->fetch_assoc()) {
-                          $emails_inscriptos = $emails_inscriptos . $user['email'] . ",";
-                          if (!$user['pago_confirmado']) {
-                            $emails_sin_confirmar = $emails_sin_confirmar . $user['email'] . ",";
+                          $emails_inscriptos= $emails_inscriptos . $user['email'] . ",";
+                          if ($user['acreditado']){
+                            $emails_acreditados= $emails_acreditados . $user['email'] . ",";
+                          }
+                          if (!$user['pago_confirmado']){
+                            $emails_sin_confirmar= $emails_sin_confirmar . $user['email'] . ",";
                           }
                       ?>
                           <tr>
-                            <td><?php echo $user['id_participante']; ?></td>
                             <td><?php echo $user['nombre']; ?></td>
                             <td><?php echo $user['apellido']; ?></td>
                             <td> <?php echo $user['email']; ?></td>
@@ -202,16 +204,19 @@ if ($permiso) {
                           </tr>
                       <?php
                         }
+                        
                       }
                       ?>
                       </tr>
 
                       </tfoot>
                   </table>
-                </div>
-                <div class="row">
-                  <div class="col-lg-2 centrar-contenido">
-                    <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Descargar planilla</button>
+
+                  <div id="acciones" class="row">
+                    <div class="col-lg-2 centrar-contenido">
+                      <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Descargar planilla</button>
+                    </div>
+
                   </div>
                 </div>
               </div>

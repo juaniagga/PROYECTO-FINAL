@@ -105,7 +105,7 @@ $permiso = $_SESSION['permiso'];
                       <div class="form-group">
                         <label for="">Foto actual del evento</label>
                         <br>
-                        <img src="../img/<?php echo $evento['imagen']?>" width="40%" alt=" Foto del evento">
+                        <img src="../img/<?php echo "evento_". $evento['id_evento'] . "/" . $evento['imagen']?>" width="40%" alt=" Foto del evento">
                       </div>
                       <div class="form-group">
                         <label for="imagen">Actualizar foto <span style="font-weight:300">(Formatos permitidos: .JPG, .JPEG, .PNG)</span></label>

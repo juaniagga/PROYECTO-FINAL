@@ -3,6 +3,7 @@ include_once 'funciones/sesion-admin.php';
 include_once 'templates/header.php';
 
 $permiso = $_SESSION['permiso'];
+$id_evento= $_SESSION['id_evento'];
 ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -53,7 +54,8 @@ $permiso = $_SESSION['permiso'];
 
                       $sql = "
                       SELECT ca.id_categoria, ca.tarifa, c.nombre
-                      FROM categoria_participante c INNER JOIN cat_asociadas ca ON c.id_categoria=ca.id_categoria";
+                      FROM categoria_participante c INNER JOIN cat_asociadas ca ON c.id_categoria=ca.id_categoria
+                      WHERE ca.id_evento=" . $id_evento;
                       $tuplas = $db->query($sql);
                     } catch (Exception $e) {
                       echo "Error: " . $e->getMessage();

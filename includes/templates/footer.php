@@ -27,7 +27,7 @@
         </nav>
       </div>
     </div>
-    <p class="copyright"> Todos los derechos reservados UNMDP 2021</p>
+    <!-- <p class="copyright"> Todos los derechos reservados UNMDP 2021</p> -->
   </footer>
 
 

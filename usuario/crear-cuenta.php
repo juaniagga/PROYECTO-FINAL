@@ -116,7 +116,7 @@ if (isset($_SESSION['id_user'])){
                       </div>
                     </div>
 
-                    <p class="col-sm-12" style="margin-top:1rem;"> <b>--- Si NO es de Mar del Plata: --- </b></p>
+                    <!-- <p class="col-sm-12" style="margin-top:1rem;"> <b>--- Si NO es de Mar del Plata: --- </b></p>
                     <div class="form-group col-sm-12">
                       <label for="hotel" class="col-sm-3 control-label">Hotel / lugar de alojamiento</label>
                       <div class="col-sm-12">
@@ -153,7 +153,7 @@ if (isset($_SESSION['id_user'])){
                         </div>
                       </div>
                     </div>
-                    <p class="col-sm-12"> <b>- - - - - - - - - - - - - - - - - - - - - - - - </b></p>
+                    <p class="col-sm-12"> <b>- - - - - - - - - - - - - - - - - - - - - - - - </b></p> -->
 
 
 

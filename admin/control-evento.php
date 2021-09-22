@@ -815,7 +815,7 @@
           }
         $cat = $tuplas->fetch_assoc();
 
-        if ($cat['tarifa']==0){    // si no abona o si la categoria no es autoregistrable
+        if ($cat['tarifa']==0 || $exento==1){    // si no abona o si la categoria no es autoregistrable
             $pago_confirmado=1;
         }
 
@@ -989,6 +989,31 @@
         }
         else{
             header("HTTP/1.1 403 Forbidden");
+        }
+    }
+    elseif (isset($_POST['verpago'])) {
+        //nombre de archivos: "pago_id"
+        $id = $_POST['id'];
+        $id_evento= $_SESSION['id_evento'];
+        $directorio= "../comprobantes/evento_" . $id_evento . "/";
+        $name = "pago_". $id;
+        $filename="";
+        if (file_exists($directorio . $name . ".pdf")){
+            $filename = $name . ".pdf";
+        } elseif(file_exists($directorio . $name . ".jpg")){
+            $filename = $name . ".jpg";
+        } elseif(file_exists($directorio . $name . ".png")){
+            $filename = $name . ".png";
+        } elseif(file_exists($directorio . $name . ".jpeg")){
+            $filename = $name . ".jpeg";
+        }
+        
+        if ($filename!=""){
+            $filepath = $directorio . $filename;
+            echo json_encode($filepath);
+        }
+        else{
+            echo json_encode('error');
         }
     }
 

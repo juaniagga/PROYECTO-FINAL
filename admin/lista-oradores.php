@@ -88,7 +88,7 @@ $id_evento= $_SESSION['id_evento'];
                           }
                         ?>
                         </td>
-                        <td> <img style="width: 100px;" src="../img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt=""></td>
+                        <td> <img style="width: 100px;" src="../img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt="<?php echo $orador['imagen']?>"></td>
                         <td>
                           <?php $encrypt= openssl_encrypt($orador['id_orador'],"AES-128-ECB","unmdp2021"); ?>
                           <a href="editar-orador.php?id=<?php echo urlencode($encrypt);?>" class="btn bg-orange btn-flat margin">

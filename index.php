@@ -160,7 +160,7 @@
                 </div><!--#charlas-->
               
             <?php } ?>
-          <a href="calendario.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente float-right">Ver más</a>
+          <a href="calendario.php?id=<?php echo urlencode($encrypt);?>#seccion" class="button transparente float-right">Ver más</a>
 
 
 
@@ -311,7 +311,8 @@
   <div class="newsletter parallax">
     <div class="contenido contenedor">
       <h3>¡Regístrate al evento!</h3>
-      <a href="registro.php?id=<?php echo $evento['id_evento']?>#seccion" class="button transparente">Registro</a>
+      <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>
+      <a href="registro.php?id=<?php echo urlencode($encrypt);?>#seccion" class="button transparente">Registro</a>
     </div><!--contenido-->
   </div>
 

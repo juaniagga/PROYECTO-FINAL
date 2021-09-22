@@ -38,14 +38,12 @@
         </div>
         <div class="box-body instrucciones">
           Para comenzar a utilizar el sistema, se recomienda que descargue y lea la guía de usuario haciendo click en <b>Guía de usuario</b> en el menú.
-          Además, también puede visualizar el siguiente video tutorial que muestra las distintas funcionalidades:
-          <a href=""></a>
           <br>
           <?php if (!$permiso){?>
           <h3>Aclaración:</h3>
           Por defecto el estado del evento es <b>desactivado</b>. En este estado sólo usted y los demás administradores podrán acceder a la página del evento. <br>
           Cambie el estado a <b>activado</b> una vez que haya completado toda la información y desee habilitar las inscripciones. <br>
-          Asímismo, las inscripciones al público son inhabilitadas una vez pasada la fecha de finalización del evento. Si desea inhabilitar las inscripciones antes de dicha fecha, cambie el estado del evento a <b>desactivado</b> nuevamente.
+          Asímismo, las inscripciones al público son inhabilitadas una vez pasada la fecha de finalización del evento.
           <?php } ?>
         </div>
         <!-- /.box-body -->

@@ -252,7 +252,7 @@ nav.redes-sociales{
 }
 nav.redes-sociales a{
   color:#ffffff;
-  font-size:2em;
+  font-size:2.2em;
   margin-right:20px;
 }
 
@@ -263,6 +263,9 @@ nav.redes-sociales a:last-child{
 div.informacion-evento{
   text-align: center;
   color: #ffffff;
+  width:90%;
+    margin: 0 auto;
+    margin-top:50px;
 }
 
 @media only screen and (min-width:768px){
@@ -276,11 +279,18 @@ div.informacion-evento{
 div.informacion-evento p{
   margin:0;
   display: inline;
-  font-size:22px;
+  font-size: 2em;
+  font-weight: 600;
+}
+@media (max-width:768px){
+  div.informacion-evento p{
+    font-size: 1.5em;
+    font-weight: 600;
+  }
 }
 div.informacion-evento p i{
   color: var(--unmdp-color);
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 p.slogan{
   text-transform: none!important;
@@ -291,15 +301,16 @@ p.slogan span{
 
 
 h1.nombre-sitio{
-  font-size: 5.9vw;
+  font-size: 7vw;
   font-family: 'PT Sans', sans-serif;
   padding-top: 5%;
   text-align: center;
+  text-transform: uppercase;
 }
 
 @media only screen and (min-width:768px){
   h1.nombre-sitio{
-    font-size: 5.5em;
+    font-size: 6em;
     margin:0;
     line-height:1;
   }
@@ -586,10 +597,12 @@ div.invitado:hover p{
 }
 @media (min-width: 992px){
   #cboxLoadedContent .cboxElement img{
-    width: 60%;
+    width: 40% !important;
   }
 }
-
+#cboxLoadedContent .cboxElement p{
+  font-size: 18px !important;
+}
 
 
 
@@ -753,6 +766,7 @@ div.cuenta-regresiva{
 footer{
   background-color: #585858;
   padding-top:40px;
+  padding-bottom: 40px;
 }
 footer .contenedor > div{
   color:#ffffff;
@@ -1153,7 +1167,7 @@ div.resumen input{
 
 /* USUARIO ----------------------------------------------------------------------------- */
 .min-altura{
-  min-height: 60vh;
+  min-height: 70vh;
 }
 
 .user-footer {

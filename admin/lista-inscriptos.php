@@ -34,7 +34,7 @@ if ($permiso) {
       </section>
 
       <!-- Main content -->
-      <section class="content">
+      <section class="content page-lista">
         <div class="row centrar-contenido">
           <div class="col-xs-12">
             <!-- BOX ADMIN SISTEMA -->
@@ -98,8 +98,8 @@ if ($permiso) {
                       p.fecha_partida, p.traslado, c.tarifa, p.comprobante, p.id_participante, p.id_categoria, cp.nombre as nombre_categoria
                     FROM (usuario u INNER JOIN participante p ON u.id_user=p.id_user) INNER JOIN cat_asociadas c
                     ON c.id_categoria=p.id_categoria INNER JOIN categoria_participante cp ON c.id_categoria=cp.id_categoria
-                    WHERE p.id_evento=" . $id_evento . "
-                    ORDER BY u.apellido";
+                    WHERE p.id_evento=" . $id_evento . " and c.id_evento=" . $id_evento . "
+                    ORDER BY u.apellido, u.nombre";
                         $tuplas = $db->query($sql);
                       } catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
@@ -129,7 +129,8 @@ if ($permiso) {
                                   <button type="button" id="acreditar" data-tipo="add" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa  fa-check"></i> Acreditar</button>
                                 <?php } ?>
                                 <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-thumbs-up"></i> Confirmar pago</button>
-                                <button type="button" id="comprobante" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-download"></i> Comprobante de pago</button>
+                                <button type="button" id="ver-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-eye"></i> Ver pago</button>
+                                <button type="button" id="comprobante" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-download"></i> Descargar comprobante pago</button>
                                 <button type="button" data-id="<?php echo $user['id_participante']; ?>" url="control-evento.php" data-tipo="participante" class="btn  btn-danger borrar-registro"><i class="fa fa-trash"></i></button>
 
                               </td>
@@ -232,10 +233,42 @@ if ($permiso) {
                       </tfoot>
                   </table>
 
+                  <!-- Modal -->
+    <div class="modal fade" id="pagoModal" tabindex="-1" role="dialog" aria-labelledby="basesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="basesModalLabel">Comprobante de pago</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="mycanvas"></canvas>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-blue" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
                   <div id="acciones" class="row">
+                   <?php
+                    if ($permiso) {
+                      ?>
                     <div class="col-md-3 text-center">
                       <button type="button" id="exportar" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
                     </div>
+                    <?php }else{ ?>
+                      <div class="col-md-3 text-center">
+                        <a href="descargar-inscriptos.php">
+                          <button type="button" data-id="<?php echo $id_evento ?>" class="btn  btn-success" style="background-color:#2e7d0e"><i class="fa fa-download"></i> Listado de inscriptos</button>
+                        </a>
+                      </div>
+                    <?php } ?>
+
                     <div class="col-md-3 text-center">
                       <a href="lista-acreditados.php">
                         <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-check-square-o"></i> Listado de acreditados</button>
@@ -277,17 +310,17 @@ if ($permiso) {
             <h2 class="title-section">Envío de emails</h2>
             <div class="row">
               <div class="col-12">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_inscriptos;?>" target="_blank">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&bcc=<?php echo $emails_inscriptos;?>" target="_blank">
                   <button type="button" class="btn btn-default" style="margin-left: 2em;"><i class="fa fa-send"></i> A todos los inscriptos</button>
                 </a>
               </div>
               <div class="col-12">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_acreditados;?>" target="_blank">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&bcc=<?php echo $emails_acreditados;?>" target="_blank">
                   <button type="button" class="btn btn-default" style="margin-left: 2em;margin-top: 1em;"><i class="fa fa-send"></i> A todos los acreditados</button>
                 </a>
               </div>
               <div class="col-12">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=<?php echo $emails_sin_confirmar;?>" target="_blank">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&bcc=<?php echo $emails_sin_confirmar;?>" target="_blank">
                   <button type="button" class="btn btn-default" style="margin-left: 2em;margin-top: 1em;"><i class="fa fa-send"></i> A inscriptos sin pago confirmado</button>
                 </a>
               </div>

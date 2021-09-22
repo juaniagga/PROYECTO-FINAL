@@ -245,3 +245,43 @@ button#acreditar{
     margin-right: auto;
   }
   
+
+  .modal-content, .modal-dialog{
+      height: 80rem;
+      width: 80rem;
+  }
+  .modal-body{
+    height: 65rem;
+    width: 100%;
+    }
+  #mycanvas{
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+  }
+
+  .page-lista{
+      padding-bottom: 8rem;
+  }
+
+  .referencia ul{
+    text-align: justify;
+    list-style-type:none;
+    padding-left: 16rem;
+  }
+  @media (max-width:767px){
+    .referencia ul{
+        padding-left: 0;
+      }
+  }
+  .referencia li{
+    font-size: 2rem;
+  }
+
+  .sq{
+    font-size: 3rem;
+  }
+
+  .page-estadisticas{
+    padding-bottom: 15rem;
+}

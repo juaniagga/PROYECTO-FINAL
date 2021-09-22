@@ -39,7 +39,7 @@ $(document).ready(function(){
     $('.box-body #comprobante').on('click', descargarComprobante);
 
     $('#exportar').on('click', exportarInscriptos);
-
+    
     $('#cargar-certificados').on('submit', enviarCertificados);
 
     $('#guia-user').on('click', guia);
@@ -321,6 +321,63 @@ $(document).ready(function(){
             }
         });
     }
+
+    $('.box-body #ver-pago').on('click',function(){
+        const id= $(this).attr('data-id');
+        $.ajax({
+            type: 'post',
+            data: {
+                id: id,
+                verpago: 1
+            },
+            url: 'control-evento.php',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                if (data!="error"){
+                    $("#pagoModal").modal()
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+                    pdfjsLib.getDocument(data).promise.then(doc=>{
+                        doc.getPage(1).then(page=>{
+                            var myCanvas= document.getElementById('mycanvas');
+                            var context= myCanvas.getContext("2d");
+                            const scale=1.5;
+                            var viewport= page.getViewport({scale});
+                            myCanvas.width= viewport.width;
+                            myCanvas.height= viewport.height;
+                            
+                            /* page.render({
+                                canvasContext: context,
+                                viewport: viewport
+                            }); */
+                            const renderContext= {
+                                canvasContext: context,
+                                viewport: viewport
+                            };
+                            page.render(renderContext).promise.then(()=>{
+                                pageIsRendering=false;
+                            })
+                        });
+                    });
+                    
+                }else{
+                    swal.fire({
+                        icon: 'error',
+                        title: '¡Error!',
+                        text: 'No se ha encontrado el comprobante.',
+                      })
+                }
+            },
+            error: function(XHR,status){
+                swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'No se ha encontrado el comprobante.',
+                  })
+            }
+        });
+        
+    });
 
     function descargarComprobante(e){
         e.preventDefault();

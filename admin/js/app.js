@@ -22,7 +22,34 @@ $(document).ready(function () {
         search: 'Buscar'
       }
     });
-    
+    $("#main_table").dataTable().fnDestroy();
+
+
+
+    $('#dtHorizontalVerticalExample').DataTable({
+      "scrollX": true,
+      "scrollY": 200, 
+      'paging'      : true,
+      'pageLength'  : 10, 
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false,
+      'language'    : {
+        paginate: {
+          next: 'Siguiente',
+          previous: 'Anterior',
+          last: 'Último',
+          first: 'Primero'
+        },
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ resultados',
+        emptyTable: 'No hay registros',
+        infoEmpty: '0 resultados',
+        search: 'Buscar'
+      },
+    });
+
 
     $('.content #btn-new').attr('disabled',true);
 
@@ -56,10 +83,7 @@ $(document).ready(function () {
   });
 
 
-  $('#dtHorizontalVerticalExample').DataTable({
-    "scrollX": true,
-    "scrollY": 200,
-    });
+
     $('.dataTables_length').addClass('bs-select');
 
 
@@ -67,7 +91,7 @@ $(document).ready(function () {
      * estadisticas
   */
 
-    const id_evento= $('#procedencia').attr('data-id');
+    const id_evento= $('#data-evento').attr('data-id');
 
 /*   $.getJSON('servicios/estadisticas-procedencia.php?id='+id_evento, function(data){
     datos_procedencia= data;
@@ -141,7 +165,6 @@ $(document).ready(function () {
   //DONUT CHART
   $.getJSON('servicios/estadisticas-institucion.php?id='+id_evento, function(datos){
     console.log(datos); 
-    var localidades= [];
     var colores= [];
     datos.forEach(element => {
       colores.push(getRandomRgb());
@@ -153,10 +176,17 @@ $(document).ready(function () {
       data: datos,
       hideHover: 'auto'
     });
+    const limite= datos.length;
+    var i=0;
+    while (i<limite){
+      var item = document.createElement("LI");
+      item.innerHTML="<span class='sq' style='color:"+colores[i]+";'>■</span> "+datos[i].label;
+      document.getElementById("lista-inst").appendChild(item);
+      i++;
+    }
   });
 
   $.getJSON('servicios/estadisticas-localidad.php?id='+id_evento, function(datos){
-    var localidades= [];
     var colores= [];
     datos.forEach(element => {
       colores.push(getRandomRgb());
@@ -168,6 +198,14 @@ $(document).ready(function () {
       data: datos,
       hideHover: 'auto'
     });
+    const limiteL= datos.length;
+    var i=0;
+    while (i<limiteL){
+      var iteml = document.createElement("LI");
+      iteml.innerHTML="<span class='sq' style='color:"+colores[i]+";'>■</span> "+datos[i].label;
+      document.getElementById("lista-loc").appendChild(iteml);
+      i++;
+    }
   });
   /*
    * END estadisticas

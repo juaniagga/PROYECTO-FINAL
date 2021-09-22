@@ -49,7 +49,9 @@
   <div class="barra" id="seccion">
     <div class="contenedor-barra clearfix">
         <div class="logo" style="width:250px">
-          <img src="../img/logoUNMDP.svg" alt="logo UNMDP">
+          <a href="https://www.mdp.edu.ar/" target="_blank">
+            <img src="../img/logoUNMDP.svg" alt="logo UNMDP">
+          </a>
         </div>
 
     </div>

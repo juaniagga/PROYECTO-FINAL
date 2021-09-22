@@ -209,6 +209,8 @@ INSERT INTO
 VALUES
     ('juani', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','juani@fi.edu', 'Juan Ignacio', 0),
     ('pilar', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','pilar@fi.edu', 'Pilar', 0),
+    ('juani2', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','juani@fi.edu', 'Juan Ignacio', 0),
+    ('juani3', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','juani@fi.edu', 'Juan Ignacio', 0),
     ('carlos', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','carlos@fi.edu', 'Carlos', 1),
     ('violeta', '$2y$10$sJeaOnfU5u0IpsYOv2b4Oepo/P0TuMoIn2F2unjZXIOrh6TfVbcza','viole@fi.edu', 'Violeta', 1);
 
@@ -217,8 +219,9 @@ INSERT INTO
     administrado(id_admin, id_evento)
 VALUES
     (1, 1),
-    (2, 1);
-
+    (2, 1),
+    (3, 2),
+    (4, 3);
 
 INSERT INTO
     categoria_participante(nombre, autoreg)

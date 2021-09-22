@@ -38,7 +38,8 @@ try {
         SELECT COUNT(*) as total, u.ciudad
         FROM usuario u INNER JOIN participante p on p.id_user=u.id_user INNER JOIN categoria_participante c ON c.id_categoria=p.id_categoria
         WHERE p.id_evento=" . $id_evento . " and p.acreditado=1 AND c.autoreg=1
-        GROUP BY u.ciudad";
+        GROUP BY u.ciudad
+        ORDER BY total desc";
         $tupla = $db->query($sql);
         while ($localidad= $tupla->fetch_assoc()){
           

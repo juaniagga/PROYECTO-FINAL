@@ -32,7 +32,8 @@
         SELECT COUNT(*) as total, u.institucion
         FROM usuario u INNER JOIN participante p on p.id_user=u.id_user INNER JOIN categoria_participante c ON c.id_categoria=p.id_categoria
         WHERE p.id_evento=" . $id_evento . " and p.acreditado=1 AND c.autoreg=1
-        GROUP BY u.institucion";
+        GROUP BY u.institucion
+        ORDER BY total desc";
         $tupla = $db->query($sql);
         while ($institucion= $tupla->fetch_assoc()){
             $valor= ($institucion['total'] * 100) / $total;

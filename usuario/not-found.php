@@ -6,7 +6,8 @@ include_once 'includes/header-basic.php';
 <h4 class="exito">Si considera que es un error, comuníquese con nosotros por alguno de los medios de contacto.</h4>
 
 <?php 
-include_once 'includes/footer.php';
+/* include_once 'includes/footer.php';
 
-include_once 'includes/scripts-footer.php';
+include_once 'includes/scripts-footer.php'; */
+include_once '../includes/templates/footer.php';
 ?>
