@@ -115,6 +115,13 @@ textarea {
     font-size: 13px !important;
   }
 /** Globales **/
+@media (min-width: 992px){
+  .contenedor-eventos{
+    margin: 0 auto;
+    max-width: 1280px;
+    
+  }
+}
 .contenedor{
   width:98%;
   margin: 0 auto;
@@ -1235,3 +1242,14 @@ td a:hover{
       max-width: 100% !important;
   }
 }
+
+/* user */
+.btn-ver{
+  background-color: #2a2692 !important;
+  border-color: var(--unmdp-color) !important;
+}
+
+.btn-ver:hover{
+  background-color: var(--unmdp-color) !important;
+}
+

@@ -6,7 +6,7 @@
     if (isset($_POST['infoPago'])) {
         $id_evento= $_POST['id_evento'];
         $filename = "info_pago_" . $id_evento . ".pdf";
-        $filepath = '../archivos/'. $filename;
+        $filepath = "../pago/evento_" . $id_evento . "/". $filename;
 
         // header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');

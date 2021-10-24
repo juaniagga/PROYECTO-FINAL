@@ -2,17 +2,18 @@
 $id_user = $_SESSION['id_user'];
 ?>
 <!-- ----------------------------------------------------------------------------- -->
-<section id="mis-eventos" class="seccion contenedor min-altura margin-barra">
+<section id="mis-eventos" class="seccion contenedor-eventos min-altura margin-barra">
   <h2> Mis eventos </h2>
 
   <div class="box-body table-responsive">
     <table id="registros" class="table table-bordered table-striped text-center">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th class="col-xs-2">Fecha inicio</th>
-          <th class="col-xs-2">Fecha fin</th>
+          <th class="col-xs-3">Nombre</th>
+          <th class="col-xs-3">Fecha inicio</th>
+          <th class="col-xs-3">Fecha fin</th>
           <th class="col-xs-2">Acciones</th>
+          <th class="col-xs-3">Estado de pago</th>
         </tr>
       </thead>
       <tbody>
@@ -20,7 +21,7 @@ $id_user = $_SESSION['id_user'];
         <?php
         try {
           $sql = "
-                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, p.id_participante
+                      SELECT e.id_evento, e.nombre, e.fecha_inicio, e.fecha_fin, p.id_participante, p.pago_confirmado
                       FROM evento e INNER JOIN participante p on e.id_evento=p.id_evento
                       WHERE p.id_user=" . $id_user . " and e.estado=1
                       ORDER BY e.fecha_inicio, e.nombre";
@@ -37,11 +38,18 @@ $id_user = $_SESSION['id_user'];
             <td>
               <?php $encrypt= openssl_encrypt($evento['id_evento'],"AES-128-ECB","unmdp2021"); ?>
               <a href="../index.php?id=<?php echo urlencode($encrypt);?>" target="_blank">
-                <button type="button" class="btn  btn-success">Ver evento</button>
+                <button type="button" class="btn btn-success btn-ver">Ver evento</button>
               </a>
               <button type="button" id="cargar_comprobante" data-toggle="modal" data-target="#uploadModal" data-evento="<?php echo $evento['id_evento'];?>" data-id="<?php echo $evento['id_participante'] ?>" class="btn  btn-default"><i class="fa fa-upload"></i> Cargar comprobante de pago</button>
 
               <button type="button" id="baja" data-id="<?php echo $evento['id_participante']; ?>" data-evento="<?php echo $evento['id_evento'];?>" class="btn  btn-danger"><i class="fa fa-trash"></i> Darme de baja</button>
+            </td>
+            <td>
+              <?php if($evento['pago_confirmado']){ ?>
+                      <p>Confirmado</p>
+                <?php }else{ ?>
+                      <p>Sin confirmar</p>
+                <?php  }?>
             </td>
           </tr>
         <?php

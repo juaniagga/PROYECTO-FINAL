@@ -271,18 +271,9 @@ if ($permiso) {
 
                     <div class="col-md-3 text-center">
                       <a href="lista-acreditados.php">
-                        <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-check-square-o"></i> Listado de acreditados</button>
+                        <button type="button" id="" data-id="<?php echo $id_evento ?>" class="btn btn-default"><i class="fa fa-download"></i> Listado de acreditados</button>
                       </a>
                     </div>
-                    <?php
-                    if (!$permiso) {
-                      ?>
-                    <div class="col-md-3 text-center">
-                      <div class="col-12">
-                        <button type="button" data-id="0" url="control-evento.php" data-tipo="sin-confirmar" class="btn  btn-danger borrar-registro"><i class="fa fa-trash" style="margin-right: 1rem;"></i> Inscriptos sin pago confirmado</button>
-                      </div>
-                    </div>
-                      <?php } ?>
                   </div>
                 </div>
               </div>
@@ -296,8 +287,10 @@ if ($permiso) {
             if (!$permiso) {
               ?>
             <h2 class="title-section">Certificados</h2>
+            
             <div class="row" style="margin-left: 0.1em;">
               <div class="col-md-4">
+                <button id="modelo" class="btn btn-default">Descargar modelo de certificado</button>
                 <form name="cargar-certificados" id="cargar-certificados" method="post" action="control-evento.php">
                   <label for="file">Seleccione los certificados que desea enviar (Formato: .PDF)</label>
                   <input type="file" id="pdf" name="file[]" multiple required>

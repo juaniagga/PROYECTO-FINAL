@@ -285,3 +285,11 @@ button#acreditar{
   .page-estadisticas{
     padding-bottom: 15rem;
 }
+
+#modelo{
+    margin-bottom: 2rem;
+}
+
+.importante{
+    color: red !important;
+}

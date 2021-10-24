@@ -43,7 +43,7 @@
           <h3>Aclaración:</h3>
           Por defecto el estado del evento es <b>desactivado</b>. En este estado sólo usted y los demás administradores podrán acceder a la página del evento. <br>
           Cambie el estado a <b>activado</b> una vez que haya completado toda la información y desee habilitar las inscripciones. <br>
-          Asímismo, las inscripciones al público son inhabilitadas una vez pasada la fecha de finalización del evento.
+          <!-- Asímismo, las inscripciones al público son inhabilitadas una vez pasada la fecha de finalización del evento. -->
           <?php } ?>
         </div>
         <!-- /.box-body -->

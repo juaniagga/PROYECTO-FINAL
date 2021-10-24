@@ -414,6 +414,30 @@ $(document).ready(function(){
         });
     }
 
+    $('#modelo').on('click', function(){
+        $.ajax({
+            type: 'post',
+            data: {
+                modelo: 1
+            },
+            url: 'control-evento.php',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data){
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = 'modelo_certificado.xlsm';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(XHR,status){
+                console.log(XHR);
+                console.log(status);
+            }
+        });
+    })
    
     function enviarCertificados(e){
         e.preventDefault();
@@ -613,20 +637,26 @@ $(document).ready(function(){
 
     $('.borrar-registro').on('click', function(e){
         e.preventDefault();
-        const tipo= $(this).attr('data-tipo');  //admin o admin-sistema .. no se usa
+        const tipo= $(this).attr('data-tipo'); 
         const id= $(this).attr('data-id');
         const url= $(this).attr('url');
         var titulo;
+        var texto;
+        var html;
         if (tipo=="sin-confirmar"){
             titulo= "¿Está seguro que desea eliminarlos?"
             texto= "No podrá recuperarlos";
         }else{
             titulo= "¿Está seguro que desea eliminarlo?"
-            texto= "No podrá recuperarlo";
+            var imp = document.createElement("p");
+            imp.innerHTML= "<span class='importante'>IMPORTANTE: </span>";
+            texto="No podrá recuperarlo";
+            html= "<span class='importante'>IMPORTANTE: </span> No podrá recuperarlo";
         }
         swal.fire({
             title: titulo,
-            text: texto,
+            
+            html: html,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
