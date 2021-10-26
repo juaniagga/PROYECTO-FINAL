@@ -293,3 +293,23 @@ button#acreditar{
 .importante{
     color: red !important;
 }
+
+#acreditar{
+    color: white;
+}
+
+.btn-acreditar{
+    background-color: #0d9355;
+}
+
+.btn-acreditar:hover{
+    background-color: #16b76c;
+}
+
+.btn-desacreditar{
+    background-color: #b72222;
+}
+
+.btn-desacreditar:hover{
+    background-color: #dd2626;
+}

@@ -7,7 +7,7 @@ $(function() {
 
     $(window).scroll(function(){
         let scroll= $(window).scrollTop();
-        if (scroll >alturaWindow){
+        if (scroll >(alturaWindow-alturaBarra)){
             $('.barra').addClass('fixed');
             $('body').css({'margin-top': alturaBarra+'px'});
         }

@@ -77,7 +77,7 @@ $permiso = $_SESSION['permiso'];
                         <input name="organizador" type="text" class="form-control" id="organizador" required placeholder="Organizador del evento" value="<?php echo $evento['organizador'] ?>">
                       </div>
                       <div class="form-group">
-                        <label for="ubicacion" class="control-label">Ubicación *</label>
+                        <label for="ubicacion" class="control-label">Ubicación (En caso de ser virtual colocar "Evento virtual") *</label>
                         <input name="ubicacion" type="text" class="form-control" id="ubicacion" required placeholder="Ubicación" value="<?php echo $evento['ubicacion'] ?>">
                       </div>
                       <div class="form-group">

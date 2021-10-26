@@ -43,7 +43,7 @@
                         <div id="#orador_hidden" style="display:none;">
                             <div class="invitado-info" id="orador<?php echo $orador['dni']; ?>">
                                 <h2><?php echo $orador['nombre_ape']; ?></h2>
-                                <img src="img/oradores/<?php echo $orador['imagen']; ?>" alt="imagen orador">
+                                <img src="img/<?php echo "evento_". $id_evento . "/" ?>oradores/<?php echo $orador['imagen']; ?>" alt="imagen orador">
                                 <p><?php echo $orador['biografia']; ?></p>
 
                             </div>

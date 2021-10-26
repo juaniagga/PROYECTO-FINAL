@@ -244,10 +244,14 @@ $(document).ready(function(){
                     setTimeout(function(){
                         if (tipo=="add"){
                             jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').html('<i class="fa  fa-close"></i> Desacreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').removeClass('btn-acreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').addClass('btn-desacreditar');
                             jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').attr('data-tipo','remove');
                             jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-green">Acreditado</span>');
                         } else{
                             jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').html('<i class="fa  fa-check"></i> Acreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').removeClass('btn-desacreditar');
+                            jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').addClass('btn-acreditar');
                             jQuery('[data-id="'+ id +'"]').parents('tr').find('#acreditar').attr('data-tipo','add');
                             jQuery('[data-id="'+ id +'"]').parents('tr').find("#acreditado").replaceWith('<span class="badge bg-red">No acreditado</span>');
                         }

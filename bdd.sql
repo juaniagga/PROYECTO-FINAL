@@ -170,11 +170,11 @@ VALUES
 
 
 INSERT INTO
-    evento(nombre,fecha_inicio,fecha_fin,inscriptos, acreditados, organizador, ubicacion, descripcion, imagen)
+    evento(nombre,fecha_inicio,fecha_fin,inscriptos, acreditados, organizador, limite, ubicacion, descripcion, imagen)
 VALUES
-    ('Fiesa','2021-11-16','2021-11-17', 7, 6, 'UNMdP','Deán Funes 3350','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.', "fiesa.jpg"),
-    ('Dia del ingeniero','2021-06-16','2021-06-16', 0, 0, 'UNMdP','Deán Funes 3350','Actividades para celebrar el día del ingeniero.',""),
-    ('Día del estudiante','2021-09-21','2021-09-21', 0, 0, 'UNMdP','Deán Funes 3350','Actividades para celebrar el día del estudiante.',"");
+    ('Fiesa','2021-11-16','2021-11-17', 7, 6, 'UNMdP', 1000, 'Deán Funes 3350','La Feria Internacional de Educación Superior Argentina (FIESA) es un encuentro internacional de Instituciones de Educación Superior que tendrá a la Universidad Nacional de Mar del Plata y a la Ciudad de Mar del Plata como anfitrionas y reunirá a referentes de todo el mundo.', "fiesa.jpg"),
+    ('Dia del ingeniero','2021-06-16','2021-06-16', 0, 0, 'UNMdP', 100, 'Deán Funes 3350','Actividades para celebrar el día del ingeniero.',""),
+    ('Día del estudiante','2021-09-21','2021-09-21', 0, 0, 'UNMdP', 100, 'Deán Funes 3350','Actividades para celebrar el día del estudiante.',"");
 
 
 INSERT INTO

@@ -2,7 +2,7 @@
 <?php include_once 'includes/funciones/redirection.php'; ?>
 
   <section id="calendario" class="seccion contenedor min-altura">
-    <h2>Calendario</h2>
+    <h2>Programa del evento</h2>
 
     <?php 
         try{

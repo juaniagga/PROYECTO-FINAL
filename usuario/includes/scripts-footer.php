@@ -37,7 +37,7 @@
 
 <script src="../js/user-ajax.js"></script>
 <script src="../js/app.js"></script>
-
+<script src="js/user.js"></script>
 
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

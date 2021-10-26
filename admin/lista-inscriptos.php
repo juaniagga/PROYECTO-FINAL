@@ -124,9 +124,9 @@ if ($permiso) {
                             ?>
                               <td>
                                 <?php if ($user['acreditado']) { ?>
-                                  <button type="button" id="acreditar" data-tipo="remove" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa  fa-close"></i> Desacreditar</button>
+                                  <button type="button" id="acreditar" data-tipo="remove" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-desacreditar"><i class="fa  fa-close"></i> Desacreditar</button>
                                 <?php }else{ ?>
-                                  <button type="button" id="acreditar" data-tipo="add" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-success"><i class="fa  fa-check"></i> Acreditar</button>
+                                  <button type="button" id="acreditar" data-tipo="add" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-acreditar"><i class="fa  fa-check"></i> Acreditar</button>
                                 <?php } ?>
                                 <button type="button" id="validar-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-primary"><i class="fa fa-thumbs-up"></i> Confirmar pago</button>
                                 <button type="button" id="ver-pago" data-id="<?php echo $user['id_participante']; ?>" class="btn  btn-default"><i class="fa fa-eye"></i> Ver pago</button>

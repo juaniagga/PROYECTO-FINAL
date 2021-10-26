@@ -25,10 +25,17 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header ">
+    <?php
+      if ($permiso){
+      ?>
+      <h1>
+        Nuevo evento
+      </h1>
+      <?php }else{?>
       <h1>
         Nuevo administrador de evento
-        <!-- <small>Completá el formulario para crear el administrador</small> -->
       </h1>
+      <?php } ?>
     </section>
 <div class="row centrar-contenido">
 <!-- Main content -->
@@ -46,6 +53,18 @@
                 <!-- form start -->
                 <form class="form-horizontal" name="crear-admin" id="crear-admin" method="post" action="control-admin.php">
                   <div class="box-body">
+                  <?php
+                    if ($permiso){
+                    ?>
+                    <div class="form-group">
+                      <label for="evento" class="col-sm-2 control-label">Nombre del evento *</label>
+                      <div class="col-sm-12">
+                        <input name="evento" type="text" class="form-control" id="evento" required placeholder="Nombre del evento">
+                      </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
                     <div class="form-group">
                       <label for="usuario" class="col-sm-2 control-label">Usuario *</label>
                       <div class="col-sm-12">
@@ -77,18 +96,7 @@
                         <span id="resultado_password" class="help-block"></span>
                       </div>
                     </div>
-                    <?php
-                    if ($permiso){
-                    ?>
-                    <div class="form-group">
-                      <label for="evento" class="col-sm-2 control-label">Nombre del evento *</label>
-                      <div class="col-sm-12">
-                        <input name="evento" type="text" class="form-control" id="evento" required placeholder="Nombre del evento">
-                      </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
+                    
                     <div id="error"></div>
                   </div>
                   <!-- /.box-body -->
